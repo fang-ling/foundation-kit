@@ -29,6 +29,11 @@
  */
 typedef int32_t Foundation_Integer32 SWIFT_NAME(Integer32);
 
+/**
+ * A 32-bit unsigned integer value type.
+ */
+typedef uint32_t Foundation_UnsignedInteger32 SWIFT_NAME(UnsignedInteger32);
+
 ///* MARK: - Choosing the Smallest and Largest Value */
 ///**
 // * Returns the lesser of two comparable values.

@@ -13,6 +13,7 @@ Model data with numbers, logical values, and other fundamental types.
 - ``Foundation_Integer8``
 - ``Foundation_UnsignedInteger8``
 - ``Foundation_Integer32``
+- ``Foundation_UnsignedInteger32``
 - ``Foundation_Integer64``
 - ``Foundation_UnsignedInteger64``
 

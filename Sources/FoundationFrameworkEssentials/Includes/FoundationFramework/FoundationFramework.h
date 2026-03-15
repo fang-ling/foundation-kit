@@ -28,6 +28,7 @@
 #include "../../Numerics/BinaryLogic.h"
 #include "../../Numerics/FloatingPoint64.h"
 #include "../../Numerics/Integer8.h"
+#include "../../Numerics/Integer32.h"
 #include "../../Numerics/Integer64.h"
 
 #include "../../Strings/String.h"
