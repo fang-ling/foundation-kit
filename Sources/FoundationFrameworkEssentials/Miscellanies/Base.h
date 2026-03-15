@@ -25,6 +25,7 @@
 
 #ifndef ONLINE_JUDGE
 #include <swift/bridging>
+#define SWIFT_ENUM __attribute__((enum_extensibility(closed)))
 
 #define ASSUME_NONNULL_BEGIN _Pragma("clang assume_nonnull begin")
 #define ASSUME_NONNULL_END _Pragma("clang assume_nonnull end")
@@ -34,6 +35,7 @@
  * Empty defines for online-judge's compiler that don't support
  * `attribute(swift_attr)`.
  */
+#define SWIFT_ENUM
 #define SWIFT_SELF_CONTAINED
 #define SWIFT_RETURNS_INDEPENDENT_VALUE
 #define SWIFT_SHARED_REFERENCE(_retain, _release)
