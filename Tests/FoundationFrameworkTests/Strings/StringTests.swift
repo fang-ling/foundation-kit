@@ -24,12 +24,13 @@ import Testing
 
 @Suite("StringTests")
 struct StringTests {
+  let inputStrings = ["", "Hello, world!", "こんにち", "🌍", "🐮 say ", "ω"]
+
   @Test("Initialize with c string")
   func testInitializeWithCString() {
-    let testStrings = ["", "Hello, world!", "こんにち", "🌍", "🐮 say ", "ω"]
-    for testString in testStrings {
-      let string = String(cString: testString)!
-      let unicodeScalars = testString.unicodeScalars.map {
+    for inputString in inputStrings {
+      let string = String(cString: inputString)!
+      let unicodeScalars = inputString.unicodeScalars.map {
         Integer32($0.value)
       }
 
@@ -37,6 +38,18 @@ struct StringTests {
 
       for i in 0 ..< Int(string._count) {
         #expect(string._characters[i] == unicodeScalars[i])
+      }
+    }
+  }
+
+  @Test("Equable")
+  func testEquable() {
+    for i in inputStrings.indices {
+      for j in inputStrings.indices {
+        let string1 = String(cString: inputStrings[i])
+        let string2 = String(cString: inputStrings[j])
+
+        #expect((string1 == string2) == (i == j))
       }
     }
   }
