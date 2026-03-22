@@ -20,7 +20,7 @@
 import FoundationFrameworkEssentials
 
 @available(macOS 13.3.0, *)
-extension String: Equatable {
+extension String: @retroactive Equatable {
   public static func == (lhs: String, rhs: String) -> BinaryLogic {
     String.compare(lhs, rhs) == ComparisonResult.equalTo
   }

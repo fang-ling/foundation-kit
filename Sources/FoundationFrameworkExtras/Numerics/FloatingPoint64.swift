@@ -20,11 +20,11 @@
 import FoundationFrameworkEssentials
 
 /* MARK: - Numeric Constants */
-extension FloatingPoint64 {
-  public static var π: Self {
-    Foundation_FloatingPoint64_Pi
-  }
-}
+//extension FloatingPoint64 {
+//  public static var π: Self {
+//    Foundation_FloatingPoint64_Pi
+//  }
+//}
 
 /* MARK: - Common Floating-Point Operations */
 extension FloatingPoint64 {

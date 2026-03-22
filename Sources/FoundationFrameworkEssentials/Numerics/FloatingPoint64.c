@@ -21,7 +21,7 @@
 
 #include <math.h>
 
-const Foundation_FloatingPoint64 Foundation_FloatingPoint64_Pi = M_PI;
+//const Foundation_FloatingPoint64 Foundation_FloatingPoint64_Pi = M_PI;
 
 Foundation_FloatingPoint64
 Foundation_FloatingPoint64_TakeSquareRoot(Foundation_FloatingPoint64 value) {

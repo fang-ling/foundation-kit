@@ -29,7 +29,7 @@ struct StringTests {
   @Test("Initialize with c string")
   func testInitializeWithCString() {
     for inputString in inputStrings {
-      let string = String(cString: inputString)!
+      let string = String(inputString)!
       let unicodeScalars = inputString.unicodeScalars.map {
         Integer32($0.value)
       }
@@ -46,8 +46,8 @@ struct StringTests {
   func testEquable() {
     for i in inputStrings.indices {
       for j in inputStrings.indices {
-        let string1 = String(cString: inputStrings[i])
-        let string2 = String(cString: inputStrings[j])
+        let string1 = String(inputStrings[i])
+        let string2 = String(inputStrings[j])
 
         #expect((string1 == string2) == (i == j))
       }

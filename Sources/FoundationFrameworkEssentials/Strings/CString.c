@@ -58,6 +58,8 @@
 
 #include "CString.h"
 
+#include <stddef.h>
+
 #include "../Numerics/Integer8.h"
 
 Foundation_UnsignedInteger64

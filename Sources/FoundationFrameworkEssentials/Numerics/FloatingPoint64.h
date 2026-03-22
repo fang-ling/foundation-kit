@@ -28,10 +28,10 @@
 typedef double Foundation_FloatingPoint64 SWIFT_NAME(FloatingPoint64);
 
 /* MARK: - Numeric Constants */
-/**
- * The mathematical constant pi (π), approximately equal to 3.14159.
- */
-extern const Foundation_FloatingPoint64 Foundation_FloatingPoint64_Pi;
+///**
+// * The mathematical constant pi (π), approximately equal to 3.14159.
+// */
+//extern const Foundation_FloatingPoint64 Foundation_FloatingPoint64_Pi;
 
 /* MARK: - Common Floating-Point Operations */
 /**

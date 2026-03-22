@@ -91,7 +91,7 @@ typedef const struct _Foundation_String* Foundation_String;
  */
 NULLABLE Foundation_String
 Foundation_String_InitializeWithCString(Foundation_CString cString)
-SWIFT_NAME(String.init(cString:))
+SWIFT_NAME(String.init(_:))
 SWIFT_RETURNS_RETAINED;
 
 /**
@@ -128,6 +128,14 @@ enum Foundation_ComparisonResult
 Foundation_String_Compare(Foundation_String string1,
                           Foundation_String string2)
 SWIFT_NAME(String.compare(_:_:));
+
+const Foundation_Integer32*
+Foundation_String_GetCharacters(Foundation_String string)
+SWIFT_NAME(getter:String.characters(self:));
+
+Foundation_UnsignedInteger64
+Foundation_String_GetCount(Foundation_String string)
+SWIFT_NAME(getter:String.count(self:));
 
 ASSUME_NONNULL_END
 
