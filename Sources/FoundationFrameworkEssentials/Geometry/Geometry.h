@@ -1,8 +1,8 @@
 //
-//  Integer8.h
+//  Geometry.h
 //  foundation-framework
 //
-//  Created by Fang Ling on 2026/2/9.
+//  Created by Fang Ling on 2026/3/29.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,21 +17,27 @@
 //  limitations under the License.
 //
 
-#ifndef Integer8_h
-#define Integer8_h
+#ifndef Geometry_h
+#define Geometry_h
 
-#include <stdint.h>
+#include "../Numerics/FloatingPoint64.h"
 
-#include "../Miscellanies/Base.h"
+struct Foundation_Point {
+  Foundation_FloatingPoint64 x;
+  Foundation_FloatingPoint64 y;
+}
+SWIFT_NAME(Point);
 
-/**
- * A 8-bit signed integer value type.
- */
-typedef char Foundation_Integer8 SWIFT_NAME(Integer8);
+struct Foundation_Size {
+  Foundation_FloatingPoint64 width;
+  Foundation_FloatingPoint64 height;
+}
+SWIFT_NAME(Size);
 
-/**
- * An 8-bit unsigned integer value type.
- */
-typedef uint8_t Foundation_UnsignedInteger8 SWIFT_NAME(UnsignedInteger8);
+struct Foundation_Rectangle {
+  struct Foundation_Point origin;
+  struct Foundation_Size size;
+}
+SWIFT_NAME(Rectangle);
 
-#endif /* Integer8_h */
+#endif /* Geometry_h */

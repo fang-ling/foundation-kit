@@ -1,8 +1,8 @@
 //
-//  Integer8.h
+//  Geometry.swift
 //  foundation-framework
 //
-//  Created by Fang Ling on 2026/2/9.
+//  Created by Fang Ling on 2026/3/29.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,21 +17,26 @@
 //  limitations under the License.
 //
 
-#ifndef Integer8_h
-#define Integer8_h
+import FoundationFrameworkEssentials
 
-#include <stdint.h>
+extension Rectangle {
+  public init(
+    x: FloatingPoint64,
+    y: FloatingPoint64,
+    width: FloatingPoint64,
+    height: FloatingPoint64
+  ) {
+    self.init(
+      origin: .init(x: x, y: y),
+      size: .init(width: width, height: height)
+    )
+  }
+}
 
-#include "../Miscellanies/Base.h"
+extension Rectangle {
+  public static let zero = Rectangle(x: 0, y: 0, width: 0, height: 0)
+}
 
-/**
- * A 8-bit signed integer value type.
- */
-typedef char Foundation_Integer8 SWIFT_NAME(Integer8);
-
-/**
- * An 8-bit unsigned integer value type.
- */
-typedef uint8_t Foundation_UnsignedInteger8 SWIFT_NAME(UnsignedInteger8);
-
-#endif /* Integer8_h */
+extension Point {
+  public static let zero = Point(x: 0, y: 0)
+}

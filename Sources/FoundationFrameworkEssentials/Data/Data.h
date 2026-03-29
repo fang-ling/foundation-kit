@@ -78,8 +78,7 @@ typedef const struct _Foundation_Data* Foundation_Data;
  *     copied into the data object.
  *   - count: The number of bytes in the buffer (bytes).
  *
- * - Returns: A new data object, or `NULL` if there was a problem creating the
- *   object.
+ * - Returns: A new data object.
  */
 Foundation_Data
 Foundation_Data_Initialize(const Foundation_UnsignedInteger8* bytes,

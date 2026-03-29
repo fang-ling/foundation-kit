@@ -69,6 +69,16 @@ void Foundation_String_Release(Foundation_String string) {
   }
 }
 
+Foundation_UnsignedInteger64
+Foundation_String_GetCount(Foundation_String string) {
+  Foundation_String_Retain(string);
+
+  let count = string->_count;
+
+  Foundation_String_Release(string);
+  return count;
+}
+
 enum Foundation_ComparisonResult
 Foundation_String_Compare(Foundation_String string1,
                           Foundation_String string2) {
@@ -94,23 +104,13 @@ Foundation_String_Compare(Foundation_String string1,
 }
 
 const Foundation_Integer32*
-Foundation_String_GetCharacters(Foundation_String string) {
+Foundation_String_GetCharactersView(Foundation_String string) {
   Foundation_String_Retain(string);
 
   let characters = string->_characters;
 
   Foundation_String_Release(string);
   return characters;
-}
-
-Foundation_UnsignedInteger64
-Foundation_String_GetCount(Foundation_String string) {
-  Foundation_String_Retain(string);
-
-  let count = string->_count;
-
-  Foundation_String_Release(string);
-  return count;
 }
 
 ASSUME_NONNULL_END

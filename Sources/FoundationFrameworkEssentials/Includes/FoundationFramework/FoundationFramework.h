@@ -22,6 +22,10 @@
 
 #include "../../Data/Data.h"
 
+#include "../../Geometry/Geometry.h"
+
+#include "../../Identifiers/UUID.h"
+
 #include "../../Miscellanies/Base.h"
 #include "../../Miscellanies/ObjectBase.h"
 

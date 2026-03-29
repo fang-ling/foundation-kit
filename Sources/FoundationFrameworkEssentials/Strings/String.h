@@ -72,7 +72,15 @@ SWIFT_SHARED_REFERENCE(Foundation_String_Retain, Foundation_String_Release);
  * - ``Foundation_String_Retain``
  * - ``Foundation_String_Release``
  *
- * ### Comparing Strings
+ * ### Examining a Foundation_String Object
+ *
+ * - ``Foundation_String_GetCount``
+ *
+ * ### Accessing Foundation_String's Characters
+ *
+ * - ``Foundation_String_GetCharactersView``
+ *
+ * ### Comparing Foundation_Strings
  *
  * - ``Foundation_String_Compare``
  */
@@ -91,7 +99,7 @@ typedef const struct _Foundation_String* Foundation_String;
  */
 NULLABLE Foundation_String
 Foundation_String_InitializeWithCString(Foundation_CString cString)
-SWIFT_NAME(String.init(_:))
+SWIFT_NAME(String.init(cString:))
 SWIFT_RETURNS_RETAINED;
 
 /**
@@ -113,7 +121,37 @@ void Foundation_String_Retain(Foundation_String string);
  */
 void Foundation_String_Release(Foundation_String string);
 
-/* MARK: - Comparing Strings */
+/* MARK: - Examining a Foundation_String Object */
+/**
+ * Returns the number (in terms of UTF-32 code pairs) of Unicode characters in a
+ * string.
+ *
+ * - Parameter string: The string to examine.
+ *
+ * - Returns: The number (in terms of UTF-32 code pairs) of characters stored in
+ * the string.
+ */
+Foundation_UnsignedInteger64
+Foundation_String_GetCount(Foundation_String string)
+SWIFT_NAME(getter:String.count(self:));
+
+/* MARK: - Accessing Foundation_String's Characters */
+/**
+ * Quickly obtains a view to the contents of a string as a buffer of Unicode
+ * characters.
+ *
+ * This function returns the requested view pointer immediately, with no memory
+ * allocations and no copying.
+ *
+ * - Parameter string: The string whose contents you wish to access.
+ *
+ * - Returns: A view pointer to a buffer of Unicode character.
+ */
+const Foundation_Integer32*
+Foundation_String_GetCharactersView(Foundation_String string)
+SWIFT_NAME(getter:String.charactersView(self:));
+
+/* MARK: - Comparing Foundation_Strings */
 /**
  * Compares one string with another string.
  *
@@ -128,14 +166,6 @@ enum Foundation_ComparisonResult
 Foundation_String_Compare(Foundation_String string1,
                           Foundation_String string2)
 SWIFT_NAME(String.compare(_:_:));
-
-const Foundation_Integer32*
-Foundation_String_GetCharacters(Foundation_String string)
-SWIFT_NAME(getter:String.characters(self:));
-
-Foundation_UnsignedInteger64
-Foundation_String_GetCount(Foundation_String string)
-SWIFT_NAME(getter:String.count(self:));
 
 ASSUME_NONNULL_END
 

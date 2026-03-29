@@ -20,3 +20,7 @@ Model data with numbers, logical values, and other fundamental types.
 ### Binary Data
 
 - ``Foundation_Data``
+
+### Unique Identifiers
+
+- ``Foundation_UUID``

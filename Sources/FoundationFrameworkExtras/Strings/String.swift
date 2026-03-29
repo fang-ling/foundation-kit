@@ -20,6 +20,13 @@
 import FoundationFrameworkEssentials
 
 @available(macOS 13.3.0, *)
+extension String {
+  public convenience init(_ swiftString: Swift.String) {
+    self.init(cString: swiftString)!
+  }
+}
+
+@available(macOS 13.3.0, *)
 extension String: @retroactive Equatable {
   public static func == (lhs: String, rhs: String) -> BinaryLogic {
     String.compare(lhs, rhs) == ComparisonResult.equalTo

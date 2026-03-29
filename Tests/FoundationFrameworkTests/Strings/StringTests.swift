@@ -27,9 +27,9 @@ struct StringTests {
   let inputStrings = ["", "Hello, world!", "こんにち", "🌍", "🐮 say ", "ω"]
 
   @Test("Initialize with c string")
-  func testInitializeWithCString() {
+  func testInitializingWithCString() {
     for inputString in inputStrings {
-      let string = String(inputString)!
+      let string = String(inputString)
       let unicodeScalars = inputString.unicodeScalars.map {
         Integer32($0.value)
       }
@@ -38,6 +38,29 @@ struct StringTests {
 
       for i in 0 ..< Int(string._count) {
         #expect(string._characters[i] == unicodeScalars[i])
+      }
+    }
+  }
+
+  @Test("Examine strings")
+  func testExaminingString() {
+    for inputString in inputStrings {
+      let string = String(inputString)
+
+      #expect(string.count == inputString.count)
+    }
+  }
+
+  @Test("Access string's characters")
+  func testAccessingCharacters() {
+    for inputString in inputStrings {
+      let string = String(inputString)
+      let unicodeScalars = inputString.unicodeScalars.map {
+        Integer32($0.value)
+      }
+
+      for i in 0 ..< Int(string.count) {
+        #expect(string.charactersView[i] == unicodeScalars[i])
       }
     }
   }
