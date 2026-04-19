@@ -18,7 +18,7 @@
  */
 
 #import <ObjectiveCKit/ObjectiveCKit.h>
-#import <Foundation/NSArray.h>
+
 OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
 @interface FoundationArray<Element>: ObjectiveCObject {
