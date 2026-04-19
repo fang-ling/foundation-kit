@@ -2,7 +2,7 @@
 
 ##
 ##  preview-documentation.zsh
-##  image-io-framework
+##  foundation-kit
 ##
 ##  Created by Fang Ling on 2026/3/7.
 ##

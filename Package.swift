@@ -2,7 +2,7 @@
 
 //
 //  Package.swift
-//  foundation-framework
+//  foundation-kit
 //
 //  Created by Fang Ling on 2025/12/7.
 //
@@ -21,33 +21,27 @@
 
 import PackageDescription
 
+let dependencies = [
+  ("https://github.com/fang-ling/objective-c-kit.git", "main")
+]
+
 let package = Package(
-  name: "foundation-framework",
+  name: "foundation-kit",
   products: [
-    .library(name: "FoundationFramework", targets: ["FoundationFramework"])
+    .library(name: "FoundationKit", targets: ["FoundationKit"])
   ],
+  dependencies: dependencies.map({ .package(url: $0.0, branch: $0.1) }),
   targets: [
     .target(
-      name: "FoundationFramework",
+      name: "FoundationKit",
       dependencies: [
-        "FoundationFrameworkEssentials",
-        "FoundationFrameworkExtras"
-      ]
-    ),
-    .target(
-      name: "FoundationFrameworkEssentials",
+        .product(name: "ObjectiveCKit", package: "objective-c-kit")
+      ],
       publicHeadersPath: "Includes"
     ),
-    .target(
-      name: "FoundationFrameworkExtras",
-      dependencies: ["FoundationFrameworkEssentials"]
-    ),
     .testTarget(
-      name: "FoundationFrameworkTests",
-      dependencies: [
-        "FoundationFramework"
-      ]
+      name: "FoundationKitTests",
+      dependencies: ["FoundationKit"]
     )
-  ],
-  cLanguageStandard: .c89
+  ]
 )
