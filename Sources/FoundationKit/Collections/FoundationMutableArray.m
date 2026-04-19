@@ -27,31 +27,31 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
 - (void)appendObject:(id)object {
   if (self.capacity == 0) {
-    self->objects = (owning id*)realloc(self->objects, sizeof(id) * 1);
+    self->_objects = (owning id*)realloc(self->_objects, sizeof(id) * 1);
     self.capacity = 1;
   }
 
   if (self.count == self.capacity) {
     self.capacity *= 2;
-    self->objects = (owning id*)realloc(
-      self->objects,
+    self->_objects = (owning id*)realloc(
+      self->_objects,
       sizeof(id) * self.capacity
     );
   }
 
-  self->objects[self.count] = object;
+  self->_objects[self.count] = object;
   self.count += 1;
 }
 
 - (void)removeLastObject {
   /* Release the last element. */
-  self->objects[self.count - 1] = nil;
+  self->_objects[self.count - 1] = nil;
   self.count -= 1;
 
   if (self.count > 0 && self.count <= self.capacity / 4) {
     self.capacity /= 2;
-    self->objects = (owning id*)realloc(
-      self->objects,
+    self->_objects = (owning id*)realloc(
+      self->_objects,
       sizeof(id) * self.capacity
     );
   }

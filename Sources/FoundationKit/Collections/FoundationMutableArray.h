@@ -21,10 +21,37 @@
 
 OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
+/**
+ * A dynamic ordered collection of objects.
+ *
+ * The ``FoundationMutableArray`` class declares the programmatic interface to
+ * objects that manage a modifiable array of objects. This class adds insertion
+ * and deletion operations to the basic array-handling behavior inherited from
+ * ``FoundationArray``.
+ *
+ * ## Topics
+ *
+ * ### Adding Objects
+ *
+ * - ``appendObject:``
+ *
+ * ### Removing Objects
+ *
+ * - ``removeLastObject``
+ */
 @interface FoundationMutableArray<Element>: FoundationArray<Element>
 
+/**
+ * Inserts a given object at the end of the array.
+ *
+ * - Parameter object: The object to add to the end of the array's content. This
+ *   value must not be `nil`.
+ */
 - (void)appendObject:(Element)object;
 
+/**
+ * Removes the object with the highest-valued index in the array.
+ */
 - (void)removeLastObject;
 
 @end

@@ -19,7 +19,7 @@
 ##  limitations under the License.
 ##
 
-FRAMEWORK_NAME="FoundationFramework"
+FRAMEWORK_NAME="FoundationKit"
 SYMBOLS_FOLDER=".build/symbol-graphs"
 
 # Extract the symbols
@@ -27,14 +27,20 @@ clang \
   -extract-api \
   --product-name=$FRAMEWORK_NAME \
   -o .build/symbol-graphs/$FRAMEWORK_NAME.symbols.json \
-  -x c-header Sources/FoundationFrameworkEssentials/**/*.h \
+  -x objective-c-header Sources/$FRAMEWORK_NAME/**/*.h \
   -I . \
+  -I ../objective-c-kit/Sources/ObjectiveCKit/Includes \
   -isysroot $(xcrun --show-sdk-path) \
   -F $(xcrun --show-sdk-path)/System/Library/Frameworks
+
+# Copy the ObjectiveCKit symbols
+cp \
+  ../objective-c-kit/$SYMBOLS_FOLDER/FoundationKit.symbols.json \
+  $SYMBOLS_FOLDER
 
 # Preview the documentation
 $(xcrun --find docc) \
   preview \
-  Sources/FoundationFrameworkEssentials/Documentation.docc \
+  Sources/$FRAMEWORK_NAME/Documentation.docc \
   -o .build/.docc-build \
   --additional-symbol-graph-dir .build/symbol-graphs

@@ -34,7 +34,7 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
   self.count = 0;
   self.capacity = 0;
-  self->objects = (owning id*)malloc(0);
+  self->_objects = (owning id*)malloc(0);
 
   return self;
 }
@@ -58,15 +58,15 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
   self.count = count;
   self.capacity = count;
-  self->objects = (owning id*)malloc(sizeof(id) * count);
+  self->_objects = (owning id*)malloc(sizeof(id) * count);
 
   if (count > 0) {
-    self->objects[0] = firstObject;
+    self->_objects[0] = firstObject;
 
     va_list arguments;
     va_start(arguments, firstObject);
     for (var i = 1; i < count; i += 1) {
-      self->objects[i] = va_arg(arguments, id);
+      self->_objects[i] = va_arg(arguments, id);
     }
     va_end(arguments);
   }
@@ -76,14 +76,14 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc {
   for (var i = 0; i < self.count; i += 1) {
-    self->objects[i] = nil;
+    self->_objects[i] = nil;
   }
 
-  free(self->objects);
+  free(self->_objects);
 }
 
 - (id)objectAtIndex:(ObjectiveCUnsignedInteger64)index {
-  return self->objects[index];
+  return self->_objects[index];
 }
 
 @end
