@@ -21,8 +21,12 @@
 
 import PackageDescription
 
+let isDevelopment = false
+
 let dependencies = [
-  ("https://github.com/fang-ling/objective-c-kit.git", "main")
+  ("c-kit", "main"),
+  ("core-foundation-kit", "main"),
+  ("objective-c-kit", "main")
 ]
 
 let package = Package(
@@ -30,11 +34,19 @@ let package = Package(
   products: [
     .library(name: "FoundationKit", targets: ["FoundationKit"])
   ],
-  dependencies: dependencies.map({ .package(url: $0.0, branch: $0.1) }),
+  dependencies: dependencies.map({
+    if isDevelopment {
+      return .package(path: "../\($0.0)")
+    } else {
+      return .package(url: "https://github.com/fang-ling/\($0.0)", branch: $0.1)
+    }
+  }),
   targets: [
     .target(
       name: "FoundationKit",
       dependencies: [
+        .product(name: "CKit", package: "c-kit"),
+        .product(name: "CoreFoundationKit", package: "core-foundation-kit"),
         .product(name: "ObjectiveCKit", package: "objective-c-kit")
       ],
       publicHeadersPath: "Includes"

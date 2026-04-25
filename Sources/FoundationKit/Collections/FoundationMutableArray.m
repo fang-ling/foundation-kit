@@ -19,44 +19,47 @@
 
 #import "FoundationMutableArray.h"
 
-#import "FoundationArray+Private.h"
+//#import "FoundationArray+Private.h"
 
-OBJECTIVE_C_ASSUME_NONNULL_BEGIN
+C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationMutableArray
+//@implementation FoundationMutableArray
 
-- (void)appendObject:(id)object {
-  if (self.capacity == 0) {
-    self->_objects = (owning id*)realloc(self->_objects, sizeof(id) * 1);
-    self.capacity = 1;
-  }
+//- (void)appendObject:(ObjectiveCAnyObject)object {
+//  if (self.capacity == 0) {
+//    self->_objects = (owning ObjectiveCAnyObject*)realloc(
+//      self->_objects,
+//      sizeof(ObjectiveCAnyObject) * 1
+//    );
+//    self.capacity = 1;
+//  }
+//
+//  if (self.count == self.capacity) {
+//    self.capacity *= 2;
+//    self->_objects = (owning ObjectiveCAnyObject*)realloc(
+//      self->_objects,
+//      sizeof(ObjectiveCAnyObject) * self.capacity
+//    );
+//  }
+//
+//  self->_objects[self.count] = object;
+//  self.count += 1;
+//}
 
-  if (self.count == self.capacity) {
-    self.capacity *= 2;
-    self->_objects = (owning id*)realloc(
-      self->_objects,
-      sizeof(id) * self.capacity
-    );
-  }
+//- (void)removeLastObject {
+//  /* Release the last element. */
+//  self->_objects[self.count - 1] = nil;
+//  self.count -= 1;
+//
+//  if (self.count > 0 && self.count <= self.capacity / 4) {
+//    self.capacity /= 2;
+//    self->_objects = (owning ObjectiveCAnyObject*)realloc(
+//      self->_objects,
+//      sizeof(ObjectiveCAnyObject) * self.capacity
+//    );
+//  }
+//}
 
-  self->_objects[self.count] = object;
-  self.count += 1;
-}
+//@end
 
-- (void)removeLastObject {
-  /* Release the last element. */
-  self->_objects[self.count - 1] = nil;
-  self.count -= 1;
-
-  if (self.count > 0 && self.count <= self.capacity / 4) {
-    self.capacity /= 2;
-    self->_objects = (owning id*)realloc(
-      self->_objects,
-      sizeof(id) * self.capacity
-    );
-  }
-}
-
-@end
-
-OBJECTIVE_C_ASSUME_NONNULL_END
+C_ASSUME_NONNULL_END

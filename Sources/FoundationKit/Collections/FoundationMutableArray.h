@@ -19,7 +19,7 @@
 
 #import "FoundationArray.h"
 
-OBJECTIVE_C_ASSUME_NONNULL_BEGIN
+C_ASSUME_NONNULL_BEGIN
 
 /**
  * A dynamic ordered collection of objects.
@@ -39,7 +39,7 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  *
  * - ``removeLastObject``
  */
-@interface FoundationMutableArray<Element>: FoundationArray<Element>
+//@interface FoundationMutableArray<Element>: FoundationArray<Element>
 
 /**
  * Inserts a given object at the end of the array.
@@ -47,13 +47,13 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  * - Parameter object: The object to add to the end of the array's content. This
  *   value must not be `nil`.
  */
-- (void)appendObject:(Element)object;
+//- (void)appendObject:(Element)object;
 
 /**
  * Removes the object with the highest-valued index in the array.
  */
-- (void)removeLastObject;
+//- (void)removeLastObject;
 
-@end
+//@end
 
-OBJECTIVE_C_ASSUME_NONNULL_END
+C_ASSUME_NONNULL_END

@@ -1,8 +1,8 @@
 //
-//  FoundationKit.h
-//  foundation-kit
+//  FoundationNumberTests.swift
+//  foundation-framework
 //
-//  Created by Fang Ling on 2025/12/7.
+//  Created by Fang Ling on 2026/4/25.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,12 +17,12 @@
 //  limitations under the License.
 //
 
-#ifndef FoundationKit_h
-#define FoundationKit_h
+@testable import FoundationKit
 
-#import "../../Collections/FoundationArray.h"
-#import "../../Collections/FoundationMutableArray.h"
+import Testing
 
-#import "../../Numerics/FoundationNumber.h"
-
-#endif /* FoundationKit_h */
+@Test("FoundationNumberTests")
+func testFoundationNumber() {
+  let number = FoundationNumber.make(withUnsignedInteger: 19358)
+  #expect(number.unsignedIntegerValue == 19358)
+}

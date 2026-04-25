@@ -19,73 +19,75 @@
 
 #import "FoundationArray.h"
 
-#import <stdarg.h>
+//#import <stdarg.h>
 
-#import "FoundationArray+Private.h"
+//#import "FoundationArray+Private.h"
 
-OBJECTIVE_C_ASSUME_NONNULL_BEGIN
+C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationArray
+//@implementation FoundationArray
 
-- (instancetype)init {
-  if (!(self = [super init])) {
-    return nil;
-  }
+//- (instancetype)init {
+//  if (!(self = [super init])) {
+//    return nil;
+//  }
+//
+//  self.count = 0;
+//  self.capacity = 0;
+//  self->_objects = (owning ObjectiveCAnyObject*)malloc(0);
+//
+//  return self;
+//}
 
-  self.count = 0;
-  self.capacity = 0;
-  self->_objects = (owning id*)malloc(0);
+//- (instancetype)initWithObjects:(ObjectiveCAnyObject)firstObject, ... {
+//  if (!(self = [super init])) {
+//    return nil;
+//  }
+//
+//  let count = 0ull;
+//  if (firstObject) {
+//    count = 1;
+//
+//    va_list arguments;
+//    va_start(arguments, firstObject);
+//    while (va_arg(arguments, ObjectiveCAnyObject) != nil) {
+//      count += 1;
+//    }
+//    va_end(arguments);
+//  }
+//
+//  self.count = count;
+//  self.capacity = count;
+//  self->_objects = (owning ObjectiveCAnyObject*)malloc(
+//    sizeof(ObjectiveCAnyObject) * count
+//  );
+//
+//  if (count > 0) {
+//    self->_objects[0] = firstObject;
+//
+//    va_list arguments;
+//    va_start(arguments, firstObject);
+//    for (let i = 1; i < count; i += 1) {
+//      self->_objects[i] = va_arg(arguments, ObjectiveCAnyObject);
+//    }
+//    va_end(arguments);
+//  }
+//
+//  return self;
+//}
 
-  return self;
-}
+//- (void)dealloc {
+//  for (let i = 0; i < self.count; i += 1) {
+//    self->_objects[i] = nil;
+//  }
+//
+//  free(self->_objects);
+//}
 
-- (instancetype)initWithObjects:(id)firstObject, ... {
-  if (!(self = [super init])) {
-    return nil;
-  }
+//- (ObjectiveCAnyObject)objectAtIndex:(CUnsignedInteger64)index {
+//  return self->_objects[index];
+//}
 
-  var count = 0ull;
-  if (firstObject) {
-    count = 1;
+//@end
 
-    va_list arguments;
-    va_start(arguments, firstObject);
-    while (va_arg(arguments, id) != nil) {
-      count += 1;
-    }
-    va_end(arguments);
-  }
-
-  self.count = count;
-  self.capacity = count;
-  self->_objects = (owning id*)malloc(sizeof(id) * count);
-
-  if (count > 0) {
-    self->_objects[0] = firstObject;
-
-    va_list arguments;
-    va_start(arguments, firstObject);
-    for (var i = 1; i < count; i += 1) {
-      self->_objects[i] = va_arg(arguments, id);
-    }
-    va_end(arguments);
-  }
-
-  return self;
-}
-
-- (void)dealloc {
-  for (var i = 0; i < self.count; i += 1) {
-    self->_objects[i] = nil;
-  }
-
-  free(self->_objects);
-}
-
-- (id)objectAtIndex:(ObjectiveCUnsignedInteger64)index {
-  return self->_objects[index];
-}
-
-@end
-
-OBJECTIVE_C_ASSUME_NONNULL_END
+C_ASSUME_NONNULL_END

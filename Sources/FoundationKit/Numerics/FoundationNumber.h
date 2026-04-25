@@ -1,8 +1,8 @@
 /*
- *  FoundationArray+Private.h
+ *  FoundationNumber.h
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/4/19.
+ *  Created by Fang Ling on 2026/4/25.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,10 +17,19 @@
  *  limitations under the License.
  */
 
-//@interface FoundationArray ()
-//
-//@property (nonatomic, assign, readwrite) CUnsignedInteger64 count;
-//
-//@property (nonatomic, assign, readwrite) CUnsignedInteger64 capacity;
-//
-//@end
+#import <CKit/CKit.h>
+#import <ObjectiveCKit/ObjectiveCKit.h>
+
+C_ASSUME_NONNULL_BEGIN
+
+@interface FoundationNumber: ObjectiveCObject
+
+@property (nonatomic, readonly) CUnsignedInteger64 unsignedIntegerValue;
+
++ (FoundationNumber*)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value;
+
+- (CUnsignedInteger64)unsignedIntegerValue;
+
+@end
+
+C_ASSUME_NONNULL_END

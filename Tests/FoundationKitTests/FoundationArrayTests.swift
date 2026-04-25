@@ -23,29 +23,29 @@ import Testing
 
 @Test("FoundationArrayTests")
 func testFoundationArray() {
-  class Cat {
-    var name: String
-
-    init(name: String) {
-      self.name = name
-    }
-  }
-
-  let array = FoundationMutableArray<Cat>()
-  #expect(array.count == 0)
-
-  array.append(.init(name: "Alice"))
-  #expect(array.object(at: 0).name == "Alice")
-  #expect(array.count == 1)
-
-  array.append(.init(name: "Tracy"))
-  #expect(array.object(at: 1).name == "Tracy")
-  #expect(array.count == 2)
-
-  array.removeLastObject()
-  #expect(array.object(at: 0).name == "Alice")
-  #expect(array.count == 1)
-
-  array.removeLastObject()
-  #expect(array.count == 0)
+//  class Cat {
+//    var name: String
+//
+//    init(name: String) {
+//      self.name = name
+//    }
+//  }
+//
+//  let array = FoundationMutableArray<Cat>()
+//  #expect(array.count == 0)
+//
+//  array.append(.init(name: "Alice"))
+//  #expect(array.object(at: 0).name == "Alice")
+//  #expect(array.count == 1)
+//
+//  array.append(.init(name: "Tracy"))
+//  #expect(array.object(at: 1).name == "Tracy")
+//  #expect(array.count == 2)
+//
+//  array.removeLastObject()
+//  #expect(array.object(at: 0).name == "Alice")
+//  #expect(array.count == 1)
+//
+//  array.removeLastObject()
+//  #expect(array.count == 0)
 }

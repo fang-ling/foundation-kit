@@ -17,9 +17,10 @@
  *  limitations under the License.
  */
 
+#import <CKit/CKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
 
-OBJECTIVE_C_ASSUME_NONNULL_BEGIN
+C_ASSUME_NONNULL_BEGIN
 
 /**
  * A static ordered collection of objects.
@@ -45,20 +46,20 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  *
  * - ``objectAtIndex:``
  */
-@interface FoundationArray<Element>: ObjectiveCObject {
-  @protected owning id* _objects;
-}
+//@interface FoundationArray<Element>: ObjectiveCObject {
+//  @protected owning ObjectiveCAnyObject* _objects;
+//}
 
 /**
  * The number of elements in the array.
  */
-@property (nonatomic, assign, readonly) ObjectiveCUnsignedInteger64 count;
+//@property (nonatomic, assign, readonly) CUnsignedInteger64 count;
 
 /**
  * The total number of elements that the array can contain without allocating
  * new storage.
  */
-@property (nonatomic, assign, readonly) ObjectiveCUnsignedInteger64 capacity;
+//@property (nonatomic, assign, readonly) CUnsignedInteger64 capacity;
 
 /**
  * Initializes a newly allocated array.
@@ -70,8 +71,8 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  *
  * - Returns: An array.
  */
-- (instancetype)init
-  OBJECTIVE_C_DESIGNATED_INITIALIZER;
+//- (instancetype)init
+//  OBJECTIVE_C_DESIGNATED_INITIALIZER;
 
 /**
  * Initializes a newly allocated array by placing in it the objects in the
@@ -90,9 +91,9 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  * - Returns: An array initialized to include the objects in the argument list.
  *   The returned object might be different than the original receiver.
  */
-- (instancetype)initWithObjects:(Element)firstObject, ...
-  OBJECTIVE_C_REQUIRES_NIL_TERMINATION
-  OBJECTIVE_C_DESIGNATED_INITIALIZER;
+//- (instancetype)initWithObjects:(Element)firstObject, ...
+//  OBJECTIVE_C_REQUIRES_NIL_TERMINATION
+//  OBJECTIVE_C_DESIGNATED_INITIALIZER;
 
 /**
  * Returns the object located at the specified index.
@@ -104,8 +105,8 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  *
  * - Returns: The object located at index.
  */
-- (Element)objectAtIndex:(ObjectiveCUnsignedInteger64)index;
+//- (Element)objectAtIndex:(CUnsignedInteger64)index;
 
-@end
+//@end
 
-OBJECTIVE_C_ASSUME_NONNULL_END
+C_ASSUME_NONNULL_END
