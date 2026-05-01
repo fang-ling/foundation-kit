@@ -1,8 +1,8 @@
 /*
- *  FoundationNumber.m
+ *  FoundationString.m
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/4/25.
+ *  Created by Fang Ling on 2026/5/1.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,21 +17,25 @@
  *  limitations under the License.
  */
 
-#import "FoundationNumber.h"
+#import "FoundationString.h"
 
-#import "FoundationCoreFoundationNumber.h"
+#import "FoundationCoreFoundationString.h"
 
 C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationNumber
+@implementation FoundationString
 
-+ (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value {
-  return [[FoundationCoreFoundationNumber alloc] initWithUnsignedInteger:value];
++ (nullable instancetype)makeStringWithCString:(CString)cString {
+  return [[FoundationCoreFoundationString alloc] initWithCString:cString];
 }
 
-- (CUnsignedInteger64)unsignedIntegerValue {
+- (CUnsignedInteger64)count {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
+}
+
+- (void)copyCharacters:(CInteger32*)characters {
   CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD unsignedIntegerValue IS BEING CALLED. ***"
+    "*** ABSTRACT METHOD copyCharacters: IS BEING CALLED. ***"
   );
 }
 

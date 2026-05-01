@@ -25,4 +25,6 @@
 
 #import "../../Numerics/FoundationNumber.h"
 
+#import "../../Strings/FoundationString.h"
+
 #endif /* FoundationKit_h */

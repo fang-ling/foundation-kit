@@ -26,7 +26,11 @@ C_ASSUME_NONNULL_BEGIN
 
 @interface FoundationCoreFoundationNumber: FoundationNumber
 
+@property (nonatomic, readonly) CUnsignedInteger64 unsignedIntegerValue;
+
 - (instancetype)initWithUnsignedInteger:(CUnsignedInteger64)value;
+
+- (CUnsignedInteger64)unsignedIntegerValue;
 
 @end
 

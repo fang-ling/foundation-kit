@@ -1,8 +1,8 @@
 /*
- *  FoundationNumber.m
+ *  FoundationString.h
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/4/25.
+ *  Created by Fang Ling on 2026/5/1.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,23 +17,20 @@
  *  limitations under the License.
  */
 
-#import "FoundationNumber.h"
-
-#import "FoundationCoreFoundationNumber.h"
+#import <CKit/CKit.h>
+#import <ObjectiveCKit/ObjectiveCKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationNumber
+@interface FoundationString: ObjectiveCObject
 
-+ (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value {
-  return [[FoundationCoreFoundationNumber alloc] initWithUnsignedInteger:value];
-}
+@property (nonatomic, readonly) CUnsignedInteger64 count;
 
-- (CUnsignedInteger64)unsignedIntegerValue {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD unsignedIntegerValue IS BEING CALLED. ***"
-  );
-}
++ (nullable instancetype)makeStringWithCString:(CString)cString;
+
+- (CUnsignedInteger64)count;
+
+- (void)copyCharacters:(CInteger32*)characters;
 
 @end
 

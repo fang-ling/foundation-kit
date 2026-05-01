@@ -26,7 +26,7 @@ C_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) CUnsignedInteger64 unsignedIntegerValue;
 
-+ (FoundationNumber*)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value;
++ (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value;
 
 - (CUnsignedInteger64)unsignedIntegerValue;
 
