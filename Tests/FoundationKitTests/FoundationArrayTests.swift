@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
-@testable import FoundationKit
-
 import Testing
+
+import FoundationKit
 
 @Test("FoundationArrayTests")
 func testFoundationArray() {
@@ -31,7 +31,7 @@ func testFoundationArray() {
     }
   }
 
-  let array = FoundationMutableArray<Cat>()
+  var array = FoundationMutableArray<Cat>.make()
   #expect(array.count == 0)
 
   array.append(.init(name: "Alice"))
@@ -48,4 +48,8 @@ func testFoundationArray() {
 
   array.removeLastObject()
   #expect(array.count == 0)
+
+  array = FoundationMutableArray<Cat>.make()
+  array.append(.init(name: "Diana"))
+  array.append(.init(name: "Clara"))
 }

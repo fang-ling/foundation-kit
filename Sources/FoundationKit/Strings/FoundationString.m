@@ -1,8 +1,8 @@
 /*
- *  FoundationMutableArray.m
+ *  FoundationString.m
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/4/19.
+ *  Created by Fang Ling on 2026/5/1.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,27 +17,25 @@
  *  limitations under the License.
  */
 
-#import "FoundationMutableArray.h"
+#import "FoundationString.h"
 
-#import "FoundationCoreFoundationMutableArray.h"
+#import "FoundationCoreFoundationString.h"
 
 C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationMutableArray
+@implementation FoundationString
 
-+ (instancetype)makeArray {
-  return [[FoundationCoreFoundationMutableArray alloc] init];
++ (nullable instancetype)makeStringWithCString:(CString)cString {
+  return [[FoundationCoreFoundationString alloc] initWithCString:cString];
 }
 
-- (void)appendObject:(ObjectiveCAnyObject)object {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD appendObject: IS BEING CALLED. ***"
-  );
+- (CUnsignedInteger64)count {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
-- (void)removeLastObject {
+- (void)copyCharacters:(CInteger32*)characters {
   CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD removeLastObject IS BEING CALLED. ***"
+    "*** ABSTRACT METHOD copyCharacters: IS BEING CALLED. ***"
   );
 }
 

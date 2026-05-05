@@ -19,7 +19,7 @@
 
 #import "FoundationArray.h"
 
-OBJECTIVE_C_ASSUME_NONNULL_BEGIN
+C_ASSUME_NONNULL_BEGIN
 
 /**
  * A dynamic ordered collection of objects.
@@ -41,6 +41,8 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
  */
 @interface FoundationMutableArray<Element>: FoundationArray<Element>
 
++ (instancetype)makeArray;
+
 /**
  * Inserts a given object at the end of the array.
  *
@@ -56,4 +58,4 @@ OBJECTIVE_C_ASSUME_NONNULL_BEGIN
 
 @end
 
-OBJECTIVE_C_ASSUME_NONNULL_END
+C_ASSUME_NONNULL_END

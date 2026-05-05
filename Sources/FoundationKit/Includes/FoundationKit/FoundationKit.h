@@ -23,4 +23,8 @@
 #import "../../Collections/FoundationArray.h"
 #import "../../Collections/FoundationMutableArray.h"
 
+#import "../../Numerics/FoundationNumber.h"
+
+#import "../../Strings/FoundationString.h"
+
 #endif /* FoundationKit_h */

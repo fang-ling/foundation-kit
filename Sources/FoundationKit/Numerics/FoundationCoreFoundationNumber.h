@@ -1,8 +1,8 @@
 /*
- *  FoundationMutableArray.m
+ *  FoundationCoreFoundationNumber.h
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/4/19.
+ *  Created by Fang Ling on 2026/4/25.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,29 +17,20 @@
  *  limitations under the License.
  */
 
-#import "FoundationMutableArray.h"
+#import <CKit/CKit.h>
+#import <ObjectiveCKit/ObjectiveCKit.h>
 
-#import "FoundationCoreFoundationMutableArray.h"
+#import "FoundationNumber.h"
 
 C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationMutableArray
+@interface FoundationCoreFoundationNumber: FoundationNumber
 
-+ (instancetype)makeArray {
-  return [[FoundationCoreFoundationMutableArray alloc] init];
-}
+@property (nonatomic, readonly) CUnsignedInteger64 unsignedIntegerValue;
 
-- (void)appendObject:(ObjectiveCAnyObject)object {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD appendObject: IS BEING CALLED. ***"
-  );
-}
+- (instancetype)initWithUnsignedInteger:(CUnsignedInteger64)value;
 
-- (void)removeLastObject {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD removeLastObject IS BEING CALLED. ***"
-  );
-}
+- (CUnsignedInteger64)unsignedIntegerValue;
 
 @end
 

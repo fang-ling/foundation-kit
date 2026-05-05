@@ -1,8 +1,8 @@
 /*
- *  FoundationMutableArray.m
+ *  FoundationCoreFoundationArray.h
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/4/19.
+ *  Created by Fang Ling on 2026/5/2.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,29 +17,17 @@
  *  limitations under the License.
  */
 
-#import "FoundationMutableArray.h"
+#import <CKit/CKit.h>
 
-#import "FoundationCoreFoundationMutableArray.h"
+#import "FoundationArray.h"
 
 C_ASSUME_NONNULL_BEGIN
 
-@implementation FoundationMutableArray
+@interface FoundationCoreFoundationArray<Element>: FoundationArray<Element>
 
-+ (instancetype)makeArray {
-  return [[FoundationCoreFoundationMutableArray alloc] init];
-}
+- (instancetype)init;
 
-- (void)appendObject:(ObjectiveCAnyObject)object {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD appendObject: IS BEING CALLED. ***"
-  );
-}
-
-- (void)removeLastObject {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD removeLastObject IS BEING CALLED. ***"
-  );
-}
+- (Element)objectAtIndex:(CUnsignedInteger64)index;
 
 @end
 
