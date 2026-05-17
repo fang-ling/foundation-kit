@@ -29,6 +29,18 @@ C_ASSUME_NONNULL_BEGIN
   return [[FoundationCoreFoundationString alloc] initWithCString:cString];
 }
 
++ (instancetype)makeStringWithFormat:(CString)format, ... {
+  let arguments = (CVariableArgumentList){ 0 };
+  CVariableArgumentListInitialize(arguments, format);
+
+  let string =
+    [[FoundationCoreFoundationString alloc] initWithFormat:format
+                                                 arguments:arguments];
+
+  CVariableArgumentListDeinitialize(arguments);
+  return string;
+}
+
 - (CUnsignedInteger64)count {
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }

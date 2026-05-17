@@ -57,6 +57,18 @@ C_ASSUME_NONNULL_BEGIN
   return self;
 }
 
+- (instancetype)initWithFormat:(CString)format
+                     arguments:(CVariableArgumentList)arguments {
+  let string = CoreFoundationStringInitializeWithFormatAndArguments(
+    format,
+    arguments
+  );
+
+  self = (bridging FoundationCoreFoundationString*)string;
+
+  return self;
+}
+
 - (void)dealloc {
   CMemoryDeallocate(self->_characters);
 }
