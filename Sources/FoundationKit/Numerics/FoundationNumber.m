@@ -25,13 +25,36 @@ C_ASSUME_NONNULL_BEGIN
 
 @implementation FoundationNumber
 
-+ (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value {
-  return [[FoundationCoreFoundationNumber alloc] initWithUnsignedInteger:value];
++ (instancetype)makeNumberWithInteger64:(CInteger64)value {
+  return
+    [[FoundationCoreFoundationNumber alloc] initWithInteger64:value];
 }
 
-- (CUnsignedInteger64)unsignedIntegerValue {
++ (instancetype)makeNumberWithUnsignedInteger64:(CUnsignedInteger64)value {
+  return
+    [[FoundationCoreFoundationNumber alloc] initWithUnsignedInteger64:value];
+}
+
++ (instancetype)makeNumberWithFloatingPoint64:(CFloatingPoint64)value {
+  return
+    [[FoundationCoreFoundationNumber alloc] initWithFloatingPoint64:value];
+}
+
+- (CInteger64)integer64Value {
   CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD unsignedIntegerValue IS BEING CALLED. ***"
+    "*** ABSTRACT METHOD integer64Value IS BEING CALLED. ***"
+  );
+}
+
+- (CUnsignedInteger64)unsignedInteger64Value {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD unsignedInteger64Value IS BEING CALLED. ***"
+  );
+}
+
+- (CFloatingPoint64)floatingPoint64 {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD floatingPoint64 IS BEING CALLED. ***"
   );
 }
 

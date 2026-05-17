@@ -28,7 +28,19 @@ C_ASSUME_NONNULL_BEGIN
 
 + (nullable instancetype)makeStringWithCString:(CString)cString;
 
-- (CUnsignedInteger64)count;
+/**
+ * Returns a string created by using a given format string as a template into
+ * which the remaining argument values are substituted.
+ *
+ * Pass a comma-separated list of trailing variadic arguments to substitute into
+ * format.
+ *
+ * - Parameter format: A format string. This value must not be `nil`.
+ *
+ * - Returns A string created by using format as a template into which the
+ *   remaining argument values are substituted without any localization.
+ */
++ (instancetype)makeStringWithFormat:(CString)format, ...;
 
 - (void)copyCharacters:(CInteger32*)characters;
 

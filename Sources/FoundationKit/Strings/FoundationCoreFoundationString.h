@@ -29,6 +29,9 @@ C_ASSUME_NONNULL_BEGIN
 
 - (nullable instancetype)initWithCString:(CString)cString;
 
+- (instancetype)initWithFormat:(CString)format
+                     arguments:(CVariableArgumentList)arguments;
+
 - (CUnsignedInteger64)count;
 
 - (void)copyCharacters:(CInteger32*)characters;

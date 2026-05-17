@@ -25,15 +25,29 @@ C_ASSUME_NONNULL_BEGIN
 
 @interface FoundationCoreFoundationNumber() {
   union {
+    CInteger64 integer64;
     CUnsignedInteger64 unsignedInteger64;
+    CFloatingPoint64 floatingPoint64;
   } _value;
+
+  CoreFoundationNumberType _type;
 }
 
 @end
 
 @implementation FoundationCoreFoundationNumber
 
-- (instancetype)initWithUnsignedInteger:(CUnsignedInteger64)value {
+- (instancetype)initWithInteger64:(CInteger64)value {
+  if (!(self = [super init])) {
+    return nil;
+  }
+
+  self->_value.integer64 = value;
+
+  return self;
+}
+
+- (instancetype)initWithUnsignedInteger64:(CUnsignedInteger64)value {
   if (!(self = [super init])) {
     return nil;
   }
@@ -43,10 +57,35 @@ C_ASSUME_NONNULL_BEGIN
   return self;
 }
 
-- (CUnsignedInteger64)unsignedIntegerValue {
-  return CoreFoundationNumberGetUnsignedIntegerValue(
-    (bridging CoreFoundationNumber*)self
-  );
+- (instancetype)initWithFloatingPoint64:(CFloatingPoint64)value {
+  if (!(self = [super init])) {
+    return nil;
+  }
+
+  self->_value.floatingPoint64 = value;
+
+  return self;
+}
+
+- (CInteger64)integer64Value {
+  let value = 0ll;
+  CoreFoundationNumberGetValue((bridging CoreFoundationNumber*)self, &value);
+
+  return value;
+}
+
+- (CUnsignedInteger64)unsignedInteger64Value {
+  let value = 0ull;
+  CoreFoundationNumberGetValue((bridging CoreFoundationNumber*)self, &value);
+
+  return value;
+}
+
+- (CFloatingPoint64)floatingPoint64Value {
+  let value = 0.0;
+  CoreFoundationNumberGetValue((bridging CoreFoundationNumber*)self, &value);
+
+  return value;
 }
 
 @end
@@ -56,11 +95,34 @@ C_ASSUME_NONNULL_BEGIN
  * instance.
  */
 CoreFoundationAnyObject*
-FoundationCoreFoundationNumberInitializeWithUnsignedInteger(
-  CUnsignedInteger64 value
+FoundationCoreFoundationNumberInitialize(
+  CoreFoundationNumberType type,
+  void* valueBuffer
 ) {
-  let number =
-    [[FoundationCoreFoundationNumber alloc] initWithUnsignedInteger:value];
+  let number = (FoundationCoreFoundationNumber*)nil;
+
+  switch (type) {
+    case kCoreFoundationNumberTypeInteger64: {
+      let n = *(CInteger64*)valueBuffer;
+      number = [[FoundationCoreFoundationNumber alloc] initWithInteger64:n];
+      break;
+    }
+
+    case kCoreFoundationNumberTypeUnsignedInteger64: {
+      let n = *(CUnsignedInteger64*)valueBuffer;
+      number =
+        [[FoundationCoreFoundationNumber alloc] initWithUnsignedInteger64:n];
+      break;
+    }
+
+    case kCoreFoundationNumberTypeFloatingPoint64: {
+      let n = *(CFloatingPoint64*)valueBuffer;
+      number =
+        [[FoundationCoreFoundationNumber alloc] initWithFloatingPoint64:n];
+      break;
+    }
+  }
+
 
   return (retainedbridging CoreFoundationAnyObject*)number;
 }

@@ -24,11 +24,56 @@ C_ASSUME_NONNULL_BEGIN
 
 @interface FoundationNumber: ObjectiveCObject
 
-@property (nonatomic, readonly) CUnsignedInteger64 unsignedIntegerValue;
+/**
+ * The number object's value expressed as a ``CInteger64``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CInteger64 integer64Value;
 
-+ (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger64)value;
+/**
+ * The number object's value expressed as a ``CUnsignedInteger64``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CUnsignedInteger64 unsignedInteger64Value;
 
-- (CUnsignedInteger64)unsignedIntegerValue;
+/**
+ * The number object's value expressed as a ``CFloatingPoint64``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CFloatingPoint64 floatingPoint64Value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CInteger64``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CInteger64``.
+ */
++ (instancetype)makeNumberWithInteger64:(CInteger64)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CUnsignedInteger64``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CUnsignedInteger64``.
+ */
++ (instancetype)makeNumberWithUnsignedInteger64:(CUnsignedInteger64)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CFloatingPoint64``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CFloatingPoint64``.
+ */
++ (instancetype)makeNumberWithFloatingPoint64:(CFloatingPoint64)value;
 
 @end
 
