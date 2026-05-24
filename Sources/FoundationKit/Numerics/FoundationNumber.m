@@ -52,9 +52,9 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
-- (CFloatingPoint64)floatingPoint64 {
+- (CFloatingPoint64)floatingPoint64Value {
   CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD floatingPoint64 IS BEING CALLED. ***"
+    "*** ABSTRACT METHOD floatingPoint64Value IS BEING CALLED. ***"
   );
 }
 
