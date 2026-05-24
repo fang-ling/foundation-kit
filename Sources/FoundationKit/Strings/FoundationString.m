@@ -26,17 +26,16 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationString
 
 + (nullable instancetype)makeStringWithCString:(CString)cString {
-  return [[FoundationCoreFoundationString alloc] initWithCString:cString];
+  return [[_FoundationCoreFoundationString alloc] initWithCString:cString];
 }
 
-+ (instancetype)makeStringWithFormat:(CString)format, ... {
++ (instancetype)makeStringWithFormat:(FoundationString*)format, ... {
   let arguments = (CVariableArgumentList){ 0 };
   CVariableArgumentListInitialize(arguments, format);
 
   let string =
-    [[FoundationCoreFoundationString alloc] initWithFormat:format
-                                                 arguments:arguments];
-
+    [[_FoundationCoreFoundationString alloc] initWithFormat:format
+                                                  arguments:arguments];
   CVariableArgumentListDeinitialize(arguments);
   return string;
 }
@@ -45,9 +44,21 @@ C_ASSUME_NONNULL_BEGIN
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
+- (CUnsignedInteger64)cStringCount {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD cStringCount IS BEING CALLED. ***"
+  );
+}
+
 - (void)copyCharacters:(CInteger32*)characters {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD copyCharacters: IS BEING CALLED. ***"
+  );
+}
+
+- (void)copyCString:(CInteger8*)cString {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD copyCString: IS BEING CALLED. ***"
   );
 }
 
