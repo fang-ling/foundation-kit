@@ -24,22 +24,34 @@ import FoundationKit
 
 @Test("FoundationNumberTests")
 func testFoundationNumber() {
-  var number = FoundationNumber.make(withUnsignedInteger: 19358)
-  #expect(number.unsignedIntegerValue == 19358)
+  var number = FoundationNumber.make(withUnsignedInteger64: 19358)
+  #expect(number.unsignedInteger64Value == 19358)
 
   // Test bridging.
+  var unsignedInteger64Value = CUnsignedInteger64(19342)
   number = Unmanaged<FoundationNumber>
     .fromOpaque(
-      UnsafeRawPointer(CoreFoundationNumberInitializeWithUnsignedInteger(19342))
+      UnsafeRawPointer(
+        CoreFoundationNumberInitialize(
+          kCoreFoundationNumberTypeUnsignedInteger64,
+          &unsignedInteger64Value
+        )
+      )
     )
     .takeRetainedValue()
-  #expect(number.unsignedIntegerValue == 19342)
+  #expect(number.unsignedInteger64Value == 19342)
 
+  unsignedInteger64Value = CUnsignedInteger64(12333)
   number = Unmanaged<FoundationNumber>
     .fromOpaque(
-      UnsafeRawPointer(CoreFoundationNumberInitializeWithUnsignedInteger(12333))
+      UnsafeRawPointer(
+        CoreFoundationNumberInitialize(
+          kCoreFoundationNumberTypeUnsignedInteger64,
+          &unsignedInteger64Value
+        )
+      )
     )
     .takeUnretainedValue()
-  #expect(number.unsignedIntegerValue == 12333)
+  #expect(number.unsignedInteger64Value == 12333)
   CoreFoundationRelease(Unmanaged.passUnretained(number).toOpaque())
 }

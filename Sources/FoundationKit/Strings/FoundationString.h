@@ -22,9 +22,20 @@
 
 C_ASSUME_NONNULL_BEGIN
 
+#define $(format, ...) \
+  [FoundationString makeStringWithFormat:format, ##__VA_ARGS__]
+
 @interface FoundationString: ObjectiveCObject
 
+/**
+ * The number of characters in a string.
+ */
 @property (nonatomic, readonly) CUnsignedInteger64 count;
+
+/**
+ * The number of characters in the C-string representation.
+ */
+@property (nonatomic, readonly) CUnsignedInteger64 cStringCount;
 
 + (nullable instancetype)makeStringWithCString:(CString)cString;
 
@@ -40,9 +51,25 @@ C_ASSUME_NONNULL_BEGIN
  * - Returns A string created by using format as a template into which the
  *   remaining argument values are substituted without any localization.
  */
-+ (instancetype)makeStringWithFormat:(CString)format, ...;
++ (instancetype)makeStringWithFormat:(FoundationString*)format, ...;
 
+/**
+ * Copies all characters from the receiver into a given buffer.
+ *
+ * - Parameter characters: Upon return, contains the characters from the
+ *   receiver. `characters` must be large enough to contain all characters in
+ *   the string.
+ */
 - (void)copyCharacters:(CInteger32*)characters;
+
+/**
+ * Converts the string to a C-string and stores it in a buffer.
+ *
+ * - Parameter cString: Upon return, contains the converted C-string plus the
+ *   `null` termination `cString`. buffer must be large enough to contain the
+ *   resulting C-string plus a terminating `null` character.
+ */
+- (void)copyCString:(CInteger8*)cString;
 
 @end
 

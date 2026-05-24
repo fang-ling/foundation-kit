@@ -23,14 +23,14 @@
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationCoreFoundationString() {
+@interface _FoundationCoreFoundationString() {
   CInteger32* _characters;
   CUnsignedInteger64 _count;
 }
 
 @end
 
-@implementation FoundationCoreFoundationString
+@implementation _FoundationCoreFoundationString
 
 - (nullable instancetype)initWithCString:(CString)cString {
   if (!(self = [super init])) {
@@ -38,33 +38,120 @@ C_ASSUME_NONNULL_BEGIN
   }
 
   let cStringCount = CStringGetCount(cString);
-  self->_characters = CMemoryAllocate(cStringCount * sizeof(CInteger32));
-
-  let count = CStringConvertUTF8CharactersToUTF32Characters(
-    self->_characters,
-    &cString,
+  self->_count = CStringConvertUTF8CharactersToUTF32Characters(
+    null,
+    cString,
     cStringCount,
-    cStringCount
+    0
   );
-  if (count == -1) {
+
+  self->_characters = CMemoryAllocate(self->_count * sizeof(CInteger32));
+  CStringConvertUTF8CharactersToUTF32Characters(
+    self->_characters,
+    cString,
+    cStringCount,
+    self->_count
+  );
+
+  if (self->_count == -1) {
     CMemoryDeallocate(self->_characters);
 
     return nil;
   }
 
-  self->_count = count;
-
   return self;
 }
 
-- (instancetype)initWithFormat:(CString)format
+- (instancetype)initWithFormat:(FoundationString*)format
                      arguments:(CVariableArgumentList)arguments {
-  let string = CoreFoundationStringInitializeWithFormatAndArguments(
-    format,
-    arguments
+  let formatCount = format.cStringCount;
+  let formatCString = (CInteger8*)CMemoryAllocate(
+    (formatCount + 1) * sizeof(CInteger8)
   );
+  [format copyCString:formatCString];
 
-  self = (bridging FoundationCoreFoundationString*)string;
+  let cString = (CInteger8*)CMemoryAllocate(1 * sizeof(CInteger8));
+  let cStringCapacity = 1ll;
+  let cStringCount = 0ll;
+
+  let i = 0ull;
+  for (; i < formatCount; i += 1) {
+    let buffer = (CInteger8*)null;
+    let bufferCount = 0ll;
+    let needsDeallocate = no;
+
+    if (formatCString[i] == '%' && formatCString[i + 1] == 'd') {
+      let value = CVariableArgumentListGetNextArgument(arguments, CInteger64);
+
+      buffer = (CInteger8 [32]){ 0 };
+      bufferCount = CStringInitializeWithFormat(buffer, "%lld", value);
+
+      i += 1;
+      needsDeallocate = no;
+    } else if (formatCString[i] == '%' && formatCString[i + 1] == 'f') {
+      let value = CVariableArgumentListGetNextArgument(
+        arguments,
+        CFloatingPoint64
+      );
+
+      buffer = (CInteger8 [32]){ 0 };
+      bufferCount = CStringInitializeWithFormat(buffer, "%lf", value);
+
+      i += 1;
+      needsDeallocate = no;
+    } else if (formatCString[i] == '%' && formatCString[i + 1] == '@') {
+      ObjectiveCAnyObject value = CVariableArgumentListGetNextArgument(
+        arguments,
+        ObjectiveCAnyObject
+      );
+
+      let descriptionString = ((ObjectiveCObject*)value).description;
+
+      bufferCount = descriptionString.cStringCount;
+      buffer = (CInteger8*)CMemoryAllocate(
+        (bufferCount + 1) * sizeof(CInteger8)
+      );
+      [descriptionString copyCString:buffer];
+
+      i += 1;
+      needsDeallocate = yes;
+    } else {
+      let j = i;
+      for (; j < formatCount && formatCString[j] != '%'; j += 1);
+
+      bufferCount = j - i;
+      buffer = (CInteger8*)CMemoryAllocate(bufferCount * sizeof(CInteger8));
+
+      let k = 0ull;
+      for (j = i; k < bufferCount; k += 1, j += 1) {
+        buffer[k] = formatCString[j];
+      }
+
+      i = j - 1;
+      needsDeallocate = yes;
+    }
+
+    /* Append the buffer to cString. */
+    while (cStringCapacity < cStringCount + bufferCount + 1) {
+      cStringCapacity *= 2;
+      cString = CMemoryResize(cString, cStringCapacity * sizeof(CInteger8));
+    }
+    CMemoryCopy(
+      cString + cStringCount,
+      buffer,
+      bufferCount * sizeof(CInteger8)
+    );
+    cStringCount += bufferCount;
+
+    if (needsDeallocate) {
+      CMemoryDeallocate(buffer);
+    }
+  }
+
+  cString[cStringCount] = '\0';
+  self = [[_FoundationCoreFoundationString alloc] initWithCString:cString];
+
+  CMemoryDeallocate(cString);
 
   return self;
 }
@@ -92,7 +179,8 @@ C_ASSUME_NONNULL_BEGIN
  */
 CoreFoundationAnyObject*
 FoundationCoreFoundationStringInitializeWithCString(CString cString) {
-  let string = [[FoundationCoreFoundationString alloc] initWithCString:cString];
+  let string =
+    [[_FoundationCoreFoundationString alloc] initWithCString:cString];
 
   return (retainedbridging CoreFoundationAnyObject*)string;
 }

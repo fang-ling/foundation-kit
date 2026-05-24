@@ -23,18 +23,27 @@
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationCoreFoundationString: FoundationString
-
-@property (nonatomic, readonly) CUnsignedInteger64 count;
+@interface _FoundationCoreFoundationString: FoundationString
 
 - (nullable instancetype)initWithCString:(CString)cString;
 
-- (instancetype)initWithFormat:(CString)format
+/**
+ * Returns a string object initialized by using a given format string as a
+ * template into which the remaining argument values are substituted.
+ *
+ * This method is meant to be called from within a variadic function, where the
+ * argument list will be available.
+ *
+ * - Parameters:
+ *   - format: A format string. This value must not be `nil`.
+ *   - arguments: A list of arguments to substitute into format.
+ *
+ * - Returns: A newly initialized object by using format as a template into
+ *   which the values in `arguments` are substituted. The returned object may be
+ *   different from the original receiver.
+ */
+- (instancetype)initWithFormat:(FoundationString*)format
                      arguments:(CVariableArgumentList)arguments;
-
-- (CUnsignedInteger64)count;
-
-- (void)copyCharacters:(CInteger32*)characters;
 
 @end
 

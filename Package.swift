@@ -52,7 +52,9 @@ let package = Package(
       publicHeadersPath: "Includes",
       cSettings: [
         .unsafeFlags(["-fobjc-runtime=objfw-1.5"], .when(platforms: [.wasi])),
-        .unsafeFlags(["-fobjc-arc"])
+        .unsafeFlags(["-fobjc-arc"]),
+        .unsafeFlags(["-fno-constant-cfstrings"]),
+        .unsafeFlags(["-fconstant-string-class=_FoundationConstantString"])
       ]
     ),
     .testTarget(
