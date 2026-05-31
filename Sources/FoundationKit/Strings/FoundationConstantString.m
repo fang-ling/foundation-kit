@@ -43,6 +43,10 @@ C_ASSUME_NONNULL_BEGIN
   return self->_cStringCount;
 }
 
+- (instancetype)copy {
+  return self;
+}
+
 - (void)copyCharacters:(CInteger32*)characters {
   CStringConvertUTF8CharactersToUTF32Characters(
     characters,
