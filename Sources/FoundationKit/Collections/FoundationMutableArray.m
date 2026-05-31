@@ -26,7 +26,7 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationMutableArray
 
 + (instancetype)makeArray {
-  return [[FoundationCoreFoundationMutableArray alloc] init];
+  return [[_FoundationCoreFoundationMutableArray alloc] init];
 }
 
 - (void)appendObject:(ObjectiveCAnyObject)object {

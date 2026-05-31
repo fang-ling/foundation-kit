@@ -17,22 +17,14 @@
  *  limitations under the License.
  */
 
-#import <CKit/CKit.h>
-
 #import "FoundationMutableArray.h"
+
+#import <CKit/CKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationCoreFoundationMutableArray<Element>:
+@interface _FoundationCoreFoundationMutableArray<Element>:
   FoundationMutableArray<Element>
-
-- (instancetype)init;
-
-- (Element)objectAtIndex:(CUnsignedInteger64)index;
-
-- (void)appendObject:(Element)object;
-
-- (void)removeLastObject;
 
 @end
 

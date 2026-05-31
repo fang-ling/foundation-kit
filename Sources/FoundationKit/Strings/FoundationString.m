@@ -40,11 +40,11 @@ C_ASSUME_NONNULL_BEGIN
   return string;
 }
 
-- (CUnsignedInteger64)count {
+- (CInteger)count {
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
-- (CUnsignedInteger64)cStringCount {
+- (CInteger)cStringCount {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD cStringCount IS BEING CALLED. ***"
   );

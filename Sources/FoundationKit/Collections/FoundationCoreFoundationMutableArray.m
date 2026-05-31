@@ -23,15 +23,15 @@
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationCoreFoundationMutableArray() {
+@interface _FoundationCoreFoundationMutableArray() {
   CoreFoundationAnyObject** _objects;
-  CUnsignedInteger64 _count;
-  CUnsignedInteger64 _capacity;
+  CInteger _count;
+  CInteger _capacity;
 }
 
 @end
 
-@implementation FoundationCoreFoundationMutableArray
+@implementation _FoundationCoreFoundationMutableArray
 
 - (instancetype)init {
   if (!(self = [super init])) {
@@ -54,13 +54,13 @@ C_ASSUME_NONNULL_BEGIN
   CMemoryDeallocate(self->_objects);
 }
 
-- (CUnsignedInteger64)count {
+- (CInteger)count {
   return CoreFoundationMutableArrayGetCount(
     (bridging CoreFoundationMutableArray*)self
   );
 }
 
-- (ObjectiveCAnyObject)objectAtIndex:(CUnsignedInteger64)index {
+- (ObjectiveCAnyObject)objectAtIndex:(CInteger)index {
   return
     (bridging ObjectiveCAnyObject)CoreFoundationMutableArrayGetObjectAtIndex(
       (bridging CoreFoundationMutableArray*)self,
@@ -88,7 +88,7 @@ C_ASSUME_NONNULL_BEGIN
  * instance.
  */
 CoreFoundationAnyObject* FoundationCoreFoundationMutableArrayInitialize() {
-  let array = [[FoundationCoreFoundationMutableArray alloc] init];
+  let array = [[_FoundationCoreFoundationMutableArray alloc] init];
 
   return (retainedbridging CoreFoundationAnyObject*)array;
 }

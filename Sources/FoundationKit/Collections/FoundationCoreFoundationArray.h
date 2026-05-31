@@ -17,17 +17,13 @@
  *  limitations under the License.
  */
 
-#import <CKit/CKit.h>
-
 #import "FoundationArray.h"
+
+#import <CKit/CKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationCoreFoundationArray<Element>: FoundationArray<Element>
-
-- (instancetype)init;
-
-- (Element)objectAtIndex:(CUnsignedInteger64)index;
+@interface _FoundationCoreFoundationArray<Element>: FoundationArray<Element>
 
 @end
 

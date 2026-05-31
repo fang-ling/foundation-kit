@@ -24,19 +24,59 @@
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationCoreFoundationNumber: FoundationNumber
+@interface _FoundationCoreFoundationNumber: FoundationNumber
+
+@property (nonatomic, readonly) CInteger8 integer8Value;
+
+@property (nonatomic, readonly) CInteger16 integer16Value;
+
+@property (nonatomic, readonly) CInteger32 integer32Value;
 
 @property (nonatomic, readonly) CInteger64 integer64Value;
 
+@property (nonatomic, readonly) CInteger integerValue;
+
+@property (nonatomic, readonly) CUnsignedInteger8 unsignedInteger8Value;
+
+@property (nonatomic, readonly) CUnsignedInteger16 unsignedInteger16Value;
+
+@property (nonatomic, readonly) CUnsignedInteger32 unsignedInteger32Value;
+
 @property (nonatomic, readonly) CUnsignedInteger64 unsignedInteger64Value;
+
+@property (nonatomic, readonly) CUnsignedInteger unsignedIntegerValue;
+
+@property (nonatomic, readonly) CFloatingPoint32 floatingPoint32Value;
 
 @property (nonatomic, readonly) CFloatingPoint64 floatingPoint64Value;
 
+@property (nonatomic, readonly) CFloatingPoint floatingPointValue;
+
+- (instancetype)initWithInteger8:(CInteger8)value;
+
+- (instancetype)initWithInteger16:(CInteger16)value;
+
+- (instancetype)initWithInteger32:(CInteger32)value;
+
 - (instancetype)initWithInteger64:(CInteger64)value;
+
+- (instancetype)initWithInteger:(CInteger)value;
+
+- (instancetype)initWithUnsignedInteger8:(CUnsignedInteger8)value;
+
+- (instancetype)initWithUnsignedInteger16:(CUnsignedInteger16)value;
+
+- (instancetype)initWithUnsignedInteger32:(CUnsignedInteger32)value;
 
 - (instancetype)initWithUnsignedInteger64:(CUnsignedInteger64)value;
 
+- (instancetype)initWithUnsignedInteger:(CUnsignedInteger)value;
+
+- (instancetype)initWithFloatingPoint32:(CFloatingPoint32)value;
+
 - (instancetype)initWithFloatingPoint64:(CFloatingPoint64)value;
+
+- (instancetype)initWithFloatingPoint:(CFloatingPoint)value;
 
 @end
 

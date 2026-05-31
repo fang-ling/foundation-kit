@@ -30,7 +30,7 @@ C_ASSUME_NONNULL_BEGIN
 
 @implementation _FoundationConstantString
 
-- (CUnsignedInteger64)count {
+- (CInteger)count {
   return CStringConvertUTF8CharactersToUTF32Characters(
     null,
     self->_cString,
@@ -39,8 +39,12 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
-- (CUnsignedInteger64)cStringCount {
+- (CInteger)cStringCount {
   return self->_cStringCount;
+}
+
+- (instancetype)copy {
+  return self;
 }
 
 - (void)copyCharacters:(CInteger32*)characters {

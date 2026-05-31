@@ -30,12 +30,12 @@ C_ASSUME_NONNULL_BEGIN
 /**
  * The number of characters in a string.
  */
-@property (nonatomic, readonly) CUnsignedInteger64 count;
+@property (nonatomic, readonly) CInteger count;
 
 /**
  * The number of characters in the C-string representation.
  */
-@property (nonatomic, readonly) CUnsignedInteger64 cStringCount;
+@property (nonatomic, readonly) CInteger cStringCount;
 
 + (nullable instancetype)makeStringWithCString:(CString)cString;
 
