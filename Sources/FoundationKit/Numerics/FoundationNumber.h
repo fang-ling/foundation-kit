@@ -25,10 +25,52 @@ C_ASSUME_NONNULL_BEGIN
 @interface FoundationNumber: ObjectiveCObject
 
 /**
+ * The number object's value expressed as a ``CInteger8``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CInteger8 integer8Value;
+
+/**
+ * The number object's value expressed as a ``CInteger16``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CInteger16 integer16Value;
+
+/**
+ * The number object's value expressed as a ``CInteger32``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CInteger32 integer32Value;
+
+/**
  * The number object's value expressed as a ``CInteger64``, converted as
  * necessary.
  */
 @property (nonatomic, readonly) CInteger64 integer64Value;
+
+/**
+ * The number object's value expressed as a ``CInteger``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CInteger integerValue;
+
+/**
+ * The number object's value expressed as a ``CUnsignedInteger8``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CUnsignedInteger8 unsignedInteger8Value;
+
+/**
+ * The number object's value expressed as a ``CUnsignedInteger16``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CUnsignedInteger16 unsignedInteger16Value;
+
+/**
+ * The number object's value expressed as a ``CUnsignedInteger32``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CUnsignedInteger32 unsignedInteger32Value;
 
 /**
  * The number object's value expressed as a ``CUnsignedInteger64``, converted as
@@ -37,10 +79,61 @@ C_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CUnsignedInteger64 unsignedInteger64Value;
 
 /**
+ * The number object's value expressed as a ``CUnsignedInteger``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CUnsignedInteger unsignedIntegerValue;
+
+/**
+ * The number object's value expressed as a ``CFloatingPoint32``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CFloatingPoint32 floatingPoint32Value;
+
+/**
  * The number object's value expressed as a ``CFloatingPoint64``, converted as
  * necessary.
  */
 @property (nonatomic, readonly) CFloatingPoint64 floatingPoint64Value;
+
+/**
+ * The number object's value expressed as a ``CFloatingPoint``, converted as
+ * necessary.
+ */
+@property (nonatomic, readonly) CFloatingPoint floatingPointValue;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CInteger8``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CInteger8``.
+ */
++ (instancetype)makeNumberWithInteger8:(CInteger8)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CInteger16``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CInteger16``.
+ */
++ (instancetype)makeNumberWithInteger16:(CInteger16)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CInteger32``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CInteger32``.
+ */
++ (instancetype)makeNumberWithInteger32:(CInteger32)value;
 
 /**
  * Creates and returns an ``FoundationNumber`` object containing a given value,
@@ -55,6 +148,50 @@ C_ASSUME_NONNULL_BEGIN
 
 /**
  * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CInteger``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CInteger``.
+ */
++ (instancetype)makeNumberWithInteger:(CInteger)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CUnsignedInteger8``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CUnsignedInteger8``.
+ */
++ (instancetype)makeNumberWithUnsignedInteger8:(CUnsignedInteger8)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CUnsignedInteger16``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CUnsignedInteger16``.
+ */
++ (instancetype)makeNumberWithUnsignedInteger16:(CUnsignedInteger16)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CUnsignedInteger32``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CUnsignedInteger32``.
+ */
++ (instancetype)makeNumberWithUnsignedInteger32:(CUnsignedInteger32)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
  * treating it as a ``CUnsignedInteger64``.
  *
  * - Parameter value: The value for the new number.
@@ -66,6 +203,28 @@ C_ASSUME_NONNULL_BEGIN
 
 /**
  * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CUnsignedInteger``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CUnsignedInteger``.
+ */
++ (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CFloatingPoint32``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CFloatingPoint32``.
+ */
++ (instancetype)makeNumberWithFloatingPoint32:(CFloatingPoint32)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
  * treating it as a ``CFloatingPoint64``.
  *
  * - Parameter value: The value for the new number.
@@ -74,6 +233,17 @@ C_ASSUME_NONNULL_BEGIN
  *   ``CFloatingPoint64``.
  */
 + (instancetype)makeNumberWithFloatingPoint64:(CFloatingPoint64)value;
+
+/**
+ * Creates and returns an ``FoundationNumber`` object containing a given value,
+ * treating it as a ``CFloatingPoint``.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: An ``FoundationNumber`` object containing value, treating it as a
+ *   ``CFloatingPoint``.
+ */
++ (instancetype)makeNumberWithFloatingPoint:(CFloatingPoint)value;
 
 @end
 

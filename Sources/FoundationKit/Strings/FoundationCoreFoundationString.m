@@ -25,7 +25,7 @@ C_ASSUME_NONNULL_BEGIN
 
 @interface _FoundationCoreFoundationString() {
   CInteger32* _characters;
-  CUnsignedInteger64 _count;
+  CInteger _count;
 }
 
 @end
@@ -71,27 +71,27 @@ C_ASSUME_NONNULL_BEGIN
   [format copyCString:formatCString];
 
   let cString = (CInteger8*)CMemoryAllocate(1 * sizeof(CInteger8));
-  let cStringCapacity = 1ll;
-  let cStringCount = 0ll;
+  let cStringCapacity = 1l;
+  let cStringCount = 0l;
 
-  let i = 0ull;
+  let i = 0l;
   for (; i < formatCount; i += 1) {
     let buffer = (CInteger8*)null;
-    let bufferCount = 0ll;
+    let bufferCount = 0l;
     let needsDeallocate = no;
 
     if (formatCString[i] == '%' && formatCString[i + 1] == 'd') {
-      let value = CVariableArgumentListGetNextArgument(arguments, CInteger64);
+      let value = CVariableArgumentListGetNextArgument(arguments, CInteger);
 
       buffer = (CInteger8 [32]){ 0 };
-      bufferCount = CStringInitializeWithFormat(buffer, "%lld", value);
+      bufferCount = CStringInitializeWithFormat(buffer, "%ld", value);
 
       i += 1;
       needsDeallocate = no;
     } else if (formatCString[i] == '%' && formatCString[i + 1] == 'f') {
       let value = CVariableArgumentListGetNextArgument(
         arguments,
-        CFloatingPoint64
+        CFloatingPoint
       );
 
       buffer = (CInteger8 [32]){ 0 };
@@ -122,7 +122,7 @@ C_ASSUME_NONNULL_BEGIN
       bufferCount = j - i;
       buffer = (CInteger8*)CMemoryAllocate(bufferCount * sizeof(CInteger8));
 
-      let k = 0ull;
+      let k = 0l;
       for (j = i; k < bufferCount; k += 1, j += 1) {
         buffer[k] = formatCString[j];
       }
@@ -160,7 +160,7 @@ C_ASSUME_NONNULL_BEGIN
   CMemoryDeallocate(self->_characters);
 }
 
-- (CUnsignedInteger64)count {
+- (CInteger)count {
   return CoreFoundationStringGetCount((bridging CoreFoundationString*)self);
 }
 

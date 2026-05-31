@@ -26,14 +26,14 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationArray
 
 + (instancetype)makeArray {
-  return [[FoundationCoreFoundationArray alloc] init];
+  return [[_FoundationCoreFoundationArray alloc] init];
 }
 
-- (CUnsignedInteger64)count {
+- (CInteger)count {
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
-- (ObjectiveCAnyObject)objectAtIndex:(CUnsignedInteger64)index {
+- (ObjectiveCAnyObject)objectAtIndex:(CInteger)index {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD objectAtIndex: IS BEING CALLED. ***"
   );

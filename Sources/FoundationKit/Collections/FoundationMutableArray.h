@@ -41,8 +41,6 @@ C_ASSUME_NONNULL_BEGIN
  */
 @interface FoundationMutableArray<Element>: FoundationArray<Element>
 
-+ (instancetype)makeArray;
-
 /**
  * Inserts a given object at the end of the array.
  *

@@ -51,11 +51,9 @@ C_ASSUME_NONNULL_BEGIN
 /**
  * The number of elements in the array.
  */
-@property (nonatomic, readonly) CUnsignedInteger64 count;
+@property (nonatomic, readonly) CInteger count;
 
 + (instancetype)makeArray;
-
-- (CUnsignedInteger64)count;
 
 /**
  * Returns the object located at the specified index.
@@ -67,7 +65,7 @@ C_ASSUME_NONNULL_BEGIN
  *
  * - Returns: The object located at index.
  */
-- (Element)objectAtIndex:(CUnsignedInteger64)index;
+- (Element)objectAtIndex:(CInteger)index;
 
 @end
 
