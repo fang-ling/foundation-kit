@@ -91,7 +91,7 @@ C_ASSUME_NONNULL_BEGIN
     } else if (formatCString[i] == '%' && formatCString[i + 1] == 'f') {
       let value = CVariableArgumentListGetNextArgument(
         arguments,
-        CFloatingPoint
+        CFloatingPoint64
       );
 
       buffer = (CInteger8 [32]){ 0 };
