@@ -46,6 +46,10 @@ func testFoundationString() {
     #expect(comparisonResult == 0)
     #expect(count == inputCharacters.count)
 
+    // Test equality.
+    let otherString = FoundationString.makeString(withCString: inputString)!
+    #expect(string.isEqual(otherString))
+
     // Test bridging.
     string = Unmanaged<FoundationString>
       .fromOpaque(
@@ -66,4 +70,9 @@ func testFoundationString() {
     #expect(string.count == inputString.count)
     CoreFoundationRelease(Unmanaged.passUnretained(string).toOpaque())
   }
+
+  // Test inequality.
+  let greetingString = FoundationString.makeString(withCString: "Hello")!
+  let anotherGreetingString = FoundationString.makeString(withCString: "Heil")!
+  #expect(!greetingString.isEqual(anotherGreetingString))
 }

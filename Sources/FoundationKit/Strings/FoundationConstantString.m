@@ -63,4 +63,34 @@ C_ASSUME_NONNULL_BEGIN
 
 @end
 
+@implementation _FoundationConstantString (ObjectiveCEquatable)
+
+- (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
+  if (object == self) {
+    return yes;
+  }
+
+  if (![object isKindOfClass:FoundationString.class]) {
+    return no;
+  }
+
+  let otherString = (FoundationString*)object;
+  if (self.cStringCount != otherString.cStringCount) {
+    return no;
+  }
+
+  let otherCString = (CInteger8*)CMemoryAllocate(
+    (self->_cStringCount + 1) * sizeof(CInteger8)
+  );
+  [otherString copyCString:otherCString];
+
+  let result = CStringCompare(self->_cString, otherCString);
+
+  CMemoryDeallocate(otherCString);
+
+  return result == 0 ? yes : no;
+}
+
+@end
+
 C_ASSUME_NONNULL_END
