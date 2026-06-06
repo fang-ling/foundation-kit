@@ -25,7 +25,7 @@ C_ASSUME_NONNULL_BEGIN
 #define $(format, ...) \
   [FoundationString makeStringWithFormat:format, ##__VA_ARGS__]
 
-@interface FoundationString: ObjectiveCObject
+@interface FoundationString: ObjectiveCObject <ObjectiveCEquatable>
 
 /**
  * The number of characters in a string.

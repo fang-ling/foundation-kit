@@ -173,6 +173,54 @@ C_ASSUME_NONNULL_BEGIN
 
 @end
 
+@implementation _FoundationCoreFoundationString (ObjectiveCEquatable)
+
+- (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
+  if (object == self) {
+    return yes;
+  }
+
+  if (![object isKindOfClass:FoundationString.class]) {
+    return no;
+  }
+
+  if ([object isKindOfClass:_FoundationCoreFoundationString.class]) {
+    let result = CoreFoundationStringCompare(
+      (bridging CoreFoundationString*)self,
+      (bridging CoreFoundationString*)object
+    );
+
+    return result == kCoreFoundationComparisonResultSameOrder ? yes : no;
+  }
+
+  let otherString = (FoundationString*)object;
+  if (self.count != otherString.count) {
+    return no;
+  }
+
+  let count = self.count;
+  let selfCharacters = (CInteger32*)CMemoryAllocate(count * sizeof(CInteger32));
+  let otherCharacters = (CInteger32*)CMemoryAllocate(
+    count * sizeof(CInteger32)
+  );
+
+  [self copyCharacters:selfCharacters];
+  [otherString copyCharacters:otherCharacters];
+
+  let result = CMemoryCompare(
+    selfCharacters,
+    otherCharacters,
+    count * sizeof(CInteger32)
+  );
+
+  CMemoryDeallocate(selfCharacters);
+  CMemoryDeallocate(otherCharacters);
+
+  return result == 0 ? yes : no;
+}
+
+@end
+
 /*
  * Exposed to CoreFoundation to ensure correct initialization of the Objective-C
  * instance.
