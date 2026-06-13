@@ -1,8 +1,8 @@
 /*
- *  FoundationKit.h
+ *  FoundationCoreFoundationValue.h
  *  foundation-kit
  *
- *  Created by Fang Ling on 2025/12/7.
+ *  Created by Fang Ling on 2026/6/13.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,17 +17,16 @@
  *  limitations under the License.
  */
 
-#ifndef FoundationKit_h
-#define FoundationKit_h
+#import "FoundationValue.h"
 
-#import "../../Collections/FoundationArray.h"
-#import "../../Collections/FoundationMutableArray.h"
+#import <CKit/CKit.h>
 
-#import "../../Values/FoundationValue.h"
+C_ASSUME_NONNULL_BEGIN
 
-#import "../../Numerics/FoundationNumber.h"
+@interface _FoundationCoreFoundationValue: FoundationValue
 
-#import "../../Strings/FoundationConstantString.h"
-#import "../../Strings/FoundationString.h"
+- (instancetype)initWithBytes:(const void*)bytes size:(CInteger)size;
 
-#endif /* FoundationKit_h */
+@end
+
+C_ASSUME_NONNULL_END
