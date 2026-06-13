@@ -281,6 +281,14 @@ C_ASSUME_NONNULL_BEGIN
   return value;
 }
 
+- (CInteger)size {
+  return sizeof(self->_value);
+}
+
+- (void)copyValue:(void*)value {
+  CMemoryCopy(value, &self->_value, sizeof(self->_value));
+}
+
 @end
 
 /*

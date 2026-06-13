@@ -1,6 +1,6 @@
 //
 //  FoundationNumberTests.swift
-//  foundation-framework
+//  foundation-kit
 //
 //  Created by Fang Ling on 2026/4/25.
 //

@@ -17,12 +17,14 @@
  *  limitations under the License.
  */
 
+#import "../Values/FoundationValue.h"
+
 #import <CKit/CKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationNumber: ObjectiveCObject
+@interface FoundationNumber: FoundationValue
 
 /**
  * The number object's value expressed as a ``CInteger8``, converted as
