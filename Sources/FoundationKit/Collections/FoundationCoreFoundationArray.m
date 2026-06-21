@@ -33,14 +33,20 @@ C_ASSUME_NONNULL_BEGIN
 
 @implementation _FoundationCoreFoundationArray
 
-- (instancetype)init {
+- (instancetype)initWithObjects:(nillable ObjectiveCAnyObject const[])objects
+                          count:(CInteger)count {
   if (!(self = [super init])) {
     return nil;
   }
 
-  self->_objects = CMemoryAllocate(0);
-  self->_count = 0;
-  self->_capacity = 0;
+  self->_objects = CMemoryAllocate(count * sizeof(const void*));
+  self->_count = count;
+  self->_capacity = count;
+
+  let i = 0;
+  for (; i < count; i += 1) {
+    self->_objects[i] = (retainedbridging CoreFoundationAnyObject*)(objects[i]);
+  }
 
   return self;
 }
@@ -65,14 +71,22 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+- (ObjectiveCAnyObject)copy {
+  return self;
+}
+
 @end
 
 /*
  * Exposed to CoreFoundation to ensure correct initialization of the Objective-C
  * instance.
  */
-CoreFoundationAnyObject* FoundationCoreFoundationArrayInitialize() {
-  let array = [[_FoundationCoreFoundationArray alloc] init];
+CoreFoundationAnyObject* FoundationCoreFoundationArrayInitialize(
+  ObjectiveCAnyObject nonnil const objects[nonnil],
+  CInteger count
+) {
+  let array = [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
+                                                                count:count];
 
   return (retainedbridging CoreFoundationAnyObject*)array;
 }

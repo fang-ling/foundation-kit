@@ -75,10 +75,34 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+- (void)insertObject:(ObjectiveCAnyObject)object atIndex:(CInteger)index {
+  CoreFoundationMutableArrayInsertObjectAtIndex(
+    (bridging CoreFoundationMutableArray*)self,
+    (bridging CoreFoundationAnyObject*)object,
+    index
+  );
+}
+
 - (void)removeLastObject {
   CoreFoundationMutableArrayRemoveLastObject(
     (bridging CoreFoundationMutableArray*)self
   );
+}
+
+- (void)removeObjectAtIndex:(CInteger)index {
+  CoreFoundationMutableArrayRemoveObjectAtIndex(
+    (bridging CoreFoundationMutableArray*)self,
+    index
+  );
+}
+
+- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))
+                                shouldBeRemoved {
+  for (let i = self.count - 1; i >= 0; i -= 1) {
+    if (shouldBeRemoved([self objectAtIndex:i])) {
+      [self removeObjectAtIndex:i];
+    }
+  }
 }
 
 @end

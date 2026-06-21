@@ -61,10 +61,7 @@ C_ASSUME_NONNULL_BEGIN
   cString[self->_cStringCount] = '\0';
 }
 
-@end
-
-@implementation _FoundationConstantString (ObjectiveCEquatable)
-
+/* MARK: ObjectiveCEquatable Implementations */
 - (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
   if (object == self) {
     return yes;
@@ -89,6 +86,11 @@ C_ASSUME_NONNULL_BEGIN
   CMemoryDeallocate(otherCString);
 
   return result == 0 ? yes : no;
+}
+
+/* MARK: FoundationStringConvertible Implementations */
+- (FoundationString*)description {
+  return self;
 }
 
 @end

@@ -17,6 +17,8 @@
  *  limitations under the License.
  */
 
+#import "FoundationStringConvertible.h"
+
 #import <CKit/CKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
 
@@ -25,7 +27,10 @@ C_ASSUME_NONNULL_BEGIN
 #define $(format, ...) \
   [FoundationString makeStringWithFormat:format, ##__VA_ARGS__]
 
-@interface FoundationString: ObjectiveCObject <ObjectiveCEquatable>
+@interface FoundationString: ObjectiveCObject <
+  ObjectiveCEquatable,
+  FoundationStringConvertible
+>
 
 /**
  * The number of characters in a string.

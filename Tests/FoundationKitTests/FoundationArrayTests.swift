@@ -34,11 +34,11 @@ func testFoundationArray() {
   var array = FoundationMutableArray<Cat>.make()
   #expect(array.count == 0)
 
-  array.append(.init(name: "Alice"))
+  array.append(Cat(name: "Alice"))
   #expect(array.object(at: 0).name == "Alice")
   #expect(array.count == 1)
 
-  array.append(.init(name: "Tracy"))
+  array.append(Cat(name: "Tracy"))
   #expect(array.object(at: 1).name == "Tracy")
   #expect(array.count == 2)
 
@@ -50,6 +50,27 @@ func testFoundationArray() {
   #expect(array.count == 0)
 
   array = FoundationMutableArray<Cat>.make()
-  array.append(.init(name: "Diana"))
-  array.append(.init(name: "Clara"))
+  array.append(Cat(name: "Diana"))
+  array.append(Cat(name: "Clara"))
+
+  array.insert(Cat(name: "Alice"), at: 0)
+  #expect(array.object(at: 0).name == "Alice")
+  array.insert(Cat(name: "Tracy"), at: 0)
+  #expect(array.object(at: 0).name == "Tracy")
+
+  array.removeObject(at: 0)
+  #expect(array.object(at: 0).name == "Alice")
+
+  array.removeObject(at: 1)
+  #expect(array.object(at: 1).name == "Clara")
+
+  _ = FoundationArray<Cat>(
+    objects: [
+      Cat(name: "Alice2"),
+      Cat(name: "Tracy2"),
+      Cat(name: "Diana2"),
+      Cat(name: "Clara2")
+    ],
+    count: 3
+  )
 }

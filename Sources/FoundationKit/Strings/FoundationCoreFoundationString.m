@@ -171,10 +171,7 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
-@end
-
-@implementation _FoundationCoreFoundationString (ObjectiveCEquatable)
-
+/* MARK: ObjectiveCEquatable Implementation */
 - (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
   if (object == self) {
     return yes;
@@ -217,6 +214,11 @@ C_ASSUME_NONNULL_BEGIN
   CMemoryDeallocate(otherCharacters);
 
   return result == 0 ? yes : no;
+}
+
+/* MARK: FoundationStringConvertible Implementations */
+- (FoundationString*)description {
+  return self;
 }
 
 @end

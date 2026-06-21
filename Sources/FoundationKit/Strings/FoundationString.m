@@ -62,6 +62,20 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+/* MARK: ObjectiveCEquatable Implementations */
+- (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD isEqual: IS BEING CALLED. ***"
+  );
+}
+
+/* MARK: FoundationStringConvertible Implementations */
+- (FoundationString*)description {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD description IS BEING CALLED. ***"
+  );
+}
+
 @end
 
 C_ASSUME_NONNULL_END

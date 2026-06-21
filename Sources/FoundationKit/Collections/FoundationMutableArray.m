@@ -35,9 +35,28 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+- (void)insertObject:(ObjectiveCAnyObject)object atIndex:(CInteger)index {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD insertObject:atIndex: IS BEING CALLED. ***"
+  );
+}
+
 - (void)removeLastObject {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD removeLastObject IS BEING CALLED. ***"
+  );
+}
+
+- (void)removeObjectAtIndex:(CInteger)index {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD removeObjectAtIndex: IS BEING CALLED. ***"
+  );
+}
+
+- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))
+                                shouldBeRemoved {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD removeAllObjectsWhere: IS BEING CALLED. ***"
   );
 }
 
