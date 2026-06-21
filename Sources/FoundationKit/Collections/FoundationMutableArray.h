@@ -34,10 +34,13 @@ C_ASSUME_NONNULL_BEGIN
  * ### Adding Objects
  *
  * - ``appendObject:``
+ * - ``insertObject:atIndex:``
  *
  * ### Removing Objects
  *
  * - ``removeLastObject``
+ * - ``removeObjectAtIndex:``
+ * - ``removeAllObjectsWhere:``
  */
 @interface FoundationMutableArray<Element>: FoundationArray<Element>
 
@@ -50,9 +53,56 @@ C_ASSUME_NONNULL_BEGIN
 - (void)appendObject:(Element)object;
 
 /**
+ * Inserts a given object into the array's contents at a given index.
+ *
+ * If `index` is already occupied, the objects at index and beyond are shifted
+ * by adding `1` to their indices to make room.
+ *
+ * Note that ``FoundationArray`` objects are not like C arrays. That is, even
+ * though you specify a size when you create an array, the specified size is
+ * regarded as a "hint"; the actual size of the array is still `0`. This means
+ * that you cannot insert an object at an index greater than the current count
+ * of an array. For example, if an array contains two objects, its size is `2`,
+ * so you can add objects at indices `0`, `1`, or `2`. Index `3` is illegal and
+ * out of bounds; if you try to add an object at index `3` (when the size of the
+ * array is `2`), the program is likely to crash.
+ *
+ * - Parameters:
+ *   - object: The object to add to the array's content. This value must not be
+ *     `nil`.
+ *   - index: The index in the array at which to insert `object`. This value
+ *     must not be greater than the count of elements in the array.
+ */
+- (void)insertObject:(Element)object atIndex:(CInteger)index;
+
+/**
  * Removes the object with the highest-valued index in the array.
  */
 - (void)removeLastObject;
+
+/**
+ * Removes the object at `index`.
+ *
+ * To fill the gap, all elements beyond `index` are moved by subtracting `1`
+ * from their index.
+ *
+ * - Parameter index: The index from which to remove the object in the array.
+ *   The value must not exceed the bounds of the array.
+ */
+- (void)removeObjectAtIndex:(CInteger)index;
+
+/**
+ * Removes all the elements that satisfy the given predicate.
+ *
+ * Use this method to remove every element in a collection that meets particular
+ * criteria. The order of the remaining elements is preserved.
+ *
+ * - Parameter shouldBeRemoved: A closure that takes an element of the sequence
+ *   as its argument and returns a Boolean value indicating whether the element
+ *   should be removed from the collection.
+ */
+- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))
+                                shouldBeRemoved;
 
 @end
 
