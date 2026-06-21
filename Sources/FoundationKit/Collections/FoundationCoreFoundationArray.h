@@ -25,6 +25,9 @@ C_ASSUME_NONNULL_BEGIN
 
 @interface _FoundationCoreFoundationArray<Element>: FoundationArray<Element>
 
+- (instancetype)initWithObjects:(nillable Element const[nillable])objects
+                          count:(CInteger)count;
+
 @end
 
 C_ASSUME_NONNULL_END

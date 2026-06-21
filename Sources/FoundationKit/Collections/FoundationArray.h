@@ -56,6 +56,27 @@ C_ASSUME_NONNULL_BEGIN
 + (instancetype)makeArray;
 
 /**
+ * Creates and returns an array that includes a given number of objects from a
+ * given C array.
+ *
+ * Elements are added to the new array in the same order they appear in objects,
+ * up to but not including index `count`.
+ *
+ * > Note: The compiler calls this method when using the container literal
+ *   syntax. Do not use this method directly.
+ *
+ * - Parameters:
+ *   - objects: A C array of objects.
+ *   - count: The number of values from the objects C array to include in the
+ *     new array. This number will be the count of the new array—it must not be
+ *     negative or greater than the number of elements in objects.
+ *
+ * - Returns: A new array including the first `count` objects from `objects`.
+ */
++ (instancetype)arrayWithObjects:(Element nillable const[nonnil])objects
+                           count:(CInteger)count;
+
+/**
  * Returns the object located at the specified index.
  *
  * If `index` is beyond the end of the array (that is, if `index` is greater
@@ -68,5 +89,7 @@ C_ASSUME_NONNULL_BEGIN
 - (Element)objectAtIndex:(CInteger)index;
 
 @end
+
+@compatibility_alias NSArray FoundationArray;
 
 C_ASSUME_NONNULL_END

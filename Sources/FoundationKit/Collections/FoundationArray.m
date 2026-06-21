@@ -26,7 +26,13 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationArray
 
 + (instancetype)makeArray {
-  return [[_FoundationCoreFoundationArray alloc] init];
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null count:0];
+}
+
++ (instancetype)arrayWithObjects:(ObjectiveCAnyObject nillable const[])objects
+                           count:(CInteger)count {
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
+                                                           count:count];
 }
 
 - (CInteger)count {
