@@ -61,7 +61,9 @@ let package = Package(
       name: "FoundationKitTests",
       dependencies: [
         "FoundationKit",
-        .product(name: "CoreFoundationKit", package: "core-foundation-kit")
+        .product(name: "CKit", package: "c-kit"),
+        .product(name: "CoreFoundationKit", package: "core-foundation-kit"),
+        .product(name: "ObjectiveCKit", package: "objective-c-kit")
       ]
     )
   ]
