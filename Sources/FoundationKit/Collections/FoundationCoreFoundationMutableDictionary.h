@@ -1,8 +1,8 @@
 /*
- *  FoundationKit.h
+ *  FoundationCoreFoundationMutableDictionary.h
  *  foundation-kit
  *
- *  Created by Fang Ling on 2025/12/7.
+ *  Created by Fang Ling on 2026/6/28.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,20 +17,15 @@
  *  limitations under the License.
  */
 
-#ifndef FoundationKit_h
-#define FoundationKit_h
+#import "FoundationMutableDictionary.h"
 
-#import "../../Collections/FoundationArray.h"
-#import "../../Collections/FoundationDictionary.h"
-#import "../../Collections/FoundationMutableArray.h"
-#import "../../Collections/FoundationMutableDictionary.h"
+#import <CKit/CKit.h>
 
-#import "../../Values/FoundationValue.h"
+C_ASSUME_NONNULL_BEGIN
 
-#import "../../Numerics/FoundationNumber.h"
+@interface _FoundationCoreFoundationMutableDictionary<Key, Value>:
+  FoundationMutableDictionary<Key, Value>
 
-#import "../../Strings/FoundationConstantString.h"
-#import "../../Strings/FoundationString.h"
-#import "../../Strings/FoundationStringConvertible.h"
+@end
 
-#endif /* FoundationKit_h */
+C_ASSUME_NONNULL_END
