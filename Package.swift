@@ -26,7 +26,8 @@ let isDevelopment = false
 let dependencies = [
   ("c-kit", "main"),
   ("core-foundation-kit", "main"),
-  ("objective-c-kit", "main")
+  ("objective-c-kit", "main"),
+  ("swift-yyjson", "main")
 ]
 
 let package = Package(
@@ -46,6 +47,7 @@ let package = Package(
       name: "FoundationKit",
       dependencies: [
         .product(name: "CKit", package: "c-kit"),
+        .product(name: "CYYJSON", package: "swift-yyjson"),
         .product(name: "CoreFoundationKit", package: "core-foundation-kit"),
         .product(name: "ObjectiveCKit", package: "objective-c-kit")
       ],

@@ -29,6 +29,8 @@
 
 #import "../../Numerics/FoundationNumber.h"
 
+#import "../../Serialization/FoundationJSONSerialization.h"
+
 #import "../../Strings/FoundationConstantString.h"
 #import "../../Strings/FoundationString.h"
 #import "../../Strings/FoundationStringConvertible.h"
