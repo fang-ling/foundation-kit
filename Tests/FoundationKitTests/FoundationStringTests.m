@@ -1,29 +1,36 @@
-//
-//  FoundationStringTests.swift
-//  foundation-kit
-//
-//  Created by Fang Ling on 2026/5/1.
-//
-//  Licensed under the Apache License, Version 2.0 (the "License");
-//  you may not use this file except in compliance with the License.
-//  You may obtain a copy of the License at
-//
-//    http://www.apache.org/licenses/LICENSE-2.0
-//
-//  Unless required by applicable law or agreed to in writing, software
-//  distributed under the License is distributed on an "AS IS" BASIS,
-//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//  See the License for the specific language governing permissions and
-//  limitations under the License.
-//
+/*
+ *  FoundationStringTests.m
+ *  foundation-kit
+ *
+ *  Created by Fang Ling on 2026/5/1.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 
-//import Testing
-//
-//import CoreFoundationKit
-//import FoundationKit
-//
-//@Test("FoundationStringTests")
-//func testFoundationString() {
+#import <CKit/CKit.h>
+#import <FoundationKit/FoundationKit.h>
+
+#import <XCTest/XCTest.h>
+
+C_ASSUME_NONNULL_BEGIN
+
+@interface FoundationStringTests: XCTestCase
+
+@end
+
+@implementation FoundationStringTests
+
+- (void)testFoundationString {
 //  let inputStrings = ["", "Hello, world!", "こんにち", "🌍", "🐮 say ", "ω"]
 //
 //  for inputString in inputStrings {
@@ -75,4 +82,36 @@
 //  let greetingString = FoundationString.makeString(withCString: "Hello")!
 //  let anotherGreetingString = FoundationString.makeString(withCString: "Heil")!
 //  #expect(!greetingString.isEqual(anotherGreetingString))
-//}
+
+  let string1 = [FoundationString makeStringWithCString:"abc"];
+  let string2 = [FoundationString makeStringWithCString:"acd"];
+  let string3 = [FoundationString makeStringWithCString:"b"];
+  XCTAssertEqual(
+    [string1 compare:string2],
+    kFoundationComparisonResultAscendingOrder
+  );
+  XCTAssertEqual(
+    [string2 compare:string3],
+    kFoundationComparisonResultAscendingOrder
+  );
+  XCTAssertEqual(
+    [string3 compare:string1],
+    kFoundationComparisonResultDescendingOrder
+  );
+
+  string1 = [FoundationString makeStringWithCString:"🌍"];
+  string2 = [FoundationString makeStringWithCString:"🚢"];
+  string3 = [FoundationString makeStringWithCString:"🌍"];
+  XCTAssertNotEqual(
+    [string1 compare:string2],
+    kFoundationComparisonResultSameOrder
+  );
+  XCTAssertEqual(
+    [string1 compare:string3],
+    kFoundationComparisonResultSameOrder
+  );
+}
+
+@end
+
+C_ASSUME_NONNULL_END

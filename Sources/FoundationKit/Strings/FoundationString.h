@@ -18,6 +18,7 @@
  */
 
 #import "FoundationStringConvertible.h"
+#import "../Sorting/FoundationComparable.h"
 
 #import <CKit/CKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
@@ -28,7 +29,9 @@ C_ASSUME_NONNULL_BEGIN
   [FoundationString makeStringWithFormat:format, ##__VA_ARGS__]
 
 @interface FoundationString: ObjectiveCObject <
+  ObjectiveCCopyable,
   ObjectiveCEquatable,
+  FoundationComparable,
   FoundationStringConvertible
 >
 

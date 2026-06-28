@@ -20,6 +20,7 @@
 #import "FoundationCoreFoundationString.h"
 
 #import <CoreFoundationKit/CoreFoundationKit.h>
+#import <ObjectiveCKit/ObjectiveCKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
@@ -171,7 +172,12 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
-/* MARK: ObjectiveCEquatable Implementation */
+/* MARK: - ObjectiveCCopyable Implementation */
+- (ObjectiveCAnyObject)copy {
+  return self;
+}
+
+/* MARK: - ObjectiveCEquatable Implementation */
 - (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
   if (object == self) {
     return yes;
@@ -216,7 +222,15 @@ C_ASSUME_NONNULL_BEGIN
   return result == 0 ? yes : no;
 }
 
-/* MARK: FoundationStringConvertible Implementations */
+/* MARK: - FoundationComparable Implementations */
+- (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
+  return CoreFoundationStringCompare(
+    (bridging CoreFoundationAnyObject*)self,
+    (bridging CoreFoundationAnyObject*)object
+  );
+}
+
+/* MARK: - FoundationStringConvertible Implementations */
 - (FoundationString*)description {
   return self;
 }

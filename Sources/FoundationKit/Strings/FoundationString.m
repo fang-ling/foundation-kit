@@ -20,6 +20,7 @@
 #import "FoundationString.h"
 
 #import "FoundationCoreFoundationString.h"
+#import "../Sorting/FoundationComparisonResult.h"
 
 C_ASSUME_NONNULL_BEGIN
 
@@ -62,14 +63,26 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
-/* MARK: ObjectiveCEquatable Implementations */
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD copy IS BEING CALLED. ***");
+}
+
+/* MARK: - ObjectiveCEquatable Implementations */
 - (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD isEqual: IS BEING CALLED. ***"
   );
 }
 
-/* MARK: FoundationStringConvertible Implementations */
+/* MARK: - FoundationComparable Implementations */
+- (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD compare: IS BEING CALLED. ***"
+  );
+}
+
+/* MARK: - FoundationStringConvertible Implementations */
 - (FoundationString*)description {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD description IS BEING CALLED. ***"
