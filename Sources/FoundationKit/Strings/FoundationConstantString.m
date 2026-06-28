@@ -19,6 +19,8 @@
 
 #import "FoundationConstantString.h"
 
+#import <ObjectiveCKit/ObjectiveCKit.h>
+
 C_ASSUME_NONNULL_BEGIN
 
 @interface _FoundationConstantString() {
@@ -43,10 +45,6 @@ C_ASSUME_NONNULL_BEGIN
   return self->_cStringCount;
 }
 
-- (instancetype)copy {
-  return self;
-}
-
 - (void)copyCharacters:(CInteger32*)characters {
   CStringConvertUTF8CharactersToUTF32Characters(
     characters,
@@ -61,7 +59,12 @@ C_ASSUME_NONNULL_BEGIN
   cString[self->_cStringCount] = '\0';
 }
 
-/* MARK: ObjectiveCEquatable Implementations */
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  return self;
+}
+
+/* MARK: - ObjectiveCEquatable Implementations */
 - (CBoolean)isEqual:(nullable ObjectiveCAnyObject)object {
   if (object == self) {
     return yes;
@@ -88,7 +91,23 @@ C_ASSUME_NONNULL_BEGIN
   return result == 0 ? yes : no;
 }
 
-/* MARK: FoundationStringConvertible Implementations */
+/* MARK: - FoundationComparable Implementations */
+- (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
+  let comparisonResult = CStringCompare(
+    self->_cString,
+    ((_FoundationConstantString*)object)->_cString
+  );
+
+  if (comparisonResult < 0) {
+    return kFoundationComparisonResultAscendingOrder;
+  } else if (comparisonResult == 0) {
+    return kFoundationComparisonResultSameOrder;
+  }
+
+  return kFoundationComparisonResultDescendingOrder;
+}
+
+/* MARK: - FoundationStringConvertible Implementations */
 - (FoundationString*)description {
   return self;
 }
