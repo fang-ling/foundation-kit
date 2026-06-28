@@ -25,12 +25,14 @@
 #import "../../Collections/FoundationMutableArray.h"
 #import "../../Collections/FoundationMutableDictionary.h"
 
-#import "../../Values/FoundationValue.h"
+#import "../../Data/FoundationData.h"
 
 #import "../../Numerics/FoundationNumber.h"
 
 #import "../../Strings/FoundationConstantString.h"
 #import "../../Strings/FoundationString.h"
 #import "../../Strings/FoundationStringConvertible.h"
+
+#import "../../Values/FoundationValue.h"
 
 #endif /* FoundationKit_h */
