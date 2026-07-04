@@ -180,6 +180,18 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD copy IS BEING CALLED. ***");
+}
+
+/* MARK: - FoundationComparable Implementations */
+- (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD compare: IS BEING CALLED. ***"
+  );
+}
+
 @end
 
 C_ASSUME_NONNULL_END

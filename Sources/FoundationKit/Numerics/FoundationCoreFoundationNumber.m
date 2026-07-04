@@ -289,6 +289,19 @@ C_ASSUME_NONNULL_BEGIN
   CMemoryCopy(value, &self->_value, sizeof(self->_value));
 }
 
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  return self;
+}
+
+/* MARK: - FoundationComparable Implementations */
+- (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
+  return CoreFoundationNumberCompare(
+    (bridging CoreFoundationAnyObject*)self,
+    (bridging CoreFoundationAnyObject*)object
+  );
+}
+
 @end
 
 /*
