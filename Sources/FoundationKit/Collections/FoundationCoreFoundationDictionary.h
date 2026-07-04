@@ -17,19 +17,19 @@
  *  limitations under the License.
  */
 
-#import "FoundationDictionary.h"
+#import "FoundationMutableDictionary.h"
 
 #import <CKit/CKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
 @interface _FoundationCoreFoundationDictionary<Key, Value>:
-  FoundationDictionary<Key, Value>
+  FoundationMutableDictionary<Key, Value>
 
 - (instancetype)initWithObjects:(nillable Value const[nillable])objects
                         forKeys:(nillable Key const[nillable])keys
-                          count:(CInteger)count;
-
+                          count:(CInteger)count
+                      isMutable:(CBoolean)mutable;
 @end
 
 C_ASSUME_NONNULL_END

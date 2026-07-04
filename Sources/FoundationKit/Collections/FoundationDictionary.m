@@ -28,7 +28,8 @@ C_ASSUME_NONNULL_BEGIN
 + (instancetype)makeDictionary {
   return [[_FoundationCoreFoundationDictionary alloc] initWithObjects:null
                                                               forKeys:null
-                                                                count:0];
+                                                                count:0
+                                                            isMutable:no];
 }
 
 + (instancetype)
@@ -37,7 +38,8 @@ C_ASSUME_NONNULL_BEGIN
                   count:(CInteger)count {
   return [[_FoundationCoreFoundationDictionary alloc] initWithObjects:objects
                                                               forKeys:keys
-                                                                count:count];
+                                                                count:count
+                                                            isMutable:no];
 }
 
 - (CInteger)count {
@@ -47,6 +49,15 @@ C_ASSUME_NONNULL_BEGIN
 - (ObjectiveCAnyObject)objectForKeyedSubscript:(ObjectiveCAnyObject)key {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD objectForKeyedSubscript: IS BEING CALLED. ***"
+  );
+}
+
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD countByEnumeratingWithState:objects:count: "
+    "IS BEING CALLED. ***"
   );
 }
 
