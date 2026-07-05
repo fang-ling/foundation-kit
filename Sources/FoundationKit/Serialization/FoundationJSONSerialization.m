@@ -94,9 +94,84 @@ ObjectiveCAnyObject FoundationJSONSerializationDecode(CYYJSONValue* value) {
   }
 }
 
+CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
+  CYYJSONMutableDocument* document,
+  ObjectiveCAnyObject object
+                                                       ) {
+  if (!object) { /* FIXME: Also check for FoundationNaught. */
+    return CYYJSONMutableValueInitializeFromNil(document);
+  }
+
+  if ([object isKindOfClass:FoundationNumber.class]) {
+    let number = (FoundationNumber*)object;
+
+    /* TODO: Distinguish among multiple numeric types. */
+    return CYYJSONMutableValueInitializeFromInteger(
+      document,
+      number.integer64Value
+    );
+  } else if ([object isKindOfClass:FoundationString.class]) {
+    let string = (FoundationString*)object;
+
+    let cStringCount = string.cStringCount;
+    let cString = (CInteger8*)CMemoryAllocate(cStringCount + 1);
+    [string copyCString:cString];
+
+    return CYYJSONMutableValueInitializeFromString(document, cString);
+  } else if ([object isKindOfClass:FoundationArray.class]) {
+    let arrayValue = CYYJSONMutableArrayInitialize(document);
+
+    let array = (FoundationArray*)object;
+
+    for (let i = 0; i < array.count; i += 1) {
+      ObjectiveCAnyObject item = [array objectAtIndex:i];
+
+      let childValue = FoundationJSONSerializationEncode(document, item);
+      CYYJSONMutableArrayAppendValue(arrayValue, childValue);
+    }
+
+    return arrayValue;
+  } else if ([object isKindOfClass:FoundationDictionary.class]) {
+    let dictionaryValue = CYYJSONMutableDictionaryInitialize(document);
+
+    let dictionary = (FoundationDictionary*)object;
+
+    for (ObjectiveCAnyObject key in dictionary) {
+      if (![key isKindOfClass:FoundationString.class]) {
+        return null;
+      }
+
+      let keyString = (FoundationString*)key;
+
+      let keyCStringCount = keyString.cStringCount;
+      let keyCString = (CInteger8*)CMemoryAllocate(keyCStringCount + 1);
+      [keyString copyCString:keyCString];
+
+      let keyValue = CYYJSONMutableValueInitializeFromString(
+        document,
+        keyCString
+      );
+      let objectValue = FoundationJSONSerializationEncode(
+        document,
+        dictionary[key]
+      );
+
+      if (!keyValue || !objectValue) {
+        return null;
+      }
+
+      CYYJSONMutableDictionarySetObject(dictionaryValue, keyValue, objectValue);
+    }
+
+    return dictionaryValue;
+  }
+
+  return null;
+}
+
 @implementation FoundationJSONSerialization
 
-+ (ObjectiveCAnyObject)makeJSONObjectWithData:(FoundationData*)data {
++ (nullable ObjectiveCAnyObject)makeJSONObjectWithData:(FoundationData*)data {
   let document = CYYJSONDocumentInitializeFromData(data.bytes, data.count, 0);
 
   let rootValue = CYYJSONDocumentGetRootValue(document);
@@ -106,6 +181,24 @@ ObjectiveCAnyObject FoundationJSONSerializationDecode(CYYJSONValue* value) {
   CYYJSONDocumentDeinitialize(document);
 
   return object;
+}
+
++ (nullable FoundationData*)makeDataWithJSONObject:(ObjectiveCAnyObject)object {
+  let document = CYYJSONMutableDocumentInitialize(null);
+
+  let root = FoundationJSONSerializationEncode(document, object);
+  CYYJSONMutableDocumentSetRootValue(document, root);
+
+  let jsonCount = 0ul;
+  let json = CYYJSONMutableDocumentConvertToData(document, 0, &jsonCount);
+
+  CYYJSONMutableDocumentDeinitialize(document);
+
+  let data = [FoundationData makeDataWithBytes:json count:jsonCount];
+
+  CMemoryDeallocate(json);
+
+  return data;
 }
 
 @end

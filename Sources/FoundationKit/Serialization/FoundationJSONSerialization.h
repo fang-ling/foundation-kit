@@ -50,6 +50,10 @@ C_ASSUME_NONNULL_BEGIN
  * ### Creating a JSON Object
  *
  * - ``makeJSONObjectWithData:``
+ *
+ * ### Creating JSON Data
+ *
+ * - ``makeDataWithJSONObject:``
  */
 @interface FoundationJSONSerialization: ObjectiveCObject
 
@@ -67,7 +71,18 @@ C_ASSUME_NONNULL_BEGIN
  * - Returns: A FoundationKit object from the JSON data in data, or `nil` if an
  *   error occurs.
  */
-+ (ObjectiveCAnyObject)makeJSONObjectWithData:(FoundationData*)data;
++ (nullable ObjectiveCAnyObject)makeJSONObjectWithData:(FoundationData*)data;
+
+/**
+ * Returns JSON data from a FoundationKit object.
+ *
+ * - Parameter object: The object from which to generate JSON data. Must not be
+ *   `nil`.
+ *
+ * - Returns: JSON data for object, or `nil` if an internal error occurs. The
+ *   resulting data is encoded in UTF-8.
+ */
++ (nullable FoundationData*)makeDataWithJSONObject:(ObjectiveCAnyObject)object;
 
 @end
 

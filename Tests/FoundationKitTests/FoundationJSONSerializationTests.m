@@ -40,6 +40,12 @@ C_ASSUME_NONNULL_BEGIN
     [FoundationJSONSerialization makeJSONObjectWithData:jsonData];
   XCTAssertTrue([jsonObject isKindOfClass:FoundationArray.class]);
   XCTAssertEqual(((FoundationArray*)jsonObject).count, 0);
+  jsonData = [FoundationJSONSerialization makeDataWithJSONObject:jsonObject];
+  jsonNSData = [NSData dataWithBytes:jsonData.bytes length:jsonData.count];
+  XCTAssertTrue(
+    [jsonString isEqual:[[NSString alloc] initWithData:jsonNSData
+                                              encoding:NSUTF8StringEncoding]]
+  );
 
   jsonString = @"{}";
   jsonNSData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
@@ -48,8 +54,14 @@ C_ASSUME_NONNULL_BEGIN
   jsonObject = [FoundationJSONSerialization makeJSONObjectWithData:jsonData];
   XCTAssertTrue([jsonObject isKindOfClass:FoundationDictionary.class]);
   XCTAssertEqual(((FoundationDictionary*)jsonObject).count, 0);
+  jsonData = [FoundationJSONSerialization makeDataWithJSONObject:jsonObject];
+  jsonNSData = [NSData dataWithBytes:jsonData.bytes length:jsonData.count];
+  XCTAssertTrue(
+    [jsonString isEqual:[[NSString alloc] initWithData:jsonNSData
+                                              encoding:NSUTF8StringEncoding]]
+  );
 
-  jsonString = @"{\"status\":\"ok\",\"code\":200}";
+  jsonString = @"{\"code\":200,\"status\":\"ok\"}";
   jsonNSData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
   jsonData = [FoundationData makeDataWithBytes:jsonNSData.bytes
                                          count:jsonNSData.length];
@@ -66,8 +78,14 @@ C_ASSUME_NONNULL_BEGIN
     ((FoundationNumber*)((FoundationDictionary*)jsonObject)[key]).integerValue,
     200
   );
+  jsonData = [FoundationJSONSerialization makeDataWithJSONObject:jsonObject];
+  jsonNSData = [NSData dataWithBytes:jsonData.bytes length:jsonData.count];
+  XCTAssertTrue(
+    [jsonString isEqual:[[NSString alloc] initWithData:jsonNSData
+                                              encoding:NSUTF8StringEncoding]]
+  );
 
-  jsonString = @"{\"status\":\"ok\",\"data\":[{\"name\":\"Alice\"}]}";
+  jsonString = @"{\"data\":[{\"name\":\"Alice\"}],\"status\":\"ok\"}";
   jsonNSData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
   jsonData = [FoundationData makeDataWithBytes:jsonNSData.bytes
                                          count:jsonNSData.length];
@@ -84,6 +102,12 @@ C_ASSUME_NONNULL_BEGIN
   let key3 = [FoundationString makeStringWithCString:"name"];
   let value3 = [FoundationString makeStringWithCString:"Alice"];
   XCTAssertTrue([firstItem[key3] isEqual:value3]);
+  jsonData = [FoundationJSONSerialization makeDataWithJSONObject:jsonObject];
+  jsonNSData = [NSData dataWithBytes:jsonData.bytes length:jsonData.count];
+  XCTAssertTrue(
+    [jsonString isEqual:[[NSString alloc] initWithData:jsonNSData
+                                              encoding:NSUTF8StringEncoding]]
+  );
 }
 
 @end

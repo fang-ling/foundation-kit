@@ -17,6 +17,7 @@
  *  limitations under the License.
  */
 
+#import "FoundationEnumerable.h"
 #import "../Sorting/FoundationComparable.h"
 
 #import <CKit/CKit.h>
@@ -81,12 +82,21 @@ C_ASSUME_NONNULL_BEGIN
  *
  * ### Accessing Values Using Subscripting
  *
- * In addition to the provided instance methods, such as ``objectForKey:``, you
- * can access ``FoundationDictionary`` values by their keys using
+ * You can access ``FoundationDictionary`` values by their keys using
  * _subscripting_.
  *
  *   ```objective-c
  *   let value = dictionary[@"aString"];
+ *   ```
+ *
+ * ### Enumerating Entries Using for-in Loops
+ *
+ * You can enumerate ``FoundationDictionary`` entries using for-in loops.
+ *
+ *   ```objective-c
+ *   for (let key in dictionary) {
+ *     ObjectiveCAnyObject value = dictionary[key];
+ *   }
  *   ```
  *
  * ### Subclassing Notes
@@ -111,8 +121,14 @@ C_ASSUME_NONNULL_BEGIN
  * ### Accessing Keys and Values
  *
  * - ``objectForKeyedSubscript:``
+ *
+ * ### Enumerating Dictionaries
+ *
+ * - ``countByEnumeratingWithState:objects:count:``
  */
-@interface FoundationDictionary<Key, Value>: ObjectiveCObject
+@interface FoundationDictionary<Key, Value>: ObjectiveCObject <
+  FoundationEnumerable
+>
 
 /**
  * The number of entries in the dictionary.
@@ -167,6 +183,27 @@ C_ASSUME_NONNULL_BEGIN
  */
 - (Value)
   objectForKeyedSubscript:(Key<ObjectiveCCopyable, FoundationComparable>)key;
+
+/**
+ * Returns by reference a C array of objects over which the sender should
+ * iterate.
+ *
+ * You shouldn't need to call this method directly. Instead, this method is
+ * called when enumerate the dictionary using for-in loops.
+ *
+ * - Parameters:
+ *   - state: Context information that is used in the enumeration to, in
+ *     addition to other possibilities, ensure that the collection has not been
+ *     mutated.
+ *   - buffer: A C array of objects over which the sender is to iterate.
+ *   - count: The maximum number of objects to return in `buffer`.
+ *
+ * - Returns: The number of objects returned in buffer. Returns `0` when the
+ *   iteration is finished.
+ */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count;
 
 @end
 

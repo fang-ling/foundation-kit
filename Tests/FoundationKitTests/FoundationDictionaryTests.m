@@ -51,6 +51,14 @@ C_ASSUME_NONNULL_BEGIN
   dictionary[key] = @"Siamese";
   XCTAssertEqual(dictionary.count, 2);
   XCTAssertTrue([@"Siamese" isEqual:dictionary[key]]);
+
+  for (ObjectiveCAnyObject key in dictionary) {
+    if ([key isEqual:[FoundationString makeStringWithCString:"Breed"]]) {
+      XCTAssertTrue([@"Siamese" isEqual:dictionary[key]]);
+    } else if ([key isEqual:[FoundationString makeStringWithCString:"Name"]]) {
+      XCTAssertTrue([@"Tracy" isEqual:dictionary[key]]);
+    }
+  }
 }
 
 @end

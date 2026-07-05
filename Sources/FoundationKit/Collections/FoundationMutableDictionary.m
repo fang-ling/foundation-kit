@@ -19,14 +19,17 @@
 
 #import "FoundationMutableDictionary.h"
 
-#import "FoundationCoreFoundationMutableDictionary.h"
+#import "FoundationCoreFoundationDictionary.h"
 
 C_ASSUME_NONNULL_BEGIN
 
 @implementation FoundationMutableDictionary
 
 + (instancetype)makeDictionary {
-  return [[_FoundationCoreFoundationMutableDictionary alloc] init];
+  return [[_FoundationCoreFoundationDictionary alloc] initWithObjects:null
+                                                              forKeys:null
+                                                                count:0
+                                                            isMutable:yes];
 }
 
 - (void)setObject:(ObjectiveCAnyObject)object
@@ -39,6 +42,15 @@ forKeyedSubscript:(ObjectiveCAnyObject)key {
 - (void)removeObjectForKey:(ObjectiveCAnyObject)key {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD removeObjectForKey: IS BEING CALLED. ***"
+  );
+}
+
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD countByEnumeratingWithState:objects:count: "
+    "IS BEING CALLED. ***"
   );
 }
 

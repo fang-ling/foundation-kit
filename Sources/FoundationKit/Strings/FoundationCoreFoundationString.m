@@ -162,13 +162,26 @@ C_ASSUME_NONNULL_BEGIN
 }
 
 - (CInteger)count {
-  return CoreFoundationStringGetCount((bridging CoreFoundationString*)self);
+  return CoreFoundationStringGetCount((bridging CoreFoundationAnyObject*)self);
+}
+
+- (CInteger)cStringCount {
+  return CoreFoundationStringGetCStringCount(
+    (bridging CoreFoundationAnyObject*)self
+  );
 }
 
 - (void)copyCharacters:(CInteger32*)characters {
   CoreFoundationStringCopyCharacters(
-    (bridging CoreFoundationString*)self,
+    (bridging CoreFoundationAnyObject*)self,
     characters
+  );
+}
+
+- (void)copyCString:(CInteger8*)cString {
+  CoreFoundationStringCopyCString(
+    (bridging CoreFoundationAnyObject*)self,
+    cString
   );
 }
 

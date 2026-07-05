@@ -19,10 +19,12 @@
 
 #import "FoundationCoreFoundationDictionary.h"
 
+#import "FoundationEnumerable.h"
 #import "../Sorting/FoundationComparisonResult.h"
 #import "../Sorting/FoundationComparable.h"
 
 #import <CoreFoundationKit/CoreFoundationKit.h>
+#import <ObjectiveCKit/ObjectiveCKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
@@ -41,6 +43,8 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
 
 @interface _FoundationCoreFoundationDictionary () {
   _CoreFoundationRedBlackTree* tree;
+  CInteger mutationCount;
+  CBoolean isMutable;
 }
 
 @end
@@ -49,7 +53,8 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
 
 - (instancetype)initWithObjects:(nillable ObjectiveCAnyObject const[])objects
                         forKeys:(nillable ObjectiveCAnyObject const[])keys
-                          count:(CInteger)count {
+                          count:(CInteger)count
+                      isMutable:(CBoolean)mutable {
   if (!(self = [super init])) {
     return nil;
   }
@@ -58,6 +63,8 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
     sizeof(_CoreFoundationDictionaryEntry),
     FoundationCoreFoundationDictionaryCompare
   );
+  self->mutationCount = 0l;
+  self->isMutable = mutable;
 
   for (let i = 0; i < count; i += 1) {
     let entry = (_CoreFoundationDictionaryEntry){
@@ -88,6 +95,60 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
   );
 }
 
+- (void)setObject:(ObjectiveCAnyObject)object
+forKeyedSubscript:(ObjectiveCAnyObject)key {
+  CoreFoundationMutableDictionarySetValue(
+    (bridging CoreFoundationAnyObject*)self,
+    (bridging CoreFoundationAnyObject*)[key copy],
+    (bridging CoreFoundationAnyObject*)object
+  );
+}
+
+- (void)removeObjectForKey:(ObjectiveCAnyObject)key {
+  CDebuggingHaltWithMessage("*** TODO ***");
+}
+
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  if (state->state == 0) {
+    state->mutationsBuffer = &self->mutationCount;
+    state->extra[0] = 0l;
+    state->state = 1;
+  }
+
+  let entry = (_CoreFoundationDictionaryEntry){ 0 };
+  _CoreFoundationDictionaryGetEntryAtIndex(
+    (bridging CoreFoundationDictionary*)(self),
+    state->extra[0],
+    &entry
+  );
+
+  state->itemsBuffer = buffer;
+
+  let objectCount = 0l;
+  while (state->extra[0] < self.count && objectCount < count) {
+    let entry = (_CoreFoundationDictionaryEntry){ 0 };
+    _CoreFoundationDictionaryGetEntryAtIndex(
+      (bridging CoreFoundationDictionary*)(self),
+      state->extra[0],
+      &entry
+    );
+
+    if (!entry.key) {
+      break;
+    }
+
+    *buffer = (bridging ObjectiveCAnyObject)entry.key;
+    buffer += 1;
+
+    state->extra[0] += 1;
+    objectCount += 1;
+  }
+
+  return objectCount;
+}
+
 @end
 
 /*
@@ -97,12 +158,14 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
 CoreFoundationAnyObject* FoundationCoreFoundationDictionaryInitialize(
   ObjectiveCAnyObject nonnil const objects[nonnil],
   ObjectiveCAnyObject nonnil const keys[nonnil],
-  CInteger count
+  CInteger count,
+  CBoolean isMutable
 ) {
   let dictionary =
     [[_FoundationCoreFoundationDictionary alloc] initWithObjects:objects
                                                          forKeys:keys
-                                                           count:count];
+                                                           count:count
+                                                       isMutable:isMutable];
 
   return (retainedbridging CoreFoundationAnyObject*)dictionary;
 }

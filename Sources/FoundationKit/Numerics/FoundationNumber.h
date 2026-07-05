@@ -17,6 +17,7 @@
  *  limitations under the License.
  */
 
+#import "../Sorting/FoundationComparable.h"
 #import "../Values/FoundationValue.h"
 
 #import <CKit/CKit.h>
@@ -24,7 +25,10 @@
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface FoundationNumber: FoundationValue
+@interface FoundationNumber: FoundationValue <
+  ObjectiveCCopyable,
+  FoundationComparable
+>
 
 /**
  * The number object's value expressed as a ``CInteger8``, converted as
