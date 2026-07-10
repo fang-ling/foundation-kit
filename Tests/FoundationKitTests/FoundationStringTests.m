@@ -110,6 +110,13 @@ C_ASSUME_NONNULL_BEGIN
     [string1 compare:string3],
     kFoundationComparisonResultSameOrder
   );
+
+  string1 = [FoundationString makeStringWithCString:"Name"];
+  string2 = [FoundationString makeStringWithCString:"Breed"];
+  XCTAssertEqual(
+    [string1 compare:string2],
+    kFoundationComparisonResultDescendingOrder
+  );
 }
 
 @end

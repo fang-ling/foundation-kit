@@ -93,18 +93,40 @@ C_ASSUME_NONNULL_BEGIN
 
 /* MARK: - FoundationComparable Implementations */
 - (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
-  let comparisonResult = CStringCompare(
-    self->_cString,
-    ((_FoundationConstantString*)object)->_cString
-  );
-
-  if (comparisonResult < 0) {
-    return kFoundationComparisonResultAscendingOrder;
-  } else if (comparisonResult == 0) {
+  if (object == self) {
     return kFoundationComparisonResultSameOrder;
   }
 
-  return kFoundationComparisonResultDescendingOrder;
+  if (![object isKindOfClass:FoundationString.class]) {
+    CDebuggingHaltWithMessage("*** INVALID ARGUMENT. ***");
+  }
+
+  let characters = (CInteger32*)CMemoryAllocate(
+    (self.count + 1) * sizeof(CInteger32)
+  );
+  [self copyCharacters:characters];
+  characters[self.count] = '\0';
+
+  let otherString = (FoundationString*)object;
+  let otherStringCharacters = (CInteger32*)CMemoryAllocate(
+    (otherString.count + 1) * sizeof(CInteger32)
+  );
+  [otherString copyCharacters:otherStringCharacters];
+  otherStringCharacters[otherString.count] = '\0';
+
+  let result = CStringCompareUTF32Characters(characters, otherStringCharacters);
+
+  let comparisonResult = kFoundationComparisonResultSameOrder;
+  if (result < 0) {
+    comparisonResult = kFoundationComparisonResultAscendingOrder;
+  } else if (result > 0) {
+    comparisonResult = kFoundationComparisonResultDescendingOrder;
+  }
+
+  CMemoryDeallocate(characters);
+  CMemoryDeallocate(otherStringCharacters);
+
+  return comparisonResult;
 }
 
 /* MARK: - FoundationStringConvertible Implementations */
