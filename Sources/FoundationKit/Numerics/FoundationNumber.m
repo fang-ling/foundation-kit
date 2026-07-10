@@ -40,16 +40,6 @@ C_ASSUME_NONNULL_BEGIN
     [[_FoundationCoreFoundationNumber alloc] initWithInteger32:value];
 }
 
-+ (instancetype)makeNumberWithInteger64:(CInteger64)value {
-  return
-    [[_FoundationCoreFoundationNumber alloc] initWithInteger64:value];
-}
-
-+ (instancetype)makeNumberWithInteger:(CInteger)value {
-  return
-    [[_FoundationCoreFoundationNumber alloc] initWithInteger:value];
-}
-
 + (instancetype)makeNumberWithUnsignedInteger8:(CUnsignedInteger8)value {
   return
     [[_FoundationCoreFoundationNumber alloc] initWithUnsignedInteger8:value];
@@ -63,11 +53,6 @@ C_ASSUME_NONNULL_BEGIN
 + (instancetype)makeNumberWithUnsignedInteger32:(CUnsignedInteger32)value {
   return
     [[_FoundationCoreFoundationNumber alloc] initWithUnsignedInteger32:value];
-}
-
-+ (instancetype)makeNumberWithUnsignedInteger64:(CUnsignedInteger64)value {
-  return
-    [[_FoundationCoreFoundationNumber alloc] initWithUnsignedInteger64:value];
 }
 
 + (instancetype)makeNumberWithUnsignedInteger:(CUnsignedInteger)value {
