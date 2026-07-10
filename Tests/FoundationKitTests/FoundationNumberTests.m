@@ -31,37 +31,6 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationNumberTests
 
 - (void)testFoundationNumber {
-//  var number = FoundationNumber.make(withUnsignedInteger64: 19358)
-//  #expect(number.unsignedInteger64Value == 19358)
-//
-//  // Test bridging.
-//  var unsignedInteger64Value = CUnsignedInteger64(19342)
-//  number = Unmanaged<FoundationNumber>
-//    .fromOpaque(
-//      UnsafeRawPointer(
-//        CoreFoundationNumberInitialize(
-//          kCoreFoundationNumberTypeUnsignedInteger64,
-//          &unsignedInteger64Value
-//        )
-//      )
-//    )
-//    .takeRetainedValue()
-//  #expect(number.unsignedInteger64Value == 19342)
-//
-//  unsignedInteger64Value = CUnsignedInteger64(12333)
-//  number = Unmanaged<FoundationNumber>
-//    .fromOpaque(
-//      UnsafeRawPointer(
-//        CoreFoundationNumberInitialize(
-//          kCoreFoundationNumberTypeUnsignedInteger64,
-//          &unsignedInteger64Value
-//        )
-//      )
-//    )
-//    .takeUnretainedValue()
-//  #expect(number.unsignedInteger64Value == 12333)
-//  CoreFoundationRelease(Unmanaged.passUnretained(number).toOpaque())
-
   let number1 = [FoundationNumber numberWithLongLong:19358];
   let number2 = [FoundationNumber numberWithLongLong:19348];
   XCTAssertEqual(

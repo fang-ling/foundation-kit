@@ -80,26 +80,27 @@ C_ASSUME_NONNULL_BEGIN
     [[_FoundationCoreFoundationNumber alloc] initWithFloatingPoint32:value];
 }
 
-+ (instancetype)makeNumberWithFloatingPoint64:(CFloatingPoint64)value {
-  return
-    [[_FoundationCoreFoundationNumber alloc] initWithFloatingPoint64:value];
-}
-
 + (instancetype)makeNumberWithFloatingPoint:(CFloatingPoint)value {
   return
     [[_FoundationCoreFoundationNumber alloc] initWithFloatingPoint:value];
 }
 
++ (instancetype)numberWithLong:(CInteger)value {
+  return [[_FoundationCoreFoundationNumber alloc] initWithInteger:value];
+}
+
 + (instancetype)numberWithLongLong:(CInteger64)value {
-  return [FoundationNumber makeNumberWithInteger64:value];
+  return [[_FoundationCoreFoundationNumber alloc] initWithInteger64:value];
 }
 
 + (instancetype)numberWithUnsignedLongLong:(CUnsignedInteger64)value {
-  return [FoundationNumber makeNumberWithUnsignedInteger64:value];
+  return
+    [[_FoundationCoreFoundationNumber alloc] initWithUnsignedInteger64:value];
 }
 
 + (instancetype)numberWithDouble:(CFloatingPoint64)value {
-  return [FoundationNumber makeNumberWithFloatingPoint64:value];
+  return
+    [[_FoundationCoreFoundationNumber alloc] initWithFloatingPoint64:value];
 }
 
 - (CInteger8)integer8Value {
