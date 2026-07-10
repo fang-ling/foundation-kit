@@ -105,7 +105,10 @@ forKeyedSubscript:(ObjectiveCAnyObject)key {
 }
 
 - (void)removeObjectForKey:(ObjectiveCAnyObject)key {
-  CDebuggingHaltWithMessage("*** TODO ***");
+  CoreFoundationMutableDictionaryRemoveValue(
+    (bridging CoreFoundationAnyObject*)self,
+    (bridging CoreFoundationAnyObject*)[key copy]
+  );
 }
 
 - (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state

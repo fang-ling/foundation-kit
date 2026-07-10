@@ -59,6 +59,11 @@ C_ASSUME_NONNULL_BEGIN
       XCTAssertTrue([@"Tracy" isEqual:dictionary[key]]);
     }
   }
+
+  [dictionary removeObjectForKey:key];
+  XCTAssertEqual(dictionary.count, 1);
+  key = [FoundationString makeStringWithCString:"Name"];
+  XCTAssertTrue([@"Tracy" isEqual:dictionary[key]]);
 }
 
 @end
