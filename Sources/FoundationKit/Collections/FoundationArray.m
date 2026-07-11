@@ -48,6 +48,16 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+/* MARK: - FoundationEnumerable Implementations */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD countByEnumeratingWithState:objects:count: "
+    "IS BEING CALLED. ***"
+  );
+}
+
 @end
 
 C_ASSUME_NONNULL_END

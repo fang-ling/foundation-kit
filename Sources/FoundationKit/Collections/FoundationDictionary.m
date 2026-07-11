@@ -52,6 +52,7 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+/* MARK: - FoundationEnumerable Implementations */
 - (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count {

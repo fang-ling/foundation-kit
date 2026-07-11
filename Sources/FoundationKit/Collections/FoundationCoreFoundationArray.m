@@ -24,7 +24,7 @@
 C_ASSUME_NONNULL_BEGIN
 
 @interface _FoundationCoreFoundationArray() {
-  CoreFoundationAnyObject** _objects;
+  owning ObjectiveCAnyObject* _objects;
   CInteger _count;
   CInteger _capacity;
   CInteger _mutationCount;
@@ -42,13 +42,16 @@ C_ASSUME_NONNULL_BEGIN
     return nil;
   }
 
-  self->_objects = CMemoryAllocate(count * sizeof(const void*));
+  self->_objects = (owning ObjectiveCAnyObject*)CMemoryAllocate(
+    count,
+    sizeof(const void*)
+  );
   self->_count = count;
   self->_capacity = count;
   self->_isMutable = isMutable;
 
   for (let i = 0l; i < count; i += 1) {
-    self->_objects[i] = (retainedbridging CoreFoundationAnyObject*)(objects[i]);
+    self->_objects[i] = objects[i];
   }
 
   return self;
@@ -56,9 +59,7 @@ C_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc {
   for (let i = 0; i < self->_count; i += 1) {
-    ObjectiveCAnyObject object =
-      (transferredbridging ObjectiveCAnyObject)self->_objects[i];
-    object = nil;
+    self->_objects[i] = nil;
   }
   CMemoryDeallocate(self->_objects);
 }
@@ -112,6 +113,22 @@ C_ASSUME_NONNULL_BEGIN
       [self removeObjectAtIndex:i];
     }
   }
+}
+
+/* MARK: - FoundationEnumerable Implementations */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  if (state->state == 0) {
+    state->mutationsBuffer = &self->_mutationCount;
+    state->itemsBuffer =
+      (unsafeunretained ObjectiveCAnyObject*)(void*)self->_objects;
+    state->state = 1;
+
+    return self->_count;
+  }
+
+  return 0;
 }
 
 @end

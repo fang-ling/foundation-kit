@@ -99,6 +99,18 @@ C_ASSUME_NONNULL_BEGIN
                                              count:3];
   XCTAssertEqual(array.count, 3);
   XCTAssertTrue([((Cat*)array[2]).name isEqual:@"Diana"]);
+
+  let i = 0;
+  for (Cat* cat in array) {
+    switch (i) {
+      case 0: XCTAssertTrue([cat.name isEqual:@"Alice"]); break;
+      case 1: XCTAssertTrue([cat.name isEqual:@"Tracy"]); break;
+      case 2: XCTAssertTrue([cat.name isEqual:@"Diana"]); break;
+    }
+
+    i += 1;
+  }
+  XCTAssertEqual(i, 3);
 }
 
 @end

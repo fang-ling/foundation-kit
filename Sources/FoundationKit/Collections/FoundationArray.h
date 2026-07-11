@@ -17,6 +17,8 @@
  *  limitations under the License.
  */
 
+#import "FoundationEnumerable.h"
+
 #import <CKit/CKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
 
@@ -46,7 +48,9 @@ C_ASSUME_NONNULL_BEGIN
  *
  * - ``objectAtIndexedSubscript:``
  */
-@interface FoundationArray<Element>: ObjectiveCObject
+@interface FoundationArray<Element>: ObjectiveCObject <
+  FoundationEnumerable
+>
 
 /**
  * The number of elements in the array.
