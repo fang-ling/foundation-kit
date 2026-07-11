@@ -49,7 +49,8 @@ C_ASSUME_NONNULL_BEGIN
  * - ``objectAtIndexedSubscript:``
  */
 @interface FoundationArray<Element>: ObjectiveCObject <
-  FoundationEnumerable
+  FoundationEnumerable,
+  ObjectiveCCopyable
 >
 
 /**

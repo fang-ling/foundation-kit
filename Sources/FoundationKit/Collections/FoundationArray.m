@@ -58,6 +58,11 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD copy IS BEING CALLED. ***");
+}
+
 @end
 
 C_ASSUME_NONNULL_END

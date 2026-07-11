@@ -131,6 +131,15 @@ C_ASSUME_NONNULL_BEGIN
   return 0;
 }
 
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  if (self->_isMutable) {
+    CDebuggingHaltWithMessage("TODO");
+  } else {
+    return self;
+  }
+}
+
 @end
 
 /*
