@@ -124,10 +124,10 @@ CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
     let array = (FoundationArray*)object;
 
     for (let i = 0; i < array.count; i += 1) {
-      ObjectiveCAnyObject item = [array objectAtIndex:i];
-
-      let childValue = FoundationJSONSerializationEncode(document, item);
-      CYYJSONMutableArrayAppendValue(arrayValue, childValue);
+      CYYJSONMutableArrayAppendValue(
+        arrayValue,
+        FoundationJSONSerializationEncode(document, array[i])
+      );
     }
 
     return arrayValue;

@@ -34,8 +34,8 @@ C_ASSUME_NONNULL_BEGIN
  *
  * ### Creating an Array
  *
- * - ``init``
- * - ``initWithObjects:``
+ * - ``makeArray``
+ * - ``arrayWithObjects:count:``
  *
  * ### Inspecting an Array
  *
@@ -44,7 +44,7 @@ C_ASSUME_NONNULL_BEGIN
  *
  * ### Accessing Elements
  *
- * - ``objectAtIndex:``
+ * - ``objectAtIndexedSubscript:``
  */
 @interface FoundationArray<Element>: ObjectiveCObject
 
@@ -77,16 +77,23 @@ C_ASSUME_NONNULL_BEGIN
                            count:(CInteger)count;
 
 /**
- * Returns the object located at the specified index.
+ * Returns the object at the specified index.
  *
  * If `index` is beyond the end of the array (that is, if `index` is greater
  * than or equal to the value returned by ``count``), the behavior is undefined.
+ *
+ * You shouldn't need to call this method directly. Instead, this method is
+ * called when accessing an object by index using subscripting.
+ *
+ *   ```objective-c
+ *   let value = array[3];
+ *   ```
  *
  * - Parameter index: An index within the bounds of the array.
  *
  * - Returns: The object located at index.
  */
-- (Element)objectAtIndex:(CInteger)index;
+- (Element)objectAtIndexedSubscript:(CInteger)index;
 
 @end
 

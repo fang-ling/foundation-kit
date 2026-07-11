@@ -26,22 +26,25 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationArray
 
 + (instancetype)makeArray {
-  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null count:0];
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null
+                                                           count:0
+                                                       isMutable:no];
 }
 
 + (instancetype)arrayWithObjects:(ObjectiveCAnyObject nillable const[])objects
                            count:(CInteger)count {
   return [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
-                                                           count:count];
+                                                           count:count
+                                                       isMutable:no];
 }
 
 - (CInteger)count {
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
-- (ObjectiveCAnyObject)objectAtIndex:(CInteger)index {
+- (ObjectiveCAnyObject)objectAtIndexedSubscript:(CInteger)index {
   CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD objectAtIndex: IS BEING CALLED. ***"
+    "*** ABSTRACT METHOD objectAtIndexedSubscript: IS BEING CALLED. ***"
   );
 }
 

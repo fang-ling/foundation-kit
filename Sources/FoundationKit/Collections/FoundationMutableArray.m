@@ -19,14 +19,16 @@
 
 #import "FoundationMutableArray.h"
 
-#import "FoundationCoreFoundationMutableArray.h"
+#import "FoundationCoreFoundationArray.h"
 
 C_ASSUME_NONNULL_BEGIN
 
 @implementation FoundationMutableArray
 
 + (instancetype)makeArray {
-  return [[_FoundationCoreFoundationMutableArray alloc] init];
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null
+                                                           count:0
+                                                       isMutable:yes];
 }
 
 - (void)appendObject:(ObjectiveCAnyObject)object {

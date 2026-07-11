@@ -27,6 +27,8 @@ C_ASSUME_NONNULL_BEGIN
   CoreFoundationAnyObject** _objects;
   CInteger _count;
   CInteger _capacity;
+  CInteger _mutationCount;
+  CBoolean _isMutable;
 }
 
 @end
@@ -34,7 +36,8 @@ C_ASSUME_NONNULL_BEGIN
 @implementation _FoundationCoreFoundationArray
 
 - (instancetype)initWithObjects:(nillable ObjectiveCAnyObject const[])objects
-                          count:(CInteger)count {
+                          count:(CInteger)count
+                      isMutable:(CBoolean)isMutable {
   if (!(self = [super init])) {
     return nil;
   }
@@ -42,9 +45,9 @@ C_ASSUME_NONNULL_BEGIN
   self->_objects = CMemoryAllocate(count * sizeof(const void*));
   self->_count = count;
   self->_capacity = count;
+  self->_isMutable = isMutable;
 
-  let i = 0;
-  for (; i < count; i += 1) {
+  for (let i = 0l; i < count; i += 1) {
     self->_objects[i] = (retainedbridging CoreFoundationAnyObject*)(objects[i]);
   }
 
@@ -61,18 +64,54 @@ C_ASSUME_NONNULL_BEGIN
 }
 
 - (CInteger)count {
-  return CoreFoundationArrayGetCount((bridging CoreFoundationArray*)self);
+  return CoreFoundationMutableArrayGetCount(
+    (bridging CoreFoundationMutableArray*)self
+  );
 }
 
-- (ObjectiveCAnyObject)objectAtIndex:(CInteger)index {
-  return (bridging ObjectiveCAnyObject)CoreFoundationArrayGetObjectAtIndex(
-    (bridging CoreFoundationArray*)self,
+- (ObjectiveCAnyObject)objectAtIndexedSubscript:(CInteger)index {
+  return
+    (bridging ObjectiveCAnyObject)CoreFoundationMutableArrayGetObjectAtIndex(
+      (bridging CoreFoundationMutableArray*)self,
+      index
+    );
+}
+
+- (void)appendObject:(ObjectiveCAnyObject)object {
+  CoreFoundationMutableArrayAppendObject(
+    (bridging CoreFoundationMutableArray*)self,
+    (bridging CoreFoundationAnyObject*)object
+  );
+}
+
+- (void)insertObject:(ObjectiveCAnyObject)object atIndex:(CInteger)index {
+  CoreFoundationMutableArrayInsertObjectAtIndex(
+    (bridging CoreFoundationMutableArray*)self,
+    (bridging CoreFoundationAnyObject*)object,
     index
   );
 }
 
-- (ObjectiveCAnyObject)copy {
-  return self;
+- (void)removeLastObject {
+  CoreFoundationMutableArrayRemoveLastObject(
+    (bridging CoreFoundationMutableArray*)self
+  );
+}
+
+- (void)removeObjectAtIndex:(CInteger)index {
+  CoreFoundationMutableArrayRemoveObjectAtIndex(
+    (bridging CoreFoundationMutableArray*)self,
+    index
+  );
+}
+
+- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))
+                                shouldBeRemoved {
+  for (let i = self.count - 1; i >= 0; i -= 1) {
+    if (shouldBeRemoved(self[i])) {
+      [self removeObjectAtIndex:i];
+    }
+  }
 }
 
 @end
@@ -83,10 +122,13 @@ C_ASSUME_NONNULL_BEGIN
  */
 CoreFoundationAnyObject* FoundationCoreFoundationArrayInitialize(
   ObjectiveCAnyObject nonnil const objects[nonnil],
-  CInteger count
+  CInteger count,
+  CBoolean isMutable
 ) {
-  let array = [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
-                                                                count:count];
+  let array =
+    [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
+                                                      count:count
+                                                  isMutable:isMutable];
 
   return (retainedbridging CoreFoundationAnyObject*)array;
 }

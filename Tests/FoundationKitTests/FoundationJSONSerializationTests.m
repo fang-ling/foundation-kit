@@ -96,7 +96,7 @@ C_ASSUME_NONNULL_BEGIN
   let value2 = (FoundationArray*)((FoundationDictionary*)jsonObject)[key2];
   XCTAssertTrue([value2 isKindOfClass:FoundationArray.class]);
   XCTAssertEqual(value2.count, 1);
-  let firstItem = (FoundationDictionary*)[value2 objectAtIndex:0];
+  let firstItem = (FoundationDictionary*)value2[0];
   XCTAssertTrue([firstItem isKindOfClass:FoundationDictionary.class]);
   XCTAssertEqual(firstItem.count, 1);
   let key3 = [FoundationString makeStringWithCString:"name"];

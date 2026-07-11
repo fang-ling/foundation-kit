@@ -59,15 +59,15 @@ C_ASSUME_NONNULL_BEGIN
   XCTAssertEqual(array.count, 0);
 
   [array appendObject:[[Cat alloc] initWithName:@"Alice"]];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:0]).name isEqual:@"Alice"]);
+  XCTAssertTrue([((Cat*)array[0]).name isEqual:@"Alice"]);
   XCTAssertEqual(array.count, 1);
 
   [array appendObject:[[Cat alloc] initWithName:@"Tracy"]];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:1]).name isEqual:@"Tracy"]);
+  XCTAssertTrue([((Cat*)array[1]).name isEqual:@"Tracy"]);
   XCTAssertEqual(array.count, 2);
 
   [array removeLastObject];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:0]).name isEqual:@"Alice"]);
+  XCTAssertTrue([((Cat*)array[0]).name isEqual:@"Alice"]);
   XCTAssertEqual(array.count, 1);
 
   [array removeLastObject];
@@ -78,16 +78,16 @@ C_ASSUME_NONNULL_BEGIN
   [array appendObject:[[Cat alloc] initWithName:@"Clara"]];
 
   [array insertObject:[[Cat alloc] initWithName:@"Alice"] atIndex:0];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:0]).name isEqual:@"Alice"]);
+  XCTAssertTrue([((Cat*)array[0]).name isEqual:@"Alice"]);
 
   [array insertObject:[[Cat alloc] initWithName:@"Tracy"] atIndex:0];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:0]).name isEqual:@"Tracy"]);
+  XCTAssertTrue([((Cat*)array[0]).name isEqual:@"Tracy"]);
 
   [array removeObjectAtIndex:0];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:0]).name isEqual:@"Alice"]);
+  XCTAssertTrue([((Cat*)array[0]).name isEqual:@"Alice"]);
 
   [array removeObjectAtIndex:1];
-  XCTAssertTrue([((Cat*)[array objectAtIndex:1]).name isEqual:@"Clara"]);
+  XCTAssertTrue([((Cat*)array[1]).name isEqual:@"Clara"]);
 
   ObjectiveCAnyObject objects[] = {
     [[Cat alloc] initWithName:@"Alice"],
@@ -98,7 +98,7 @@ C_ASSUME_NONNULL_BEGIN
   array = [FoundationMutableArray arrayWithObjects:objects
                                              count:3];
   XCTAssertEqual(array.count, 3);
-  XCTAssertTrue([((Cat*)[array objectAtIndex:2]).name isEqual:@"Diana"]);
+  XCTAssertTrue([((Cat*)array[2]).name isEqual:@"Diana"]);
 }
 
 @end
