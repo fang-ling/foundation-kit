@@ -31,6 +31,11 @@ C_ASSUME_NONNULL_BEGIN
                                                        isMutable:no];
 }
 
++ (instancetype)makeArrayWithArray:(FoundationArray*)array {
+  return [[_FoundationCoreFoundationArray alloc] initWithArray:array
+                                                     isMutable:no];
+}
+
 + (instancetype)arrayWithObjects:(ObjectiveCAnyObject nillable const[])objects
                            count:(CInteger)count {
   return [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
@@ -49,7 +54,7 @@ C_ASSUME_NONNULL_BEGIN
 }
 
 /* MARK: - FoundationEnumerable Implementations */
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count {
   CDebuggingHaltWithMessage(

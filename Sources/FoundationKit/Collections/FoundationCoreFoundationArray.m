@@ -57,6 +57,27 @@ C_ASSUME_NONNULL_BEGIN
   return self;
 }
 
+- (instancetype)initWithArray:(FoundationArray*)array
+                    isMutable:(CBoolean)isMutable {
+  if (!(self = [super init])) {
+    return nil;
+  }
+
+  self->_objects = (owning ObjectiveCAnyObject*)CMemoryAllocate(
+    array.count,
+    sizeof(const void*)
+  );
+  self->_count = array.count;
+  self->_capacity = array.count;
+  self->_isMutable = isMutable;
+
+  for (let i = 0l; i < array.count; i += 1) {
+    self->_objects[i] = array[i];
+  }
+
+  return self;
+}
+
 - (void)dealloc {
   for (let i = 0; i < self->_count; i += 1) {
     self->_objects[i] = nil;
@@ -116,7 +137,7 @@ C_ASSUME_NONNULL_BEGIN
 }
 
 /* MARK: - FoundationEnumerable Implementations */
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count {
   if (state->state == 0) {

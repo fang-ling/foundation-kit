@@ -37,6 +37,7 @@ C_ASSUME_NONNULL_BEGIN
  * ### Creating an Array
  *
  * - ``makeArray``
+ * - ``makeWithArray:``
  * - ``arrayWithObjects:count:``
  *
  * ### Inspecting an Array
@@ -58,7 +59,23 @@ C_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) CInteger count;
 
+/**
+ * Creates and returns an empty array.
+ *
+ * This method is used by mutable subclasses of ``FoundationArray``.
+ *
+ * - Returns: An empty array.
+ */
 + (instancetype)makeArray;
+
+/**
+ * Creates and returns an array containing the objects in another given array.
+ *
+ * - Parameter array: An array.
+ *
+ * - Returns: An array containing the objects in an array.
+ */
++ (instancetype)makeArrayWithArray:(FoundationArray*)array;
 
 /**
  * Creates and returns an array that includes a given number of objects from a

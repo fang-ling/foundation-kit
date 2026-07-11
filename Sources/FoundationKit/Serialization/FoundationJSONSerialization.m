@@ -68,7 +68,7 @@ ObjectiveCAnyObject FoundationJSONSerializationDecode(CYYJSONValue* value) {
         [array appendObject:FoundationJSONSerializationDecode(item)];
       }
 
-      return array; /* TODO: immutable copy. */
+      return [FoundationArray makeArrayWithArray:array];
     }
 
     case kCYYJSONTypeDictionary: {

@@ -112,7 +112,7 @@ forKeyedSubscript:(ObjectiveCAnyObject)key {
 }
 
 /* MARK: - FoundationEnumerable Implementations */
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count {
   if (state->state == 0) {

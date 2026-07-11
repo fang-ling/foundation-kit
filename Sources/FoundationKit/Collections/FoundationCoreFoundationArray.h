@@ -30,6 +30,9 @@ C_ASSUME_NONNULL_BEGIN
                           count:(CInteger)count
                       isMutable:(CBoolean)isMutable;
 
+- (instancetype)initWithArray:(FoundationArray*)array
+                    isMutable:(CBoolean)isMutable;
+
 @end
 
 C_ASSUME_NONNULL_END
