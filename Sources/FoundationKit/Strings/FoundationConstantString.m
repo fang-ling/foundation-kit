@@ -80,7 +80,8 @@ C_ASSUME_NONNULL_BEGIN
   }
 
   let otherCString = (CInteger8*)CMemoryAllocate(
-    (self->_cStringCount + 1) * sizeof(CInteger8)
+    self->_cStringCount + 1,
+    sizeof(CInteger8)
   );
   [otherString copyCString:otherCString];
 
@@ -102,14 +103,16 @@ C_ASSUME_NONNULL_BEGIN
   }
 
   let characters = (CInteger32*)CMemoryAllocate(
-    (self.count + 1) * sizeof(CInteger32)
+    self.count + 1,
+    sizeof(CInteger32)
   );
   [self copyCharacters:characters];
   characters[self.count] = '\0';
 
   let otherString = (FoundationString*)object;
   let otherStringCharacters = (CInteger32*)CMemoryAllocate(
-    (otherString.count + 1) * sizeof(CInteger32)
+    otherString.count + 1,
+    sizeof(CInteger32)
   );
   [otherString copyCharacters:otherStringCharacters];
   otherStringCharacters[otherString.count] = '\0';

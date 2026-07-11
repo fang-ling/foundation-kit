@@ -34,7 +34,7 @@ C_ASSUME_NONNULL_BEGIN
 + (instancetype)makeDataWithBytes:(const void*)bytes count:(CInteger)count {
   let data = [[FoundationData alloc] init];
 
-  data.bytes = CMemoryAllocate(count);
+  data.bytes = CMemoryAllocate(count, sizeof(CInteger8));
   CMemoryCopy((void*)data.bytes, bytes, count);
   data.count = count;
 

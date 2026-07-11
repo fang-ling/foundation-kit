@@ -114,7 +114,10 @@ CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
     let string = (FoundationString*)object;
 
     let cStringCount = string.cStringCount;
-    let cString = (CInteger8*)CMemoryAllocate(cStringCount + 1);
+    let cString = (CInteger8*)CMemoryAllocate(
+      cStringCount + 1,
+      sizeof(CInteger8)
+    );
     [string copyCString:cString];
 
     return CYYJSONMutableValueInitializeFromString(document, cString);
@@ -144,7 +147,10 @@ CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
       let keyString = (FoundationString*)key;
 
       let keyCStringCount = keyString.cStringCount;
-      let keyCString = (CInteger8*)CMemoryAllocate(keyCStringCount + 1);
+      let keyCString = (CInteger8*)CMemoryAllocate(
+        keyCStringCount + 1,
+        sizeof(CInteger8)
+      );
       [keyString copyCString:keyCString];
 
       let keyValue = CYYJSONMutableValueInitializeFromString(
