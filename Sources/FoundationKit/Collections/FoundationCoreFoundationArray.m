@@ -136,6 +136,17 @@ C_ASSUME_NONNULL_BEGIN
   }
 }
 
+- (FoundationArray*)
+  map:(ObjectiveCAnyObject (^)(ObjectiveCAnyObject))transform {
+  let newArray = [FoundationMutableArray makeArray];
+
+  for (ObjectiveCAnyObject object in self) {
+    [newArray appendObject:transform(object)];
+  }
+
+  return [FoundationArray makeArrayWithArray:newArray];
+}
+
 /* MARK: - FoundationEnumerable Implementations */
 - (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer

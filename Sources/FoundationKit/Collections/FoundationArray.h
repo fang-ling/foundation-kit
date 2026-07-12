@@ -48,6 +48,10 @@ C_ASSUME_NONNULL_BEGIN
  * ### Accessing Elements
  *
  * - ``objectAtIndexedSubscript:``
+ *
+ * ### Transforming an Array
+ *
+ * - ``map:``
  */
 @interface FoundationArray<Element>: ObjectiveCObject <
   FoundationEnumerable,
@@ -116,6 +120,20 @@ C_ASSUME_NONNULL_BEGIN
  * - Returns: The object located at index.
  */
 - (Element)objectAtIndexedSubscript:(CInteger)index;
+
+/**
+ * Returns an array containing the results of mapping the given closure over the
+ * sequence's elements.
+ *
+ * - Parameter transform: A mapping closure. transform accepts an element of
+ *   this array as its parameter and returns a transformed value of the same or
+ *   of a different type.
+ *
+ * - Returns: An array containing the transformed elements of this array.
+ *
+ * - Complexity: O(_n_), where _n_ is the length of the array.
+ */
+- (FoundationArray*)map:(ObjectiveCAnyObject (^)(Element object))transform;
 
 @end
 

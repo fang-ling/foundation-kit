@@ -53,6 +53,11 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+- (FoundationArray*)
+  map:(ObjectiveCAnyObject (^)(ObjectiveCAnyObject))transform {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD map: IS BEING CALLED. ***");
+}
+
 /* MARK: - FoundationEnumerable Implementations */
 - (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
