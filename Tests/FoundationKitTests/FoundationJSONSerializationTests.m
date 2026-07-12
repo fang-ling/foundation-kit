@@ -72,7 +72,7 @@ C_ASSUME_NONNULL_BEGIN
   ObjectiveCAnyObject value = [FoundationString makeStringWithCString:"ok"];
   XCTAssertTrue([((FoundationDictionary*)jsonObject)[key] isEqual:value]);
   key = [FoundationString makeStringWithCString:"code"];
-  value = [FoundationNumber makeNumberWithInteger64:200];
+  value = [FoundationNumber numberWithLongLong:200];
   /* TODO: Make FoundationNumber conform to the FoundationComparable */
   XCTAssertEqual(
     ((FoundationNumber*)((FoundationDictionary*)jsonObject)[key]).integerValue,
@@ -96,7 +96,7 @@ C_ASSUME_NONNULL_BEGIN
   let value2 = (FoundationArray*)((FoundationDictionary*)jsonObject)[key2];
   XCTAssertTrue([value2 isKindOfClass:FoundationArray.class]);
   XCTAssertEqual(value2.count, 1);
-  let firstItem = (FoundationDictionary*)[value2 objectAtIndex:0];
+  let firstItem = (FoundationDictionary*)value2[0];
   XCTAssertTrue([firstItem isKindOfClass:FoundationDictionary.class]);
   XCTAssertEqual(firstItem.count, 1);
   let key3 = [FoundationString makeStringWithCString:"name"];

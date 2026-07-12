@@ -52,7 +52,8 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+/* MARK: - FoundationEnumerable Implementations */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count {
   CDebuggingHaltWithMessage(

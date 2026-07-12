@@ -68,7 +68,7 @@ ObjectiveCAnyObject FoundationJSONSerializationDecode(CYYJSONValue* value) {
         [array appendObject:FoundationJSONSerializationDecode(item)];
       }
 
-      return array; /* TODO: immutable copy. */
+      return [FoundationArray makeArrayWithArray:array];
     }
 
     case kCYYJSONTypeDictionary: {
@@ -114,7 +114,10 @@ CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
     let string = (FoundationString*)object;
 
     let cStringCount = string.cStringCount;
-    let cString = (CInteger8*)CMemoryAllocate(cStringCount + 1);
+    let cString = (CInteger8*)CMemoryAllocate(
+      cStringCount + 1,
+      sizeof(CInteger8)
+    );
     [string copyCString:cString];
 
     return CYYJSONMutableValueInitializeFromString(document, cString);
@@ -123,11 +126,11 @@ CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
 
     let array = (FoundationArray*)object;
 
-    for (let i = 0; i < array.count; i += 1) {
-      ObjectiveCAnyObject item = [array objectAtIndex:i];
-
-      let childValue = FoundationJSONSerializationEncode(document, item);
-      CYYJSONMutableArrayAppendValue(arrayValue, childValue);
+    for (ObjectiveCAnyObject item in array) {
+      CYYJSONMutableArrayAppendValue(
+        arrayValue,
+        FoundationJSONSerializationEncode(document, item)
+      );
     }
 
     return arrayValue;
@@ -144,7 +147,10 @@ CYYJSONMutableValue* nillable FoundationJSONSerializationEncode(
       let keyString = (FoundationString*)key;
 
       let keyCStringCount = keyString.cStringCount;
-      let keyCString = (CInteger8*)CMemoryAllocate(keyCStringCount + 1);
+      let keyCString = (CInteger8*)CMemoryAllocate(
+        keyCStringCount + 1,
+        sizeof(CInteger8)
+      );
       [keyString copyCString:keyCString];
 
       let keyValue = CYYJSONMutableValueInitializeFromString(

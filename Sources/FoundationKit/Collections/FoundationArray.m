@@ -26,23 +26,51 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationArray
 
 + (instancetype)makeArray {
-  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null count:0];
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null
+                                                           count:0
+                                                       isMutable:no];
+}
+
++ (instancetype)makeArrayWithArray:(FoundationArray*)array {
+  return [[_FoundationCoreFoundationArray alloc] initWithArray:array
+                                                     isMutable:no];
 }
 
 + (instancetype)arrayWithObjects:(ObjectiveCAnyObject nillable const[])objects
                            count:(CInteger)count {
   return [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
-                                                           count:count];
+                                                           count:count
+                                                       isMutable:no];
 }
 
 - (CInteger)count {
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
-- (ObjectiveCAnyObject)objectAtIndex:(CInteger)index {
+- (ObjectiveCAnyObject)objectAtIndexedSubscript:(CInteger)index {
   CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD objectAtIndex: IS BEING CALLED. ***"
+    "*** ABSTRACT METHOD objectAtIndexedSubscript: IS BEING CALLED. ***"
   );
+}
+
+- (FoundationArray*)
+  map:(ObjectiveCAnyObject (^)(ObjectiveCAnyObject))transform {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD map: IS BEING CALLED. ***");
+}
+
+/* MARK: - FoundationEnumerable Implementations */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  CDebuggingHaltWithMessage(
+    "*** ABSTRACT METHOD countByEnumeratingWithState:objects:count: "
+    "IS BEING CALLED. ***"
+  );
+}
+
+/* MARK: - ObjectiveCCopyable Implementations */
+- (ObjectiveCAnyObject)copy {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD copy IS BEING CALLED. ***");
 }
 
 @end

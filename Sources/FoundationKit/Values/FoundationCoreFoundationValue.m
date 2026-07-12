@@ -37,7 +37,7 @@ C_ASSUME_NONNULL_BEGIN
     return nil;
   }
 
-  self->_value = CMemoryAllocate(size);
+  self->_value = CMemoryAllocate(1, size);
   CMemoryCopy(self->_value, bytes, size);
   self->_size = size;
 

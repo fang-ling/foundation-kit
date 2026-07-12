@@ -17,16 +17,21 @@
  *  limitations under the License.
  */
 
-#import "FoundationArray.h"
+#import "FoundationMutableArray.h"
 
 #import <CKit/CKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface _FoundationCoreFoundationArray<Element>: FoundationArray<Element>
+@interface _FoundationCoreFoundationArray<Element>:
+  FoundationMutableArray<Element>
 
 - (instancetype)initWithObjects:(nillable Element const[nillable])objects
-                          count:(CInteger)count;
+                          count:(CInteger)count
+                      isMutable:(CBoolean)isMutable;
+
+- (instancetype)initWithArray:(FoundationArray*)array
+                    isMutable:(CBoolean)isMutable;
 
 @end
 

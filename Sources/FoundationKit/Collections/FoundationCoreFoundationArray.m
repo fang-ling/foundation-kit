@@ -24,9 +24,11 @@
 C_ASSUME_NONNULL_BEGIN
 
 @interface _FoundationCoreFoundationArray() {
-  CoreFoundationAnyObject** _objects;
+  owning ObjectiveCAnyObject* _objects;
   CInteger _count;
   CInteger _capacity;
+  CInteger _mutationCount;
+  CBoolean _isMutable;
 }
 
 @end
@@ -34,18 +36,43 @@ C_ASSUME_NONNULL_BEGIN
 @implementation _FoundationCoreFoundationArray
 
 - (instancetype)initWithObjects:(nillable ObjectiveCAnyObject const[])objects
-                          count:(CInteger)count {
+                          count:(CInteger)count
+                      isMutable:(CBoolean)isMutable {
   if (!(self = [super init])) {
     return nil;
   }
 
-  self->_objects = CMemoryAllocate(count * sizeof(const void*));
+  self->_objects = (owning ObjectiveCAnyObject*)CMemoryAllocate(
+    count,
+    sizeof(const void*)
+  );
   self->_count = count;
   self->_capacity = count;
+  self->_isMutable = isMutable;
 
-  let i = 0;
-  for (; i < count; i += 1) {
-    self->_objects[i] = (retainedbridging CoreFoundationAnyObject*)(objects[i]);
+  for (let i = 0l; i < count; i += 1) {
+    self->_objects[i] = objects[i];
+  }
+
+  return self;
+}
+
+- (instancetype)initWithArray:(FoundationArray*)array
+                    isMutable:(CBoolean)isMutable {
+  if (!(self = [super init])) {
+    return nil;
+  }
+
+  self->_objects = (owning ObjectiveCAnyObject*)CMemoryAllocate(
+    array.count,
+    sizeof(const void*)
+  );
+  self->_count = array.count;
+  self->_capacity = array.count;
+  self->_isMutable = isMutable;
+
+  for (let i = 0l; i < array.count; i += 1) {
+    self->_objects[i] = array[i];
   }
 
   return self;
@@ -53,26 +80,96 @@ C_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc {
   for (let i = 0; i < self->_count; i += 1) {
-    ObjectiveCAnyObject object =
-      (transferredbridging ObjectiveCAnyObject)self->_objects[i];
-    object = nil;
+    self->_objects[i] = nil;
   }
   CMemoryDeallocate(self->_objects);
 }
 
 - (CInteger)count {
-  return CoreFoundationArrayGetCount((bridging CoreFoundationArray*)self);
+  return CoreFoundationMutableArrayGetCount(
+    (bridging CoreFoundationMutableArray*)self
+  );
 }
 
-- (ObjectiveCAnyObject)objectAtIndex:(CInteger)index {
-  return (bridging ObjectiveCAnyObject)CoreFoundationArrayGetObjectAtIndex(
-    (bridging CoreFoundationArray*)self,
+- (ObjectiveCAnyObject)objectAtIndexedSubscript:(CInteger)index {
+  return
+    (bridging ObjectiveCAnyObject)CoreFoundationMutableArrayGetObjectAtIndex(
+      (bridging CoreFoundationMutableArray*)self,
+      index
+    );
+}
+
+- (void)appendObject:(ObjectiveCAnyObject)object {
+  CoreFoundationMutableArrayAppendObject(
+    (bridging CoreFoundationMutableArray*)self,
+    (bridging CoreFoundationAnyObject*)object
+  );
+}
+
+- (void)insertObject:(ObjectiveCAnyObject)object atIndex:(CInteger)index {
+  CoreFoundationMutableArrayInsertObjectAtIndex(
+    (bridging CoreFoundationMutableArray*)self,
+    (bridging CoreFoundationAnyObject*)object,
     index
   );
 }
 
+- (void)removeLastObject {
+  CoreFoundationMutableArrayRemoveLastObject(
+    (bridging CoreFoundationMutableArray*)self
+  );
+}
+
+- (void)removeObjectAtIndex:(CInteger)index {
+  CoreFoundationMutableArrayRemoveObjectAtIndex(
+    (bridging CoreFoundationMutableArray*)self,
+    index
+  );
+}
+
+- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))
+                                shouldBeRemoved {
+  for (let i = self.count - 1; i >= 0; i -= 1) {
+    if (shouldBeRemoved(self[i])) {
+      [self removeObjectAtIndex:i];
+    }
+  }
+}
+
+- (FoundationArray*)
+  map:(ObjectiveCAnyObject (^)(ObjectiveCAnyObject))transform {
+  let newArray = [FoundationMutableArray makeArray];
+
+  for (ObjectiveCAnyObject object in self) {
+    [newArray appendObject:transform(object)];
+  }
+
+  return [FoundationArray makeArrayWithArray:newArray];
+}
+
+/* MARK: - FoundationEnumerable Implementations */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
+                                objects:(_FoundationEnumerationBuffer)buffer
+                                  count:(CInteger)count {
+  if (state->state == 0) {
+    state->mutationsBuffer = &self->_mutationCount;
+    state->itemsBuffer =
+      (unsafeunretained ObjectiveCAnyObject*)(void*)self->_objects;
+    state->state = 1;
+
+    return self->_count;
+  }
+
+  return 0;
+}
+
+/* MARK: - ObjectiveCCopyable Implementations */
 - (ObjectiveCAnyObject)copy {
-  return self;
+  if (self->_isMutable) {
+    CDebuggingHaltWithMessage("TODO");
+  } else {
+    return self;
+  }
 }
 
 @end
@@ -83,10 +180,13 @@ C_ASSUME_NONNULL_BEGIN
  */
 CoreFoundationAnyObject* FoundationCoreFoundationArrayInitialize(
   ObjectiveCAnyObject nonnil const objects[nonnil],
-  CInteger count
+  CInteger count,
+  CBoolean isMutable
 ) {
-  let array = [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
-                                                                count:count];
+  let array =
+    [[_FoundationCoreFoundationArray alloc] initWithObjects:objects
+                                                      count:count
+                                                  isMutable:isMutable];
 
   return (retainedbridging CoreFoundationAnyObject*)array;
 }

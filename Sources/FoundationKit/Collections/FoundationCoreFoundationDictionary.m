@@ -42,9 +42,9 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
 }
 
 @interface _FoundationCoreFoundationDictionary () {
-  _CoreFoundationRedBlackTree* tree;
-  CInteger mutationCount;
-  CBoolean isMutable;
+  _CoreFoundationRedBlackTree* _tree;
+  CInteger _mutationCount;
+  CBoolean _isMutable;
 }
 
 @end
@@ -54,17 +54,17 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
 - (instancetype)initWithObjects:(nillable ObjectiveCAnyObject const[])objects
                         forKeys:(nillable ObjectiveCAnyObject const[])keys
                           count:(CInteger)count
-                      isMutable:(CBoolean)mutable {
+                      isMutable:(CBoolean)isMutable {
   if (!(self = [super init])) {
     return nil;
   }
 
-  self->tree = _CoreFoundationRedBlackTreeInitialize(
+  self->_tree = _CoreFoundationRedBlackTreeInitialize(
     sizeof(_CoreFoundationDictionaryEntry),
     FoundationCoreFoundationDictionaryCompare
   );
-  self->mutationCount = 0l;
-  self->isMutable = mutable;
+  self->_mutationCount = 0l;
+  self->_isMutable = isMutable;
 
   for (let i = 0; i < count; i += 1) {
     let entry = (_CoreFoundationDictionaryEntry){
@@ -72,14 +72,14 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
       (bridging CoreFoundationAnyObject*)objects[i]
     };
 
-    _CoreFoundationRedBlackTreeInsertKey(self->tree, &entry);
+    _CoreFoundationRedBlackTreeInsertKey(self->_tree, &entry);
   }
 
   return self;
 }
 
 - (void)dealloc {
-  _CoreFoundationRedBlackTreeDeinitialize(self->tree);
+  _CoreFoundationRedBlackTreeDeinitialize(self->_tree);
 }
 
 - (CInteger)count {
@@ -105,14 +105,18 @@ forKeyedSubscript:(ObjectiveCAnyObject)key {
 }
 
 - (void)removeObjectForKey:(ObjectiveCAnyObject)key {
-  CDebuggingHaltWithMessage("*** TODO ***");
+  CoreFoundationMutableDictionaryRemoveValue(
+    (bridging CoreFoundationAnyObject*)self,
+    (bridging CoreFoundationAnyObject*)[key copy]
+  );
 }
 
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+/* MARK: - FoundationEnumerable Implementations */
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count {
   if (state->state == 0) {
-    state->mutationsBuffer = &self->mutationCount;
+    state->mutationsBuffer = &self->_mutationCount;
     state->extra[0] = 0l;
     state->state = 1;
   }

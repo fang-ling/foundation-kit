@@ -143,28 +143,6 @@ C_ASSUME_NONNULL_BEGIN
 
 /**
  * Creates and returns a ``FoundationNumber`` object containing a given value,
- * treating it as a ``CInteger64``.
- *
- * - Parameter value: The value for the new number.
- *
- * - Returns: A ``FoundationNumber`` object containing value, treating it as a
- *   ``CInteger64``.
- */
-+ (instancetype)makeNumberWithInteger64:(CInteger64)value;
-
-/**
- * Creates and returns a ``FoundationNumber`` object containing a given value,
- * treating it as a ``CInteger``.
- *
- * - Parameter value: The value for the new number.
- *
- * - Returns: A ``FoundationNumber`` object containing value, treating it as a
- *   ``CInteger``.
- */
-+ (instancetype)makeNumberWithInteger:(CInteger)value;
-
-/**
- * Creates and returns a ``FoundationNumber`` object containing a given value,
  * treating it as a ``CUnsignedInteger8``.
  *
  * - Parameter value: The value for the new number.
@@ -198,17 +176,6 @@ C_ASSUME_NONNULL_BEGIN
 
 /**
  * Creates and returns a ``FoundationNumber`` object containing a given value,
- * treating it as a ``CUnsignedInteger64``.
- *
- * - Parameter value: The value for the new number.
- *
- * - Returns: A ``FoundationNumber`` object containing value, treating it as a
- *   ``CUnsignedInteger64``.
- */
-+ (instancetype)makeNumberWithUnsignedInteger64:(CUnsignedInteger64)value;
-
-/**
- * Creates and returns a ``FoundationNumber`` object containing a given value,
  * treating it as a ``CUnsignedInteger``.
  *
  * - Parameter value: The value for the new number.
@@ -231,17 +198,6 @@ C_ASSUME_NONNULL_BEGIN
 
 /**
  * Creates and returns a ``FoundationNumber`` object containing a given value,
- * treating it as a ``CFloatingPoint64``.
- *
- * - Parameter value: The value for the new number.
- *
- * - Returns: A ``FoundationNumber`` object containing value, treating it as a
- *   ``CFloatingPoint64``.
- */
-+ (instancetype)makeNumberWithFloatingPoint64:(CFloatingPoint64)value;
-
-/**
- * Creates and returns a ``FoundationNumber`` object containing a given value,
  * treating it as a ``CFloatingPoint``.
  *
  * - Parameter value: The value for the new number.
@@ -250,6 +206,20 @@ C_ASSUME_NONNULL_BEGIN
  *   ``CFloatingPoint``.
  */
 + (instancetype)makeNumberWithFloatingPoint:(CFloatingPoint)value;
+
+/**
+ * Creates and returns a ``FoundationNumber`` object containing a given value,
+ * treating it as a `signed long`.
+ *
+ * > Note: The compiler calls this method when using the numeric literal
+ *   syntax. Do not use this method directly.
+ *
+ * - Parameter value: The value for the new number.
+ *
+ * - Returns: A ``FoundationNumber`` object containing value, treating it as a
+ *   `signed long`.
+ */
++ (instancetype)numberWithLong:(CInteger)value;
 
 /**
  * Creates and returns a ``FoundationNumber`` object containing a given value,

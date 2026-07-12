@@ -201,7 +201,7 @@ C_ASSUME_NONNULL_BEGIN
  * - Returns: The number of objects returned in buffer. Returns `0` when the
  *   iteration is finished.
  */
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState *)state
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer
                                   count:(CInteger)count;
 

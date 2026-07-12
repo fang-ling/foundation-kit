@@ -17,6 +17,8 @@
  *  limitations under the License.
  */
 
+#import "FoundationEnumerable.h"
+
 #import <CKit/CKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
 
@@ -34,8 +36,9 @@ C_ASSUME_NONNULL_BEGIN
  *
  * ### Creating an Array
  *
- * - ``init``
- * - ``initWithObjects:``
+ * - ``makeArray``
+ * - ``makeWithArray:``
+ * - ``arrayWithObjects:count:``
  *
  * ### Inspecting an Array
  *
@@ -44,16 +47,39 @@ C_ASSUME_NONNULL_BEGIN
  *
  * ### Accessing Elements
  *
- * - ``objectAtIndex:``
+ * - ``objectAtIndexedSubscript:``
+ *
+ * ### Transforming an Array
+ *
+ * - ``map:``
  */
-@interface FoundationArray<Element>: ObjectiveCObject
+@interface FoundationArray<Element>: ObjectiveCObject <
+  FoundationEnumerable,
+  ObjectiveCCopyable
+>
 
 /**
  * The number of elements in the array.
  */
 @property (nonatomic, readonly) CInteger count;
 
+/**
+ * Creates and returns an empty array.
+ *
+ * This method is used by mutable subclasses of ``FoundationArray``.
+ *
+ * - Returns: An empty array.
+ */
 + (instancetype)makeArray;
+
+/**
+ * Creates and returns an array containing the objects in another given array.
+ *
+ * - Parameter array: An array.
+ *
+ * - Returns: An array containing the objects in an array.
+ */
++ (instancetype)makeArrayWithArray:(FoundationArray*)array;
 
 /**
  * Creates and returns an array that includes a given number of objects from a
@@ -77,16 +103,37 @@ C_ASSUME_NONNULL_BEGIN
                            count:(CInteger)count;
 
 /**
- * Returns the object located at the specified index.
+ * Returns the object at the specified index.
  *
  * If `index` is beyond the end of the array (that is, if `index` is greater
  * than or equal to the value returned by ``count``), the behavior is undefined.
+ *
+ * You shouldn't need to call this method directly. Instead, this method is
+ * called when accessing an object by index using subscripting.
+ *
+ *   ```objective-c
+ *   let value = array[3];
+ *   ```
  *
  * - Parameter index: An index within the bounds of the array.
  *
  * - Returns: The object located at index.
  */
-- (Element)objectAtIndex:(CInteger)index;
+- (Element)objectAtIndexedSubscript:(CInteger)index;
+
+/**
+ * Returns an array containing the results of mapping the given closure over the
+ * sequence's elements.
+ *
+ * - Parameter transform: A mapping closure. transform accepts an element of
+ *   this array as its parameter and returns a transformed value of the same or
+ *   of a different type.
+ *
+ * - Returns: An array containing the transformed elements of this array.
+ *
+ * - Complexity: O(_n_), where _n_ is the length of the array.
+ */
+- (FoundationArray*)map:(ObjectiveCAnyObject (^)(Element object))transform;
 
 @end
 

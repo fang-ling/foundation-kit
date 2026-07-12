@@ -46,7 +46,7 @@ C_ASSUME_NONNULL_BEGIN
     0
   );
 
-  self->_characters = CMemoryAllocate(self->_count * sizeof(CInteger32));
+  self->_characters = CMemoryAllocate(self->_count, sizeof(CInteger32));
   CStringConvertUTF8CharactersToUTF32Characters(
     self->_characters,
     cString,
@@ -67,11 +67,12 @@ C_ASSUME_NONNULL_BEGIN
                      arguments:(CVariableArgumentList)arguments {
   let formatCount = format.cStringCount;
   let formatCString = (CInteger8*)CMemoryAllocate(
-    (formatCount + 1) * sizeof(CInteger8)
+    formatCount + 1,
+    sizeof(CInteger8)
   );
   [format copyCString:formatCString];
 
-  let cString = (CInteger8*)CMemoryAllocate(1 * sizeof(CInteger8));
+  let cString = (CInteger8*)CMemoryAllocate(1, sizeof(CInteger8));
   let cStringCapacity = 1l;
   let cStringCount = 0l;
 
@@ -109,9 +110,7 @@ C_ASSUME_NONNULL_BEGIN
       let descriptionString = ((ObjectiveCObject*)value).description;
 
       bufferCount = descriptionString.cStringCount;
-      buffer = (CInteger8*)CMemoryAllocate(
-        (bufferCount + 1) * sizeof(CInteger8)
-      );
+      buffer = (CInteger8*)CMemoryAllocate(bufferCount + 1, sizeof(CInteger8));
       [descriptionString copyCString:buffer];
 
       i += 1;
@@ -121,7 +120,7 @@ C_ASSUME_NONNULL_BEGIN
       for (; j < formatCount && formatCString[j] != '%'; j += 1);
 
       bufferCount = j - i;
-      buffer = (CInteger8*)CMemoryAllocate(bufferCount * sizeof(CInteger8));
+      buffer = (CInteger8*)CMemoryAllocate(bufferCount, sizeof(CInteger8));
 
       let k = 0l;
       for (j = i; k < bufferCount; k += 1, j += 1) {
@@ -215,10 +214,8 @@ C_ASSUME_NONNULL_BEGIN
   }
 
   let count = self.count;
-  let selfCharacters = (CInteger32*)CMemoryAllocate(count * sizeof(CInteger32));
-  let otherCharacters = (CInteger32*)CMemoryAllocate(
-    count * sizeof(CInteger32)
-  );
+  let selfCharacters = (CInteger32*)CMemoryAllocate(count, sizeof(CInteger32));
+  let otherCharacters = (CInteger32*)CMemoryAllocate(count, sizeof(CInteger32));
 
   [self copyCharacters:selfCharacters];
   [otherString copyCharacters:otherCharacters];
@@ -237,10 +234,49 @@ C_ASSUME_NONNULL_BEGIN
 
 /* MARK: - FoundationComparable Implementations */
 - (FoundationComparisonResult)compare:(ObjectiveCAnyObject)object {
-  return CoreFoundationStringCompare(
-    (bridging CoreFoundationAnyObject*)self,
-    (bridging CoreFoundationAnyObject*)object
+  if (object == self) {
+    return kFoundationComparisonResultSameOrder;
+  }
+
+  if (![object isKindOfClass:FoundationString.class]) {
+    CDebuggingHaltWithMessage("*** INVALID ARGUMENT. ***");
+  }
+
+  if ([object isKindOfClass:_FoundationCoreFoundationString.class]) {
+    return CoreFoundationStringCompare(
+      (bridging CoreFoundationAnyObject*)self,
+      (bridging CoreFoundationAnyObject*)object
+    );
+  }
+
+  let characters = (CInteger32*)CMemoryAllocate(
+    self.count + 1,
+    sizeof(CInteger32)
   );
+  [self copyCharacters:characters];
+  characters[self.count] = '\0';
+
+  let otherString = (FoundationString*)object;
+  let otherStringCharacters = (CInteger32*)CMemoryAllocate(
+    otherString.count + 1,
+    sizeof(CInteger32)
+  );
+  [otherString copyCharacters:otherStringCharacters];
+  otherStringCharacters[otherString.count] = '\0';
+
+  let result = CStringCompareUTF32Characters(characters, otherStringCharacters);
+
+  let comparisonResult = kFoundationComparisonResultSameOrder;
+  if (result < 0) {
+    comparisonResult = kFoundationComparisonResultAscendingOrder;
+  } else if (result > 0) {
+    comparisonResult = kFoundationComparisonResultDescendingOrder;
+  }
+
+  CMemoryDeallocate(characters);
+  CMemoryDeallocate(otherStringCharacters);
+
+  return comparisonResult;
 }
 
 /* MARK: - FoundationStringConvertible Implementations */
