@@ -8,4 +8,8 @@ PointerAlignment: Left
 
 AllowShortFunctionsOnASingleLine: Empty
 
+ObjCSpaceAfterProperty: true
+
+SpaceBeforeInheritanceColon: false
+
 ...

@@ -90,23 +90,24 @@ C_ASSUME_NONNULL_BEGIN
   [array removeObjectAtIndex:1];
   XCTAssertTrue([((Cat*)array[1]).name isEqual:@"Clara"]);
 
-  ObjectiveCAnyObject objects[] = {
-    [[Cat alloc] initWithName:@"Alice"],
-    [[Cat alloc] initWithName:@"Tracy"],
-    [[Cat alloc] initWithName:@"Diana"],
-    [[Cat alloc] initWithName:@"Clara"]
-  };
-  array = [FoundationMutableArray arrayWithObjects:objects
-                                             count:3];
+  ObjectiveCAnyObject objects[] = {[[Cat alloc] initWithName:@"Alice"], [[Cat alloc] initWithName:@"Tracy"], [[Cat alloc] initWithName:@"Diana"],
+                                   [[Cat alloc] initWithName:@"Clara"]};
+  array = [FoundationMutableArray arrayWithObjects:objects count:3];
   XCTAssertEqual(array.count, 3);
   XCTAssertTrue([((Cat*)array[2]).name isEqual:@"Diana"]);
 
   let i = 0;
   for (Cat* cat in array) {
     switch (i) {
-      case 0: XCTAssertTrue([cat.name isEqual:@"Alice"]); break;
-      case 1: XCTAssertTrue([cat.name isEqual:@"Tracy"]); break;
-      case 2: XCTAssertTrue([cat.name isEqual:@"Diana"]); break;
+    case 0:
+      XCTAssertTrue([cat.name isEqual:@"Alice"]);
+      break;
+    case 1:
+      XCTAssertTrue([cat.name isEqual:@"Tracy"]);
+      break;
+    case 2:
+      XCTAssertTrue([cat.name isEqual:@"Diana"]);
+      break;
     }
 
     i += 1;
