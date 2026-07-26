@@ -46,6 +46,10 @@ C_ASSUME_NONNULL_BEGIN
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
+- (FoundationArray*)allKeys {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD allKeys IS BEING CALLED. ***");
+}
+
 - (ObjectiveCAnyObject)objectForKeyedSubscript:(ObjectiveCAnyObject)key {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD objectForKeyedSubscript: IS BEING CALLED. ***"

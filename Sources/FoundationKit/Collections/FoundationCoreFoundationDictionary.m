@@ -19,6 +19,8 @@
 
 #import "FoundationCoreFoundationDictionary.h"
 
+#import "FoundationArray.h"
+#import "FoundationMutableArray.h"
 #import "FoundationEnumerable.h"
 #import "../Sorting/FoundationComparisonResult.h"
 #import "../Sorting/FoundationComparable.h"
@@ -86,6 +88,15 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
   return CoreFoundationDictionaryGetCount(
     (bridging CoreFoundationAnyObject*)self
   );
+}
+
+- (FoundationArray*)allKeys {
+  let keys = [FoundationMutableArray makeArray];
+  for (ObjectiveCAnyObject key in self) {
+    [keys appendObject:key];
+  }
+
+  return [FoundationArray makeArrayWithArray:keys];
 }
 
 - (ObjectiveCAnyObject)objectForKeyedSubscript:(ObjectiveCAnyObject)key {

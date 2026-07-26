@@ -17,6 +17,7 @@
  *  limitations under the License.
  */
 
+#import "FoundationArray.h"
 #import "FoundationEnumerable.h"
 #import "../Sorting/FoundationComparable.h"
 
@@ -120,6 +121,7 @@ C_ASSUME_NONNULL_BEGIN
  *
  * ### Accessing Keys and Values
  *
+ * - ``allKeys``
  * - ``objectForKeyedSubscript:``
  *
  * ### Enumerating Dictionaries
@@ -134,6 +136,13 @@ C_ASSUME_NONNULL_BEGIN
  * The number of entries in the dictionary.
  */
 @property (nonatomic, readonly) CInteger count;
+
+/**
+ * A new array containing the dictionary's keys, or an empty array if the dictionary has no entries.
+ *
+ * The order of the elements in the array is not defined.
+ */
+@property (nonatomic, copy, readonly) FoundationArray<Key>* allKeys;
 
 /**
  * Creates an empty dictionary.

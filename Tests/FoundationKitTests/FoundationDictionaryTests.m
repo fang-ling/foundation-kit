@@ -60,6 +60,12 @@ C_ASSUME_NONNULL_BEGIN
     }
   }
 
+  let allKeys = dictionary.allKeys;
+  XCTAssertEqual(allKeys.count, 2);
+  /* TODO: contains */
+  XCTAssertTrue([allKeys[0] isEqual:[FoundationString makeStringWithCString:"Breed"]]);
+  XCTAssertTrue([allKeys[1] isEqual:[FoundationString makeStringWithCString:"Name"]]);
+
   [dictionary removeObjectForKey:key];
   XCTAssertEqual(dictionary.count, 1);
   key = [FoundationString makeStringWithCString:"Name"];
