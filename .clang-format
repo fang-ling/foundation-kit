@@ -2,13 +2,20 @@
 BasedOnStyle: LLVM
 ColumnLimit: 180
 
-# Force pointers to the type.
-DerivePointerAlignment: false
-PointerAlignment: Left
-
 AllowShortFunctionsOnASingleLine: Empty
+AllowAllArgumentsOnNextLine: false
+AlignAfterOpenBracket: Align
+AlwaysBreakAfterReturnType: None
+
+BinPackArguments: false
+BinPackParameters: false
+
+DerivePointerAlignment: false
 
 ObjCSpaceAfterProperty: true
+
+PenaltyReturnTypeOnItsOwnLine: 200
+PointerAlignment: Left
 
 SpaceBeforeInheritanceColon: false
 

@@ -31,8 +31,7 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationDictionaryTests
 
 - (void)testFoundationDictionary {
-  let dictionary =
-    (FoundationMutableDictionary*)[FoundationDictionary makeDictionary];
+  let dictionary = (FoundationMutableDictionary*)[FoundationDictionary makeDictionary];
   XCTAssertEqual(dictionary.count, 0);
 
   dictionary = [FoundationMutableDictionary makeDictionary];
