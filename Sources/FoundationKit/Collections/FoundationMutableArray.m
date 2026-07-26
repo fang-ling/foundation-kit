@@ -31,6 +31,11 @@ C_ASSUME_NONNULL_BEGIN
                                                        isMutable:yes];
 }
 
++ (instancetype)arrayWithObjects:(ObjectiveCAnyObject nillable const[])objects
+                           count:(CInteger)count {
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:objects count:count isMutable:yes];
+}
+
 - (void)appendObject:(ObjectiveCAnyObject)object {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD appendObject: IS BEING CALLED. ***"
