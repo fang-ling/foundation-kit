@@ -1,8 +1,8 @@
 /*
- *  FoundationCoreFoundationArray.h
+ *  FoundationNumericConstants.m
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/5/2.
+ *  Created by Fang Ling on 2026/7/26.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -14,18 +14,10 @@
  *  See the License for the specific language governing permissions and limitations under the License.
  */
 
-#import "FoundationMutableArray.h"
-
-#import <CKit/CKit.h>
+#import "FoundationNumericConstants.h"
 
 C_ASSUME_NONNULL_BEGIN
 
-@interface _FoundationCoreFoundationArray<Element>: FoundationMutableArray <Element>
-
-- (instancetype)initWithObjects:(nillable Element const[nillable])objects count:(CInteger)count isMutable:(CBoolean)isMutable;
-
-- (instancetype)initWithArray:(FoundationArray*)array isMutable:(CBoolean)isMutable;
-
-@end
+const CInteger FoundationNotFound = CIntegerMaximum;
 
 C_ASSUME_NONNULL_END

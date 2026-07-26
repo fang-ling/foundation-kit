@@ -4,34 +4,30 @@
  *
  *  Created by Fang Ling on 2026/6/27.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  See the License for the specific language governing permissions and limitations under the License.
  */
 
 #import "FoundationCoreFoundationDictionary.h"
 
-#import "FoundationEnumerable.h"
-#import "../Sorting/FoundationComparisonResult.h"
 #import "../Sorting/FoundationComparable.h"
+#import "../Sorting/FoundationComparisonResult.h"
+#import "FoundationArray.h"
+#import "FoundationEnumerable.h"
+#import "FoundationMutableArray.h"
 
 #import <CoreFoundationKit/CoreFoundationKit.h>
 #import <ObjectiveCKit/ObjectiveCKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
-FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
-  const void* _lhs,
-  const void* _rhs
-) {
+FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(const void* _lhs, const void* _rhs) {
   let lhs = (_CoreFoundationDictionaryEntry*)_lhs;
   let rhs = (_CoreFoundationDictionaryEntry*)_rhs;
 
@@ -59,18 +55,12 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
     return nil;
   }
 
-  self->_tree = _CoreFoundationRedBlackTreeInitialize(
-    sizeof(_CoreFoundationDictionaryEntry),
-    FoundationCoreFoundationDictionaryCompare
-  );
+  self->_tree = _CoreFoundationRedBlackTreeInitialize(sizeof(_CoreFoundationDictionaryEntry), FoundationCoreFoundationDictionaryCompare);
   self->_mutationCount = 0l;
   self->_isMutable = isMutable;
 
   for (let i = 0; i < count; i += 1) {
-    let entry = (_CoreFoundationDictionaryEntry){
-      (bridging CoreFoundationAnyObject*)([keys[i] copy]),
-      (bridging CoreFoundationAnyObject*)objects[i]
-    };
+    let entry = (_CoreFoundationDictionaryEntry){(bridging CoreFoundationAnyObject*)([keys[i] copy]), (bridging CoreFoundationAnyObject*)objects[i]};
 
     _CoreFoundationRedBlackTreeInsertKey(self->_tree, &entry);
   }
@@ -83,61 +73,47 @@ FoundationComparisonResult FoundationCoreFoundationDictionaryCompare(
 }
 
 - (CInteger)count {
-  return CoreFoundationDictionaryGetCount(
-    (bridging CoreFoundationAnyObject*)self
-  );
+  return CoreFoundationDictionaryGetCount((bridging CoreFoundationAnyObject*)self);
+}
+
+- (FoundationArray*)allKeys {
+  let keys = [FoundationMutableArray makeArray];
+  for (ObjectiveCAnyObject key in self) {
+    [keys appendObject:key];
+  }
+
+  return [FoundationArray makeArrayWithArray:keys];
 }
 
 - (ObjectiveCAnyObject)objectForKeyedSubscript:(ObjectiveCAnyObject)key {
-  return (bridging ObjectiveCAnyObject)CoreFoundationDictionaryGetValue(
-    (bridging CoreFoundationAnyObject*)self,
-    (bridging CoreFoundationAnyObject*)[key copy]
-  );
+  return (bridging ObjectiveCAnyObject)CoreFoundationDictionaryGetValue((bridging CoreFoundationAnyObject*)self, (bridging CoreFoundationAnyObject*)[key copy]);
 }
 
-- (void)setObject:(ObjectiveCAnyObject)object
-forKeyedSubscript:(ObjectiveCAnyObject)key {
-  CoreFoundationMutableDictionarySetValue(
-    (bridging CoreFoundationAnyObject*)self,
-    (bridging CoreFoundationAnyObject*)[key copy],
-    (bridging CoreFoundationAnyObject*)object
-  );
+- (void)setObject:(ObjectiveCAnyObject)object forKeyedSubscript:(ObjectiveCAnyObject)key {
+  CoreFoundationMutableDictionarySetValue((bridging CoreFoundationAnyObject*)self, (bridging CoreFoundationAnyObject*)[key copy], (bridging CoreFoundationAnyObject*)object);
 }
 
 - (void)removeObjectForKey:(ObjectiveCAnyObject)key {
-  CoreFoundationMutableDictionaryRemoveValue(
-    (bridging CoreFoundationAnyObject*)self,
-    (bridging CoreFoundationAnyObject*)[key copy]
-  );
+  CoreFoundationMutableDictionaryRemoveValue((bridging CoreFoundationAnyObject*)self, (bridging CoreFoundationAnyObject*)[key copy]);
 }
 
 /* MARK: - FoundationEnumerable Implementations */
-- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
-                                objects:(_FoundationEnumerationBuffer)buffer
-                                  count:(CInteger)count {
+- (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state objects:(_FoundationEnumerationBuffer)buffer count:(CInteger)count {
   if (state->state == 0) {
     state->mutationsBuffer = &self->_mutationCount;
     state->extra[0] = 0l;
     state->state = 1;
   }
 
-  let entry = (_CoreFoundationDictionaryEntry){ 0 };
-  _CoreFoundationDictionaryGetEntryAtIndex(
-    (bridging CoreFoundationDictionary*)(self),
-    state->extra[0],
-    &entry
-  );
+  let entry = (_CoreFoundationDictionaryEntry){0};
+  _CoreFoundationDictionaryGetEntryAtIndex((bridging CoreFoundationDictionary*)(self), state->extra[0], &entry);
 
   state->itemsBuffer = buffer;
 
   let objectCount = 0l;
   while (state->extra[0] < self.count && objectCount < count) {
-    let entry = (_CoreFoundationDictionaryEntry){ 0 };
-    _CoreFoundationDictionaryGetEntryAtIndex(
-      (bridging CoreFoundationDictionary*)(self),
-      state->extra[0],
-      &entry
-    );
+    let entry = (_CoreFoundationDictionaryEntry){0};
+    _CoreFoundationDictionaryGetEntryAtIndex((bridging CoreFoundationDictionary*)(self), state->extra[0], &entry);
 
     if (!entry.key) {
       break;
@@ -155,23 +131,12 @@ forKeyedSubscript:(ObjectiveCAnyObject)key {
 
 @end
 
-/*
- * Exposed to CoreFoundation to ensure correct initialization of the Objective-C
- * instance.
- */
-CoreFoundationAnyObject* FoundationCoreFoundationDictionaryInitialize(
-  ObjectiveCAnyObject nonnil const objects[nonnil],
-  ObjectiveCAnyObject nonnil const keys[nonnil],
-  CInteger count,
-  CBoolean isMutable
-) {
-  let dictionary =
-    [[_FoundationCoreFoundationDictionary alloc] initWithObjects:objects
-                                                         forKeys:keys
-                                                           count:count
-                                                       isMutable:isMutable];
-
-  return (retainedbridging CoreFoundationAnyObject*)dictionary;
+/* Exposed to CoreFoundation to ensure correct initialization of the Objective-C instance. */
+CoreFoundationAnyObject* FoundationCoreFoundationDictionaryInitialize(ObjectiveCAnyObject nonnil const objects[nonnil],
+                                                                      ObjectiveCAnyObject nonnil const keys[nonnil],
+                                                                      CInteger count,
+                                                                      CBoolean isMutable) {
+  return (retainedbridging CoreFoundationAnyObject*)[[_FoundationCoreFoundationDictionary alloc] initWithObjects:objects forKeys:keys count:count isMutable:isMutable];
 }
 
 C_ASSUME_NONNULL_END

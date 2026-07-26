@@ -4,17 +4,14 @@
  *
  *  Created by Fang Ling on 2026/4/19.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  See the License for the specific language governing permissions and limitations under the License.
  */
 
 #import "FoundationMutableArray.h"
@@ -26,40 +23,31 @@ C_ASSUME_NONNULL_BEGIN
 @implementation FoundationMutableArray
 
 + (instancetype)makeArray {
-  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null
-                                                           count:0
-                                                       isMutable:yes];
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:null count:0 isMutable:yes];
+}
+
++ (instancetype)arrayWithObjects:(ObjectiveCAnyObject nillable const[])objects count:(CInteger)count {
+  return [[_FoundationCoreFoundationArray alloc] initWithObjects:objects count:count isMutable:yes];
 }
 
 - (void)appendObject:(ObjectiveCAnyObject)object {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD appendObject: IS BEING CALLED. ***"
-  );
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD appendObject: IS BEING CALLED. ***");
 }
 
 - (void)insertObject:(ObjectiveCAnyObject)object atIndex:(CInteger)index {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD insertObject:atIndex: IS BEING CALLED. ***"
-  );
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD insertObject:atIndex: IS BEING CALLED. ***");
 }
 
 - (void)removeLastObject {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD removeLastObject IS BEING CALLED. ***"
-  );
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD removeLastObject IS BEING CALLED. ***");
 }
 
 - (void)removeObjectAtIndex:(CInteger)index {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD removeObjectAtIndex: IS BEING CALLED. ***"
-  );
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD removeObjectAtIndex: IS BEING CALLED. ***");
 }
 
-- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))
-                                shouldBeRemoved {
-  CDebuggingHaltWithMessage(
-    "*** ABSTRACT METHOD removeAllObjectsWhere: IS BEING CALLED. ***"
-  );
+- (void)removeAllObjectsWhere:(CBoolean (^)(ObjectiveCAnyObject object))shouldBeRemoved {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD removeAllObjectsWhere: IS BEING CALLED. ***");
 }
 
 @end

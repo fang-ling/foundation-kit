@@ -4,17 +4,14 @@
  *
  *  Created by Fang Ling on 2026/4/18.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
+ *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
  *
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  See the License for the specific language governing permissions and limitations under the License.
  */
 
 #import <CKit/CKit.h>
@@ -72,6 +69,7 @@ C_ASSUME_NONNULL_BEGIN
 
   [array removeLastObject];
   XCTAssertEqual(array.count, 0);
+  XCTAssertNil(array.lastObject);
 
   array = [FoundationMutableArray makeArray];
   [array appendObject:[[Cat alloc] initWithName:@"Diana"]];
@@ -89,28 +87,42 @@ C_ASSUME_NONNULL_BEGIN
   [array removeObjectAtIndex:1];
   XCTAssertTrue([((Cat*)array[1]).name isEqual:@"Clara"]);
 
-  ObjectiveCAnyObject objects[] = {
-    [[Cat alloc] initWithName:@"Alice"],
-    [[Cat alloc] initWithName:@"Tracy"],
-    [[Cat alloc] initWithName:@"Diana"],
-    [[Cat alloc] initWithName:@"Clara"]
-  };
-  array = [FoundationMutableArray arrayWithObjects:objects
-                                             count:3];
+  ObjectiveCAnyObject objects[] = {[[Cat alloc] initWithName:@"Alice"], [[Cat alloc] initWithName:@"Tracy"], [[Cat alloc] initWithName:@"Diana"],
+                                   [[Cat alloc] initWithName:@"Clara"]};
+  array = [FoundationMutableArray arrayWithObjects:objects count:3];
   XCTAssertEqual(array.count, 3);
   XCTAssertTrue([((Cat*)array[2]).name isEqual:@"Diana"]);
 
   let i = 0;
   for (Cat* cat in array) {
     switch (i) {
-      case 0: XCTAssertTrue([cat.name isEqual:@"Alice"]); break;
-      case 1: XCTAssertTrue([cat.name isEqual:@"Tracy"]); break;
-      case 2: XCTAssertTrue([cat.name isEqual:@"Diana"]); break;
+    case 0:
+      XCTAssertTrue([cat.name isEqual:@"Alice"]);
+      break;
+    case 1:
+      XCTAssertTrue([cat.name isEqual:@"Tracy"]);
+      break;
+    case 2:
+      XCTAssertTrue([cat.name isEqual:@"Diana"]);
+      break;
     }
 
     i += 1;
   }
   XCTAssertEqual(i, 3);
+
+  XCTAssertTrue([((Cat*)array.lastObject).name isEqual:@"Diana"]);
+
+  let cat = [[Cat alloc] initWithName:@"Clara"];
+  XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], FoundationNotFound);
+  [array appendObject:cat];
+  XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], 3);
+
+  let filteredArray = [array filteredArrayUsingBlock:^CBoolean(Cat* cat) {
+    return [cat.name characterAtIndex:0] == 'A';
+  }];
+  XCTAssertEqual(filteredArray.count, 1);
+  XCTAssertTrue([((Cat*)filteredArray[0]).name isEqual:@"Alice"]);
 }
 
 @end

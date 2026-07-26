@@ -1,8 +1,8 @@
 /*
- *  FoundationCoreFoundationArray.h
+ *  FoundationSetTests.m
  *  foundation-kit
  *
- *  Created by Fang Ling on 2026/5/2.
+ *  Created by Fang Ling on 2026/7/26.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
  *  You may obtain a copy of the License at
@@ -14,18 +14,27 @@
  *  See the License for the specific language governing permissions and limitations under the License.
  */
 
-#import "FoundationMutableArray.h"
-
 #import <CKit/CKit.h>
+#import <FoundationKit/FoundationKit.h>
 
-C_ASSUME_NONNULL_BEGIN
+#import <XCTest/XCTest.h>
 
-@interface _FoundationCoreFoundationArray<Element>: FoundationMutableArray <Element>
-
-- (instancetype)initWithObjects:(nillable Element const[nillable])objects count:(CInteger)count isMutable:(CBoolean)isMutable;
-
-- (instancetype)initWithArray:(FoundationArray*)array isMutable:(CBoolean)isMutable;
+@interface FoundationSetTests: XCTestCase
 
 @end
 
-C_ASSUME_NONNULL_END
+@implementation FoundationSetTests
+
+- (void)testFoundationSet {
+  let set = (FoundationMutableSet*)[FoundationSet makeSet];
+
+  set = [FoundationMutableSet makeSet];
+
+  let object = [FoundationString makeStringWithCString:"Diana"];
+  [set insertObject:object];
+  XCTAssertTrue([set containsObject:object]);
+  object = [FoundationString makeStringWithCString:"Clara"];
+  XCTAssertFalse([set containsObject:object]);
+}
+
+@end
