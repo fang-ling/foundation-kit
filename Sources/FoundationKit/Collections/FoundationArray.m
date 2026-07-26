@@ -66,6 +66,10 @@ C_ASSUME_NONNULL_BEGIN
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD map: IS BEING CALLED. ***");
 }
 
+- (FoundationArray*)filteredArrayUsingBlock:(CBoolean (^)(ObjectiveCAnyObject))block {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD filteredArrayUsingBlock: IS BEING CALLED. ***");
+}
+
 /* MARK: - FoundationEnumerable Implementations */
 - (CInteger)countByEnumeratingWithState:(FoundationEnumerationState*)state
                                 objects:(_FoundationEnumerationBuffer)buffer

@@ -22,6 +22,7 @@
 #import "../Numerics/FoundationNumericConstants.h"
 
 #import <CoreFoundationKit/CoreFoundationKit.h>
+#import <ObjectiveCKit/ObjectiveCKit.h>
 
 C_ASSUME_NONNULL_BEGIN
 
@@ -158,6 +159,18 @@ C_ASSUME_NONNULL_BEGIN
 
   for (ObjectiveCAnyObject object in self) {
     [newArray appendObject:transform(object)];
+  }
+
+  return [FoundationArray makeArrayWithArray:newArray];
+}
+
+- (FoundationArray*)filteredArrayUsingBlock:(CBoolean (^)(ObjectiveCAnyObject))block {
+  let newArray = [FoundationMutableArray makeArray];
+
+  for (ObjectiveCAnyObject object in self) {
+    if (block(object)) {
+      [newArray appendObject:object];
+    }
   }
 
   return [FoundationArray makeArrayWithArray:newArray];

@@ -56,6 +56,7 @@ C_ASSUME_NONNULL_BEGIN
  * ### Transforming an Array
  *
  * - ``map:``
+ * - ``filteredArrayUsingBlock:``
  */
 @interface FoundationArray<Element>: ObjectiveCObject <
   FoundationEnumerable,
@@ -157,6 +158,15 @@ C_ASSUME_NONNULL_BEGIN
  * - Complexity: O(_n_), where _n_ is the length of the array.
  */
 - (FoundationArray*)map:(ObjectiveCAnyObject (^)(Element object))transform;
+
+/**
+ * Evaluates a given predicate against each object in the receiving array and returns a new array containing the objects for which the predicate returns `yes`.
+ *
+ * - Parameter block: A block that takes an array's element as its argument and returns a Boolean value indicating whether the element should be included in the returned array.
+ *
+ * - Returns: Returns a new array of the same type containing, in order, the elements of the original array that satisfy the given predicate.
+ */
+- (FoundationArray<Element>*)filteredArrayUsingBlock:(CBoolean (^)(Element object))block;
 
 @end
 

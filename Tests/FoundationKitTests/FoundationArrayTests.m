@@ -119,6 +119,12 @@ C_ASSUME_NONNULL_BEGIN
   XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], FoundationNotFound);
   [array appendObject:cat];
   XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], 3);
+
+  let filteredArray = [array filteredArrayUsingBlock:^CBoolean(Cat* cat) {
+    return [cat.name characterAtIndex:0] == 'A';
+  }];
+  XCTAssertEqual(filteredArray.count, 1);
+  XCTAssertTrue([((Cat*)filteredArray[0]).name isEqual:@"Alice"]);
 }
 
 @end
