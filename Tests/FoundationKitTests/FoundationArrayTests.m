@@ -72,6 +72,7 @@ C_ASSUME_NONNULL_BEGIN
 
   [array removeLastObject];
   XCTAssertEqual(array.count, 0);
+  XCTAssertNil(array.lastObject);
 
   array = [FoundationMutableArray makeArray];
   [array appendObject:[[Cat alloc] initWithName:@"Diana"]];
@@ -111,6 +112,8 @@ C_ASSUME_NONNULL_BEGIN
     i += 1;
   }
   XCTAssertEqual(i, 3);
+
+  XCTAssertTrue([((Cat*)array.lastObject).name isEqual:@"Diana"]);
 
   let cat = [[Cat alloc] initWithName:@"Clara"];
   XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], FoundationNotFound);

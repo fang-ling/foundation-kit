@@ -93,6 +93,14 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+- (nullable ObjectiveCAnyObject)lastObject {
+  if (self.count <= 0) {
+    return nil;
+  }
+
+  return self[self.count - 1];
+}
+
 - (ObjectiveCAnyObject)objectAtIndexedSubscript:(CInteger)index {
   return
     (bridging ObjectiveCAnyObject)CoreFoundationMutableArrayGetObjectAtIndex(

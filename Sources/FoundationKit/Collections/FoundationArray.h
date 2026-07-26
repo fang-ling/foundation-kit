@@ -40,10 +40,10 @@ C_ASSUME_NONNULL_BEGIN
  * - ``makeWithArray:``
  * - ``arrayWithObjects:count:``
  *
- * ### Inspecting an Array
+ * ### Querying an Array
  *
  * - ``count``
- * - ``capacity``
+ * - ``lastObject``
  *
  * ### Accessing Elements
  *
@@ -66,6 +66,13 @@ C_ASSUME_NONNULL_BEGIN
  * The number of elements in the array.
  */
 @property (nonatomic, readonly) CInteger count;
+
+/**
+ * The last object in the array.
+ *
+ * If the array is empty, returns `nil`.
+ */
+@property (nullable, nonatomic, readonly) Element lastObject;
 
 /**
  * Creates and returns an empty array.

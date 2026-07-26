@@ -47,6 +47,10 @@ C_ASSUME_NONNULL_BEGIN
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD count IS BEING CALLED. ***");
 }
 
+- (nullable ObjectiveCAnyObject)lastObject {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD lastObject IS BEING CALLED. ***");
+}
+
 - (ObjectiveCAnyObject)objectAtIndexedSubscript:(CInteger)index {
   CDebuggingHaltWithMessage(
     "*** ABSTRACT METHOD objectAtIndexedSubscript: IS BEING CALLED. ***"
