@@ -1,0 +1,11 @@
+---
+BasedOnStyle: LLVM
+ColumnLimit: 180
+
+# Force pointers to the type.
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+AllowShortFunctionsOnASingleLine: Empty
+
+...
