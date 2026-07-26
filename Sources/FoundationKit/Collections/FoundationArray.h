@@ -49,6 +49,10 @@ C_ASSUME_NONNULL_BEGIN
  *
  * - ``objectAtIndexedSubscript:``
  *
+ * ### Finding Objects in an Array
+ *
+ * - ``firstIndexOfObjectIdenticalTo:``
+ *
  * ### Transforming an Array
  *
  * - ``map:``
@@ -120,6 +124,18 @@ C_ASSUME_NONNULL_BEGIN
  * - Returns: The object located at index.
  */
 - (Element)objectAtIndexedSubscript:(CInteger)index;
+
+/**
+ * Returns the lowest index whose corresponding array value is identical to a given object.
+ *
+ * Objects are considered identical if their object addresses are the same.
+ *
+ * - Parameter object: An object.
+ *
+ * - Returns: The lowest index whose corresponding array value is identical to `object`.
+ *   If none of the objects in the array is identical to `object`, returns ``FoundationNotFound``.
+ */
+- (CInteger)firstIndexOfObjectIdenticalTo:(Element)object;
 
 /**
  * Returns an array containing the results of mapping the given closure over the

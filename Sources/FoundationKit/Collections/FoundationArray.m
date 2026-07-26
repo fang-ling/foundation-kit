@@ -53,6 +53,10 @@ C_ASSUME_NONNULL_BEGIN
   );
 }
 
+- (CInteger)firstIndexOfObjectIdenticalTo:(ObjectiveCAnyObject)object {
+  CDebuggingHaltWithMessage("*** ABSTRACT METHOD findFirstIndexOfObjectIdenticalTo: IS BEING CALLED. ***");
+}
+
 - (FoundationArray*)
   map:(ObjectiveCAnyObject (^)(ObjectiveCAnyObject))transform {
   CDebuggingHaltWithMessage("*** ABSTRACT METHOD map: IS BEING CALLED. ***");

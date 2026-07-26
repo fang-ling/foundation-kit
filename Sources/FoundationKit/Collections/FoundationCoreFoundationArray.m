@@ -19,6 +19,8 @@
 
 #import "FoundationCoreFoundationArray.h"
 
+#import "../Numerics/FoundationNumericConstants.h"
+
 #import <CoreFoundationKit/CoreFoundationKit.h>
 
 C_ASSUME_NONNULL_BEGIN
@@ -97,6 +99,12 @@ C_ASSUME_NONNULL_BEGIN
       (bridging CoreFoundationMutableArray*)self,
       index
     );
+}
+
+- (CInteger)firstIndexOfObjectIdenticalTo:(ObjectiveCAnyObject)object {
+  let index = CoreFoundationMutableArrayFindFirstIndexOfObjectIdenticalToObject((bridging CoreFoundationMutableArray*)self, (bridging CoreFoundationAnyObject*)object);
+
+  return index < 0 ? FoundationNotFound : index;
 }
 
 - (void)appendObject:(ObjectiveCAnyObject)object {

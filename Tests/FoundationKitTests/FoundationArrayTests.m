@@ -111,6 +111,11 @@ C_ASSUME_NONNULL_BEGIN
     i += 1;
   }
   XCTAssertEqual(i, 3);
+
+  let cat = [[Cat alloc] initWithName:@"Clara"];
+  XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], FoundationNotFound);
+  [array appendObject:cat];
+  XCTAssertEqual([array firstIndexOfObjectIdenticalTo:cat], 3);
 }
 
 @end
