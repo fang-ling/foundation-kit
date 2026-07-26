@@ -25,6 +25,8 @@
 #import "../../Collections/Basic Collections/FoundationMutableSet.h"
 #import "../../Collections/Basic Collections/FoundationSet.h"
 
+#import "../../Collections/Indexes/FoundationIndexPath.h"
+
 #import "../../Data/FoundationData.h"
 
 #import "../../Numerics/FoundationNumber.h"
