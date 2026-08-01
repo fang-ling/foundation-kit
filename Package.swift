@@ -25,7 +25,6 @@ let isDevelopment = false
 let dependencies = [
   ("c-kit", "main"),
   ("core-foundation-kit", "main"),
-  ("objective-c-kit", "main"),
   ("swift-yyjson", "main")
 ]
 
@@ -41,17 +40,13 @@ let package = Package(
       dependencies: [
         .product(name: "CKit", package: "c-kit"),
         .product(name: "CYYJSON", package: "swift-yyjson"),
-        .product(name: "CoreFoundationKit", package: "core-foundation-kit"),
-        .product(name: "ObjectiveCKit", package: "objective-c-kit")
+        .product(name: "CoreFoundationKit", package: "core-foundation-kit")
       ]
     ),
     .testTarget(
       name: "FoundationKitTests",
       dependencies: [
-        "FoundationKit",
-        .product(name: "CKit", package: "c-kit"),
-        .product(name: "CoreFoundationKit", package: "core-foundation-kit"),
-        .product(name: "ObjectiveCKit", package: "objective-c-kit")
+        "FoundationKit"
       ]
     )
   ]
