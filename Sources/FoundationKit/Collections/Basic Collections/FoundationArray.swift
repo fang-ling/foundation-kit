@@ -222,10 +222,10 @@ public struct FoundationArray<Element> {
   private let array: CoreFoundationArray
 
   private init(elements: [Element]) {
-    let objects = elements.map({ $0 as AnyObject })
-    array = objects
-      .map({ Unmanaged.passUnretained($0).toOpaque() })
-      .withUnsafeBufferPointer({ CoreFoundationArray(objects: $0.baseAddress, count: elements.count) })
+    let objects = elements.map { $0 as AnyObject }
+    let unretainedObjects = objects.map { Unmanaged.passUnretained($0).toOpaque() }
+
+    array = unretainedObjects.withUnsafeBufferPointer { CoreFoundationArray(objects: $0.baseAddress, count: elements.count) }
   }
 }
 
