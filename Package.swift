@@ -1,6 +1,6 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.3
 
-//===--------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
+//===----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
 //
 //  Package.swift
 //  foundation-kit
@@ -16,16 +16,16 @@
 //
 //  SPDX-License-Identifier: Apache-2.0
 //
-//===--------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
+//===----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
 
 import PackageDescription
 
 let isDevelopment = false
 
 let dependencies = [
-  ("c-kit", "main"),
-  ("core-foundation-kit", "main"),
-  ("swift-yyjson", "main")
+  ("c-kit", "CKit", "main"),
+  ("core-foundation-kit", "CoreFoundationKit", "main"),
+  ("swift-yyjson", "CYYJSON", "main")
 ]
 
 let package = Package(
@@ -33,15 +33,11 @@ let package = Package(
   products: [
     .library(name: "FoundationKit", targets: ["FoundationKit"])
   ],
-  dependencies: dependencies.map { isDevelopment ? .package(path: "../\($0.0)") : .package(url: "https://github.com/fang-ling/\($0.0)", branch: $0.1) },
+  dependencies: dependencies.map { isDevelopment ? .package(path: "../\($0.0)") : .package(url: "https://github.com/fang-ling/\($0.0)", branch: $0.2) },
   targets: [
     .target(
       name: "FoundationKit",
-      dependencies: [
-        .product(name: "CKit", package: "c-kit"),
-        .product(name: "CYYJSON", package: "swift-yyjson"),
-        .product(name: "CoreFoundationKit", package: "core-foundation-kit")
-      ]
+      dependencies: dependencies.map { .product(name: $0.1, package: $0.0) }
     ),
     .testTarget(
       name: "FoundationKitTests",
