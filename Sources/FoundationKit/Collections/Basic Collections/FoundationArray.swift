@@ -398,3 +398,5 @@ extension FoundationArray: Swift::BidirectionalCollection {
     return index - 1
   }
 }
+
+extension FoundationArray: Swift::RandomAccessCollection {}
