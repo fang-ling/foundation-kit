@@ -35,6 +35,18 @@ struct FoundationArrayTests {
     let array2: FoundationArray = [Cat(), Cat(), Cat()]
     #expect(array2.count == 3)
   }
+
+  @Test func testSwiftSequenceProtocolConformance() {
+    let input = ["Diana", "Tracy", "Alice"]
+    let array: FoundationArray = ["Diana", "Tracy", "Alice"]
+
+    var index = 0
+    for element in array {
+      #expect(element == input[index])
+
+      index += 1
+    }
+  }
 }
 
 extension FoundationArrayTests {

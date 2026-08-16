@@ -219,6 +219,14 @@ import CoreFoundationKit
 ///
 /// - ``count``
 ///
+/// ### Iterating Over an Array's Elements
+///
+/// - ``makeIterator()``
+///
+/// ### Supporting Types
+///
+/// - ``Iterator``
+///
 /// ### Infrequently Used Functionality
 ///
 /// - ``init(arrayLiteral:)``
@@ -254,5 +262,53 @@ extension FoundationArray: Swift::ExpressibleByArrayLiteral {
   /// - Parameter elements: A variadic list of elements of the new array.
   public init(arrayLiteral elements: Element...) {
     self.init(elements: elements)
+  }
+}
+
+extension FoundationArray: Swift::Sequence {
+  /// The type that allows iteration over an array's elements.
+  public struct Iterator: Swift::IteratorProtocol<Element> {
+    internal let array: FoundationArray<Element>
+
+    internal var currentIndex: CInteger
+
+    /// Advances to the next element and returns it, or `nil` if no next element exists.
+    ///
+    /// Repeatedly calling this method returns all the elements of the underlying sequence in order. As soon as the sequence has run out of elements, all subsequent calls return `nil`.
+    ///
+    /// This example shows how an iterator can be used explicitly to emulate a for-in loop. First, retrieve an array's iterator, and then call the iterator's ``next()`` method until it returns `nil`.
+    ///
+    ///    ```swift
+    ///    let numbers: FoundationArray = [2, 3, 5, 7]
+    ///    var numbersIterator = numbers.makeIterator()
+    ///
+    ///    while let num = numbersIterator.next() {
+    ///      print(num)
+    ///    }
+    ///    // Prints "2"
+    ///    // Prints "3"
+    ///    // Prints "5"
+    ///    // Prints "7"
+    ///    ```
+    ///
+    /// - Returns: The next element in the underlying sequence if a next element exists; otherwise, `nil`.
+    public mutating func next() -> Element? {
+      guard self.currentIndex < array.count else {
+        return nil
+      }
+
+      defer {
+        self.currentIndex += 1
+      }
+
+      return self.array[self.currentIndex]
+    }
+  }
+
+  /// Returns an iterator over the elements of the array.
+  ///
+  /// - Returns: An iterator over the elements of the array.
+  public func makeIterator() -> Iterator {
+    return Iterator(array: self, currentIndex: 0)
   }
 }
