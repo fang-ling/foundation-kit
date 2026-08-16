@@ -61,6 +61,20 @@ struct FoundationArrayTests {
       #expect(array[index] == input[index])
     }
   }
+
+  @Test func testSwiftBidirectionalCollectionProtocolConformance() {
+    let array: FoundationArray = [Cat(), Cat(), Cat()]
+
+    for index in array.indices {
+      if index >= array.startIndex && index < array.endIndex {
+        #expect(array.index(before: array.index(after: index)) == index)
+      }
+
+      if index > array.startIndex && index <= array.endIndex {
+        #expect(array.index(after: array.index(before: index)) == index)
+      }
+    }
+  }
 }
 
 extension FoundationArrayTests {

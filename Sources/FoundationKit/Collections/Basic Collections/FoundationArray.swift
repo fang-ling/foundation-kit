@@ -228,6 +228,7 @@ import CoreFoundationKit
 /// - ``startIndex``
 /// - ``endIndex``
 /// - ``index(after:)``
+/// - ``index(before:)``
 ///
 /// ### Iterating Over an Array's Elements
 ///
@@ -382,5 +383,18 @@ extension FoundationArray: Swift::Collection {
     }
 
     return element
+  }
+}
+
+extension FoundationArray: Swift::BidirectionalCollection {
+  /// Returns the position immediately before the given index.
+  ///
+  /// - Parameter index: A valid index of the collection. `index` must be greater than ``startIndex``.
+  ///
+  /// - Returns: The index immediately before `index`.
+  public func index(before index: CInteger) -> CInteger {
+    Swift::precondition(index > self.startIndex, "Index out of range.")
+
+    return index - 1
   }
 }
