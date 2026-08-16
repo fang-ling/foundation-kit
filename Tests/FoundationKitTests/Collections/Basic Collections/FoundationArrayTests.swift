@@ -47,6 +47,20 @@ struct FoundationArrayTests {
       index += 1
     }
   }
+
+  @Test func testSwiftCollectionProtocolConformance() async {
+    await #expect(processExitsWith: .failure) {
+      let array: FoundationArray = []
+      _ = array[1]
+    }
+
+    let input = ["Diana", "Tracy", "Alice"]
+    let array: FoundationArray = ["Diana", "Tracy", "Alice"]
+
+    for index in array.indices {
+      #expect(array[index] == input[index])
+    }
+  }
 }
 
 extension FoundationArrayTests {

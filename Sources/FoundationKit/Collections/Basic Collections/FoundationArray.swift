@@ -219,6 +219,16 @@ import CoreFoundationKit
 ///
 /// - ``count``
 ///
+/// ### Accessing Elements
+///
+/// - ``subscript(_:)``
+///
+/// ### Manipulating Indices
+///
+/// - ``startIndex``
+/// - ``endIndex``
+/// - ``index(after:)``
+///
 /// ### Iterating Over an Array's Elements
 ///
 /// - ``makeIterator()``
@@ -310,5 +320,67 @@ extension FoundationArray: Swift::Sequence {
   /// - Returns: An iterator over the elements of the array.
   public func makeIterator() -> Iterator {
     return Iterator(array: self, currentIndex: 0)
+  }
+}
+
+extension FoundationArray: Swift::Collection {
+  /// The position of the first element in a nonempty array.
+  ///
+  /// For an instance of Array, ``startIndex`` is always zero. If the array is empty, ``startIndex`` is equal to ``endIndex``.
+  public var startIndex: CInteger {
+    return 0
+  }
+
+  /// The array's "past the end" position—that is, the position one greater than the last valid subscript argument.
+  ///
+  /// When you need a range that includes the last element of an array, use the half-open range operator (`..<`) with ``endIndex``. The `..<` operator creates a range that doesn't include the upper
+  /// bound, so it's always safe to use with endIndex. For example:
+  ///
+  ///    ```swift
+  ///    let numbers: FoundationArray = [10, 20, 30, 40, 50]
+  ///    if let i = numbers.firstIndex(of: 30) {
+  ///      print(numbers[i ..< numbers.endIndex])
+  ///    }
+  ///    // Prints "[30, 40, 50]"
+  ///    ```
+  ///
+  /// If the array is empty, ``endIndex`` is equal to ``startIndex``.
+  public var endIndex: CInteger {
+    return self.count
+  }
+
+  /// Returns the position immediately after the given index.
+  ///
+  /// - Parameter index: A valid index of the collection. `index` must be less than ``endIndex``.
+  ///
+  /// - Returns: The index immediately after `index`.
+  public func index(after index: CInteger) -> CInteger {
+    Swift::precondition(index < self.endIndex, "Index out of range.")
+
+    return index + 1
+  }
+
+  /// Accesses the element at the specified position.
+  ///
+  /// The following example uses indexed subscripting to update an array's second element. After assigning the new value ("`Butler`") at a specific position, that value is immediately available at
+  /// that same position.
+  ///
+  ///    ```swift
+  ///    var streets: FoundationArray = ["Adams", "Bryant", "Channing", "Douglas", "Evarts"]
+  ///    streets[1] = "Butler"
+  ///    print(streets[1])
+  ///    // Prints "Butler"
+  ///    ```
+  ///
+  /// - Parameter index: The position of the element to access. index must be greater than or equal to ``startIndex`` and less than ``endIndex``.
+  ///
+  /// - Complexity: Reading an element from an array is O(_1_). Writing is O(_1_) unless the array's storage is shared with another array, in which case writing is O(_n_), where _n_ is the length of
+  ///   the array.
+  public subscript(index: CInteger) -> Element {
+    guard let element = Unmanaged<AnyObject>.fromOpaque(self.array.object(at: index)).takeUnretainedValue() as? Element else {
+      Swift::fatalError()
+    }
+
+    return element
   }
 }
