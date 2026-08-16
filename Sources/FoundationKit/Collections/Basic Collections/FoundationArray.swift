@@ -215,6 +215,10 @@ import CoreFoundationKit
 ///
 /// ## Topics
 ///
+/// ### Inspecting an Array
+///
+/// - ``count``
+///
 /// ### Infrequently Used Functionality
 ///
 /// - ``init(arrayLiteral:)``
@@ -223,9 +227,15 @@ public struct FoundationArray<Element> {
 
   private init(elements: [Element]) {
     let objects = elements.map { $0 as AnyObject }
-    let unretainedObjects = objects.map { Unmanaged.passUnretained($0).toOpaque() }
 
-    array = unretainedObjects.withUnsafeBufferPointer { CoreFoundationArray(objects: $0.baseAddress, count: elements.count) }
+    array = CoreFoundationArray(objects: objects.map({ Swift::Unmanaged.passUnretained($0).toOpaque() }), count: elements.count)
+  }
+}
+
+extension FoundationArray {
+  /// The number of elements in the array.
+  public var count: CInteger {
+    return self.array.count
   }
 }
 

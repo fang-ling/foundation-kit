@@ -24,8 +24,16 @@ import Testing
 @Suite("FoundationArrayTests")
 struct FoundationArrayTests {
   @Test func testInitializationWithLiteral() {
-    let _: FoundationArray<CInteger> = [19358]
-    let _: FoundationArray<Cat> = [Cat()]
+    let _: FoundationArray = [19358]
+    let _: FoundationArray = [Cat()]
+  }
+
+  @Test func testCount() {
+    let array1: FoundationArray<CInteger> = []
+    #expect(array1.count == 0)
+
+    let array2: FoundationArray = [Cat(), Cat(), Cat()]
+    #expect(array2.count == 3)
   }
 }
 
