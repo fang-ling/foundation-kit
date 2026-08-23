@@ -62,6 +62,25 @@ struct FoundationArrayTests {
     }
   }
 
+  @Test func testSwiftMutableCollectionProtocolConformance() {
+    var input = ["Diana", "Tracy", "Alice"]
+    let array: FoundationArray = ["Diana", "Tracy", "Alice"]
+    var copiedArray = array
+
+    input[1] = "Clara"
+    copiedArray[1] = input[1]
+
+    for index in copiedArray.indices {
+      #expect(copiedArray[index] == input[index])
+
+      if index != 1 {
+        #expect(array[index] == input[index])
+      }
+    }
+    #expect(copiedArray[1] != array[1])
+    #expect(copiedArray[1] == "Clara")
+  }
+
   @Test func testSwiftBidirectionalCollectionProtocolConformance() {
     let array: FoundationArray = [Cat(), Cat(), Cat()]
 

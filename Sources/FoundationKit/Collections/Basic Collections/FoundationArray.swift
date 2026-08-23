@@ -242,12 +242,17 @@ import CoreFoundationKit
 ///
 /// - ``init(arrayLiteral:)``
 public struct FoundationArray<Element> {
-  private let array: CoreFoundationArray
+  @_Storage private var array: CoreFoundationArray
 
   private init(elements: [Element]) {
-    let objects = elements.map { $0 as AnyObject }
+    let objects = elements.map { Swift::Unmanaged.passRetained($0 as Swift::AnyObject) }
+    defer {
+      for object in objects {
+        object.release()
+      }
+    }
 
-    array = CoreFoundationArray(objects: objects.map({ Swift::Unmanaged.passUnretained($0).toOpaque() }), count: elements.count)
+    self._array = _Storage(wrappedValue: CoreFoundationArray(objects: objects.map({ $0.toOpaque() }), count: elements.count))
   }
 }
 
@@ -324,7 +329,7 @@ extension FoundationArray: Swift::Sequence {
   }
 }
 
-extension FoundationArray: Swift::Collection {
+extension FoundationArray: Swift::Collection, Swift::MutableCollection {
   /// The position of the first element in a nonempty array.
   ///
   /// For an instance of Array, ``startIndex`` is always zero. If the array is empty, ``startIndex`` is equal to ``endIndex``.
@@ -378,11 +383,22 @@ extension FoundationArray: Swift::Collection {
   /// - Complexity: Reading an element from an array is O(_1_). Writing is O(_1_) unless the array's storage is shared with another array, in which case writing is O(_n_), where _n_ is the length of
   ///   the array.
   public subscript(index: CInteger) -> Element {
-    guard let element = Unmanaged<AnyObject>.fromOpaque(self.array.object(at: index)).takeUnretainedValue() as? Element else {
-      Swift::fatalError()
+    get {
+      guard let element = Swift::Unmanaged<Swift::AnyObject>.fromOpaque(self.array.object(at: index)).takeUnretainedValue() as? Element else {
+        Swift::fatalError()
+      }
+
+      return element
     }
 
-    return element
+    set {
+      let object = Swift::Unmanaged.passRetained(newValue as Swift::AnyObject)
+      defer {
+        object.release()
+      }
+
+      self.$array.setObject(object.toOpaque(), at: index)
+    }
   }
 }
 
@@ -400,3 +416,42 @@ extension FoundationArray: Swift::BidirectionalCollection {
 }
 
 extension FoundationArray: Swift::RandomAccessCollection {}
+
+extension FoundationArray {
+  @propertyWrapper
+  internal struct _Storage {
+    private var box: _Box
+
+    internal init(wrappedValue: CoreFoundationArray) {
+      self.box = _Box(content: wrappedValue)
+    }
+
+    internal var wrappedValue: CoreFoundationArray {
+      return self.box.content
+    }
+
+    internal var projectedValue: CoreFoundationArray {
+      mutating get {
+        if !Swift::isKnownUniquelyReferenced(&self.box) {
+          self.box = _Box(content: self.box.content.copy())
+        }
+
+        return wrappedValue
+      }
+
+      set {
+        self.box.content = newValue
+      }
+    }
+  }
+}
+
+extension FoundationArray._Storage {
+  private final class _Box {
+    internal var content: CoreFoundationArray
+
+    internal init(content: CoreFoundationArray) {
+      self.content = content
+    }
+  }
+}
