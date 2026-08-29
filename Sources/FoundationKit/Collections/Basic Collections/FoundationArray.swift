@@ -215,6 +215,10 @@ import CoreFoundationKit
 ///
 /// ## Topics
 ///
+/// ### Creating an Array
+///
+/// - ``init()``
+///
 /// ### Inspecting an Array
 ///
 /// - ``count``
@@ -222,6 +226,10 @@ import CoreFoundationKit
 /// ### Accessing Elements
 ///
 /// - ``subscript(_:)``
+///
+/// ### Adding Elements
+///
+/// - ``replaceSubrange(_:with:)``
 ///
 /// ### Manipulating Indices
 ///
@@ -416,6 +424,63 @@ extension FoundationArray: Swift::BidirectionalCollection {
 }
 
 extension FoundationArray: Swift::RandomAccessCollection {}
+
+extension FoundationArray: Swift::RangeReplaceableCollection {
+  /// Creates a new, empty array.
+  ///
+  /// This is equivalent to initializing with an empty array literal. For example:
+  ///
+  ///    ```swift
+  ///    var emptyArray = FoundationArray<CInteger>()
+  ///    print(emptyArray.isEmpty)
+  ///    // Prints "true"
+  ///
+  ///    emptyArray = []
+  ///    print(emptyArray.isEmpty)
+  ///    // Prints "true"
+  ///    ```
+  public init() {
+    self.init(elements: [])
+  }
+
+  /// Replaces a range of elements with the elements in the specified collection.
+  ///
+  /// This method has the effect of removing the specified range of elements from the array and inserting the new elements at the same location. The number of new elements need not match the number of
+  /// elements being removed.
+  ///
+  /// In this example, three elements in the middle of an array of integers are replaced by the five elements of a `Swift::Repeated<CInteger>` instance.
+  ///
+  ///    ```swift
+  ///    var numbers: FoundationArray = [10, 20, 30, 40, 50]
+  ///    numbers.replaceSubrange(1 ... 3, with: Swift::repeatElement(1, count: 5))
+  ///
+  ///    print(numbers)
+  ///    // Prints "[10, 1, 1, 1, 1, 1, 50]"
+  ///    ```
+  ///
+  /// If you pass a zero-length range as the subrange parameter, this method inserts the elements of `newElements` at `subrange.startIndex`. Calling the ``insert(contentsOf:at:)`` method instead is
+  /// preferred.
+  ///
+  /// Likewise, if you pass a zero-length collection as the `newElements` parameter, this method removes the elements in the given subrange without replacement. Calling the ``removeSubrange(_:)``
+  /// method instead is preferred.
+  ///
+  /// - Parameters:
+  ///   - subrange: The subrange of the array to replace. The start and end of a subrange must be valid indices of the array.
+  ///   - newElements: The new elements to add to the array.
+  ///
+  /// - Complexity: O(_n_ + _m_), where _n_ is length of the array and _m_ is the length of `newElements`. If the call to this method simply appends the contents of `newElements` to the array, this
+  ///   method is equivalent to ``append(contentsOf:)``.
+  public mutating func replaceSubrange<C>(_ subrange: Swift::Range<CInteger>, with newElements: C) where C: Swift::Collection, Element == C.Element {
+    let objects = newElements.map { Swift::Unmanaged.passRetained($0 as Swift::AnyObject) }
+    defer {
+      for object in objects {
+        object.release()
+      }
+    }
+
+    self.$array.replaceSubrange(CoreFoundationRange(location: subrange.startIndex, count: subrange.count), with: objects.map({ $0.toOpaque() }), objects.count)
+  }
+}
 
 extension FoundationArray {
   @propertyWrapper

@@ -94,6 +94,51 @@ struct FoundationArrayTests {
       }
     }
   }
+
+  @Test func testSwiftRangeReplaceableCollectionConformance() {
+    var array = FoundationArray<Cat>()
+
+    // Pure append to an empty array.
+    var cats = [Cat(name: "Alice"), Cat(name: "Tracy"), Cat(name: "Diana")]
+    array.append(contentsOf: cats)
+
+    for index in cats.indices {
+      #expect(array[index].name == cats[index].name)
+    }
+    #expect(cats.count == array.count)
+
+    // Insert in the middle, growing the array.
+    cats.insert(contentsOf: [Cat(name: "Laura"), Cat(name: "Clara"), Cat(name: "Ruby"), Cat(name: "Eva"), Cat(name: "Sue")], at: 1)
+    array.insert(contentsOf: cats[1 ... 5], at: 1)
+
+    for index in cats.indices {
+      #expect(array[index].name == cats[index].name)
+    }
+    #expect(cats.count == array.count)
+
+    // Remove from the middle.
+    cats.removeSubrange(3 ..< 6)
+    array.removeSubrange(3 ..< 6)
+
+    for index in cats.indices {
+      #expect(array[index].name == cats[index].name)
+    }
+    #expect(cats.count == array.count)
+
+    // Replace with equal count.
+    cats.replaceSubrange(0 ..< 3, with: [Cat(name: "Grace"), Cat(name: "Anna"), Cat(name: "Rachel")])
+    array.replaceSubrange(0 ..< 3, with: cats[0 ..< 3])
+
+    for index in cats.indices {
+      #expect(array[index].name == cats[index].name)
+    }
+    #expect(cats.count == array.count)
+
+    // Remove everything.
+    cats.removeAll()
+    array.removeAll()
+    #expect(cats.count == array.count)
+  }
 }
 
 extension FoundationArrayTests {
