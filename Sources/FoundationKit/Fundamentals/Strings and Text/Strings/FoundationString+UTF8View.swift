@@ -67,6 +67,10 @@ extension FoundationString {
   /// ### Getting a UTF8View's Length
   ///
   /// - ``count``
+  ///
+  /// ### Getting C Strings
+  ///
+  /// - ``cString``
   public struct UTF8View {
     private var string: FoundationString
 
@@ -77,6 +81,14 @@ extension FoundationString {
     /// The number of UTF-8 code units in a string.
     public var count: CInteger {
       return self.string.string.count
+    }
+
+    /// A null-terminated representation of the UTF-8 string.
+    ///
+    /// This C string is a pointer to a structure inside the string object, which may have a lifetime shorter than the string object and will certainly not have a longer lifetime. Therefore, you
+    /// should copy the C string if it needs to be stored outside of the memory context in which you use this property.
+    public var cString: CString {
+      return self.string.string.utf8CString
     }
   }
 }

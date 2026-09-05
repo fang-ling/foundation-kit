@@ -16,6 +16,7 @@
 //
 //===----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------===//
 
+import CKit
 import FoundationKit
 
 import Testing
@@ -27,6 +28,13 @@ struct FoundationStringTests {
   @Test func testCount() {
     for input in strings {
       #expect(FoundationString(stringLiteral: input).utf8.count == input.utf8.count)
+    }
+  }
+
+  @Test func testGettingCString() {
+    for input in strings {
+      let string = FoundationString(stringLiteral: input)
+      #expect(strcmp(string.utf8.cString, input) == 0)
     }
   }
 
