@@ -12,3 +12,4 @@ networking.
 ### Fundamentals
 
 - <doc:Collections>
+- <doc:Strings-and-Text>
