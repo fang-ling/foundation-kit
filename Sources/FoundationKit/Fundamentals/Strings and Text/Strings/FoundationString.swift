@@ -314,3 +314,5 @@ extension FoundationString: Swift::ExpressibleByStringLiteral {
     self.init(string: value)
   }
 }
+
+extension FoundationString: Swift::ExpressibleByStringInterpolation {}

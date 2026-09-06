@@ -25,6 +25,12 @@ import Testing
 struct FoundationStringTests {
   let strings = ["", "Hello, world!", "こんにちは!", "Heil!", "Γεια σου, κόσμε!", "你好，世界！", "👋, 🌍!"]
 
+  @Test func testSwiftExpressibleByStringInterpolationProtocolConformance() {
+    for index in strings.indices {
+      let _: FoundationString = "\(strings[index]) \(index)"
+    }
+  }
+
   @Test func testCount() {
     for input in strings {
       #expect(FoundationString(stringLiteral: input).utf8.count == input.utf8.count)
