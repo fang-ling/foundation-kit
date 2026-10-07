@@ -25,6 +25,7 @@ let isDevelopment = false
 let dependencies = [
   ("c-kit", "CKit", "main"),
   ("core-foundation-kit", "CoreFoundationKit", "main"),
+  ("swift-framework", "SwiftFramework", "main"),
   ("swift-yyjson", "CYYJSON", "main")
 ]
 

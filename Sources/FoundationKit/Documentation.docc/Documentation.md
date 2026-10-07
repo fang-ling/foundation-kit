@@ -11,5 +11,6 @@ networking.
 
 ### Fundamentals
 
+- <doc:Numbers-Data-and-Basic-Values>
 - <doc:Collections>
 - <doc:Strings-and-Text>
