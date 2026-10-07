@@ -68,7 +68,7 @@ public struct FoundationUUID {
   ///
   /// - Returns: A random UUID.
   public static func random(using generator: inout some SwiftRandomNumberGenerator) -> FoundationUUID {
-    var bits = UInt128.random(in: .min ... .max, using: &generator)
+    var bits = SwiftUnsignedInteger128.random(in: .min ... .max, using: &generator)
 
     // Clear bits 48 through 51 and 64 through 65.
     bits &= 0b11111111_11111111_11111111_11111111_11111111_11111111_00001111_11111111_00111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111
